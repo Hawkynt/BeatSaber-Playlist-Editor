@@ -1,4 +1,5 @@
-﻿using System.Text.Json.Serialization;
+﻿using System.Diagnostics;
+using System.Text.Json.Serialization;
 
 namespace BeatSaber_Playlist_Editor.BeatSaberInstallation.JSON {
   internal class SongInfo {
@@ -19,6 +20,7 @@ namespace BeatSaber_Playlist_Editor.BeatSaberInstallation.JSON {
       public Editors Editors { get; set; }
     }
 
+    [DebuggerDisplay($"{{{nameof(Difficulty)}}}")]
     public class DifficultyBeatmap {
       [JsonPropertyName("_difficulty")]
       public string Difficulty { get; set; }
@@ -36,6 +38,7 @@ namespace BeatSaber_Playlist_Editor.BeatSaberInstallation.JSON {
       public double NoteJumpStartBeatOffset { get; set; }
     }
 
+    [DebuggerDisplay($"{{{nameof(BeatmapCharacteristicName)}}}")]
     public class DifficultyBeatmapSet {
       [JsonPropertyName("_beatmapCharacteristicName")]
       public string BeatmapCharacteristicName { get; set; }
@@ -44,6 +47,7 @@ namespace BeatSaber_Playlist_Editor.BeatSaberInstallation.JSON {
       public List<DifficultyBeatmap> DifficultyBeatmaps { get; set; }
     }
 
+    [DebuggerDisplay($"{{{nameof(LastEditedBy)}}}")]
     public class Editors {
       [JsonPropertyName("_lastEditedBy")]
       public string LastEditedBy { get; set; }
@@ -52,6 +56,7 @@ namespace BeatSaber_Playlist_Editor.BeatSaberInstallation.JSON {
       public Beatsage Beatsage { get; set; }
     }
 
+    [DebuggerDisplay($"{{{nameof(SongAuthorName)}}} - {{{nameof(SongName)}}}")]
     public class Root {
       [JsonPropertyName("_version")]
       public string Version { get; set; }

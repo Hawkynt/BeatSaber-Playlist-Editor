@@ -1,8 +1,10 @@
-﻿using System.Text.Json.Serialization;
+﻿using System.Diagnostics;
+using System.Text.Json.Serialization;
 
 namespace BeatSaber_Playlist_Editor.BeatSaberInstallation.JSON {
   internal class PlaylistFile {
     // Root myDeserializedClass = JsonSerializer.Deserialize<Root>(myJsonResponse);
+    [DebuggerDisplay($"{{{nameof(PlaylistTitle)}}}")]
     public class Root {
       [JsonPropertyName("playlistTitle")]
       public string PlaylistTitle { get; set; }
@@ -20,6 +22,7 @@ namespace BeatSaber_Playlist_Editor.BeatSaberInstallation.JSON {
       public object Image { get; set; }
     }
 
+    [DebuggerDisplay($"{{{nameof(SongName)}}}")]
     public class Song {
       [JsonPropertyName("hash")]
       public string Hash { get; set; } //SHA-1 hex-bytes
