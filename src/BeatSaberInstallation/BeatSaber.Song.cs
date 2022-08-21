@@ -30,9 +30,39 @@ partial class BeatSaber {
       | (this.Supports360DegreesMode ? GameMode.ThreeSixtyDegrees : 0)
       ;
 
+    public IReadOnlyDictionary<GameMode,DifficultyMode> Difficulties { get {
+        var result=new Dictionary<GameMode,DifficultyMode>();
+        foreach(var mode in this._Data.DifficultyBeatmapSets) {
+          var gameMode= mode.BeatmapCharacteristicName.ToLowerInvariant() switch {
+            "standard"=>GameMode.Normal,
+            "onesaber"=>GameMode.OneSaber,
+            "noarrows"=>GameMode.NoArrows,
+            "90degree"=>GameMode.NinetyDegrees,
+            "360degree"=>GameMode.ThreeSixtyDegrees,
+            _=>(GameMode)(-1)
+          };
+          if ((int)gameMode == -1)
+            continue;
+
+          DifficultyMode value = 0;
+          foreach(var difficulty in mode.DifficultyBeatmaps) 
+            value |= difficulty.Difficulty.ToLowerInvariant() switch {
+              "easy"=>DifficultyMode.Easy,
+              "normal"=>DifficultyMode.Normal,
+              "hard"=>DifficultyMode.Hard,
+              "expert"=>DifficultyMode.Expert,
+              "expertplus"=>DifficultyMode.ExpertPlus,
+              _ => 0
+            };
+          
+          result.Add(gameMode, value);
+        }
+        return result;
+      } }
+
     public Song(DirectoryInfo directory) {
       this.Directory = directory;
-      this._data = new System.Lazy<SongInfo.Root>(this._ReadMetadata);
+      this._data = new (this._ReadMetadata);
     }
 
     public FileInfo? GetCoverFile() {
@@ -51,7 +81,7 @@ partial class BeatSaber {
       return this.Directory.File(songFileName);
     }
 
-    public byte[] CalculateChecksum() {
+    public string CalculateChecksum() {
       var sb = new StringBuilder();
       _AddFileToBuilder(sb, _GetInfoFile(this.Directory));
       foreach (var set in this._Data.DifficultyBeatmapSets)
@@ -60,7 +90,7 @@ partial class BeatSaber {
 
       var str = sb.ToString();
       using var crypto = SHA1.Create();
-      return crypto.ComputeHash(Encoding.UTF8.GetBytes(str));
+      return crypto.ComputeHash(Encoding.UTF8.GetBytes(str)).ToHex(true);
     }
 
     private static void _AddFileToBuilder(StringBuilder builder, FileInfo textFile) 

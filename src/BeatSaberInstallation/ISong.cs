@@ -2,6 +2,8 @@
   interface ISong { 
     string Title { get;}
     string? Artist { get; }
+
+    string CalculateChecksum();
   }
 
 }

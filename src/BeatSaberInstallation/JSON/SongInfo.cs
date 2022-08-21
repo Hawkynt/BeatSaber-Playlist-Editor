@@ -32,7 +32,7 @@ namespace BeatSaber_Playlist_Editor.BeatSaberInstallation.JSON {
       public string BeatmapFilename { get; set; }
 
       [JsonPropertyName("_noteJumpMovementSpeed")]
-      public int NoteJumpMovementSpeed { get; set; }
+      public double NoteJumpMovementSpeed { get; set; }
 
       [JsonPropertyName("_noteJumpStartBeatOffset")]
       public double NoteJumpStartBeatOffset { get; set; }
@@ -77,7 +77,7 @@ namespace BeatSaber_Playlist_Editor.BeatSaberInstallation.JSON {
       public double BeatsPerMinute { get; set; }
 
       [JsonPropertyName("_songTimeOffset")]
-      public int SongTimeOffset { get; set; }
+      public double SongTimeOffset { get; set; }
 
       [JsonPropertyName("_shuffle")]
       public double Shuffle { get; set; }
@@ -89,7 +89,7 @@ namespace BeatSaber_Playlist_Editor.BeatSaberInstallation.JSON {
       public double PreviewStartTime { get; set; }
 
       [JsonPropertyName("_previewDuration")]
-      public int PreviewDuration { get; set; }
+      public double PreviewDuration { get; set; }
 
       [JsonPropertyName("_songFilename")]
       public string SongFilename { get; set; }
