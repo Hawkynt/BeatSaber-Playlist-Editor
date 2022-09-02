@@ -37,6 +37,14 @@ namespace BeatSaber_Playlist_Editor {
       }
       firstList.WriteToDisk();
 
+      var testList = lists.FirstOrDefault(i => i.Name == "test");
+      if (testList != null)
+        bs.Playlists.Delete("test");
+      
+      testList = bs.Playlists.Create("test");
+      testList.WriteToDisk();
+
+
       // To customize application configuration such as set high DPI settings or default font,
       // see https://aka.ms/applicationconfiguration.
       ApplicationConfiguration.Initialize();
