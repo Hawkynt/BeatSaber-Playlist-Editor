@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace BeatSaberAPI.Properties {
+namespace BeatSaber_Playlist_Editor.Properties {
     using System;
     
     

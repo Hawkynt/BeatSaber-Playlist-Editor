@@ -1,7 +1,8 @@
 ﻿using System.Collections;
 
-namespace BeatSaberAPI.BeatSaberInstallation; 
-partial class BeatSaber {
+namespace BeatSaberAPI; 
+
+partial class BeatSaberInstallation {
 
   private class PlaylistCollection : IPlaylistCollection {
     

@@ -1,7 +1,8 @@
 ﻿using System.Diagnostics;
 
-namespace BeatSaberAPI.BeatSaberInstallation; 
-partial class BeatSaber {
+namespace BeatSaberAPI; 
+
+partial class BeatSaberInstallation {
 
   [DebuggerDisplay($"{{{nameof(Name)}}}")]
   private class PlaylistEntry : IPlaylistEntry {

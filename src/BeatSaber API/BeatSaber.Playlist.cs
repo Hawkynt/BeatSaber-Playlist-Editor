@@ -1,9 +1,10 @@
 ﻿using System.Diagnostics;
 using System.Text.Json;
-using BeatSaberAPI.BeatSaberInstallation.JSON;
+using BeatSaberAPI.JSON;
 
-namespace BeatSaberAPI.BeatSaberInstallation; 
-partial class BeatSaber {
+namespace BeatSaberAPI; 
+
+partial class BeatSaberInstallation {
 
   [DebuggerDisplay($"{{{nameof(Name)}}}")]
   private class Playlist : IPlaylist {

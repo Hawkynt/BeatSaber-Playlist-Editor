@@ -1,4 +1,4 @@
-﻿namespace BeatSaberAPI.BeatSaberInstallation {
-  public interface ISongCollection :IEnumerable<ISong> { }
+﻿namespace BeatSaberAPI;
 
-}
+public interface ISongCollection :IEnumerable<ISong> { }
+

@@ -2,12 +2,13 @@
 using System.Diagnostics;
 using System.Text;
 using System.Text.Json;
-using BeatSaberAPI.BeatSaberInstallation.JSON;
 using System.Collections;
 using System.Drawing;
+using BeatSaberAPI.JSON;
 
-namespace BeatSaberAPI.BeatSaberInstallation; 
-partial class BeatSaber {
+namespace BeatSaberAPI; 
+
+partial class BeatSaberInstallation {
 
   [DebuggerDisplay($"{{{nameof(Artist)}}} - {{{nameof(Title)}}}")]
   private class Song : ISong {

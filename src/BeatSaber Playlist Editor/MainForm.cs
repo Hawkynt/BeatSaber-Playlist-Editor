@@ -1,4 +1,4 @@
-namespace BeatSaberAPI
+namespace BeatSaber_Playlist_Editor
 {
     public partial class MainForm : Form
     {

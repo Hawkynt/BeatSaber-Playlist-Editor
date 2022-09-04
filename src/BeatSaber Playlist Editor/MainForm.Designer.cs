@@ -1,6 +1,6 @@
-﻿using BeatSaberAPI.UserControls;
+﻿using BeatSaber_Playlist_Editor.UserControls;
 
-namespace BeatSaberAPI {
+namespace BeatSaber_Playlist_Editor {
   partial class MainForm : Form {
     /// <summary>
     ///  Required designer variable.
@@ -49,7 +49,7 @@ namespace BeatSaberAPI {
       this.tsbEntryClear = new System.Windows.Forms.ToolStripButton();
       this.tsbPlaylistReread = new System.Windows.Forms.ToolStripButton();
       this.lvSongs = new System.Windows.Forms.ListView();
-      this.tstbSongFilter = new BeatSaberAPI.UserControls.ToolStripSpringTextBox();
+      this.tstbSongFilter = new BeatSaber_Playlist_Editor.UserControls.ToolStripSpringTextBox();
       this.tsbModeStandard = new System.Windows.Forms.ToolStripButton();
       this.tsbModeOneSaber = new System.Windows.Forms.ToolStripButton();
       this.tsbModeNoArrows = new System.Windows.Forms.ToolStripButton();
@@ -148,7 +148,7 @@ namespace BeatSaberAPI {
       // tsbBeatsaberSetPath
       // 
       this.tsbBeatsaberSetPath.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-      this.tsbBeatsaberSetPath.Image = global::BeatSaberAPI.Properties.Resources._20x20_BeatSaber;
+      this.tsbBeatsaberSetPath.Image = global::BeatSaber_Playlist_Editor.Properties.Resources._20x20_BeatSaber;
       this.tsbBeatsaberSetPath.ImageTransparentColor = System.Drawing.Color.Magenta;
       this.tsbBeatsaberSetPath.Name = "tsbBeatsaberSetPath";
       this.tsbBeatsaberSetPath.Size = new System.Drawing.Size(23, 22);
@@ -157,7 +157,7 @@ namespace BeatSaberAPI {
       // tsbBeatsaberRefresh
       // 
       this.tsbBeatsaberRefresh.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-      this.tsbBeatsaberRefresh.Image = global::BeatSaberAPI.Properties.Resources._16x16_Refresh;
+      this.tsbBeatsaberRefresh.Image = global::BeatSaber_Playlist_Editor.Properties.Resources._16x16_Refresh;
       this.tsbBeatsaberRefresh.ImageTransparentColor = System.Drawing.Color.Magenta;
       this.tsbBeatsaberRefresh.Name = "tsbBeatsaberRefresh";
       this.tsbBeatsaberRefresh.Size = new System.Drawing.Size(23, 22);
@@ -237,7 +237,7 @@ namespace BeatSaberAPI {
       // tsbPlaylistSave
       // 
       this.tsbPlaylistSave.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-      this.tsbPlaylistSave.Image = global::BeatSaberAPI.Properties.Resources._16x16_Save;
+      this.tsbPlaylistSave.Image = global::BeatSaber_Playlist_Editor.Properties.Resources._16x16_Save;
       this.tsbPlaylistSave.ImageTransparentColor = System.Drawing.Color.Magenta;
       this.tsbPlaylistSave.Name = "tsbPlaylistSave";
       this.tsbPlaylistSave.Size = new System.Drawing.Size(23, 22);
@@ -246,7 +246,7 @@ namespace BeatSaberAPI {
       // tsbEntryFirst
       // 
       this.tsbEntryFirst.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-      this.tsbEntryFirst.Image = global::BeatSaberAPI.Properties.Resources._20x20_First;
+      this.tsbEntryFirst.Image = global::BeatSaber_Playlist_Editor.Properties.Resources._20x20_First;
       this.tsbEntryFirst.ImageTransparentColor = System.Drawing.Color.Magenta;
       this.tsbEntryFirst.Name = "tsbEntryFirst";
       this.tsbEntryFirst.Size = new System.Drawing.Size(23, 22);
@@ -255,7 +255,7 @@ namespace BeatSaberAPI {
       // tsbEntryUp
       // 
       this.tsbEntryUp.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-      this.tsbEntryUp.Image = global::BeatSaberAPI.Properties.Resources._20x20_Up;
+      this.tsbEntryUp.Image = global::BeatSaber_Playlist_Editor.Properties.Resources._20x20_Up;
       this.tsbEntryUp.ImageTransparentColor = System.Drawing.Color.Magenta;
       this.tsbEntryUp.Name = "tsbEntryUp";
       this.tsbEntryUp.Size = new System.Drawing.Size(23, 22);
@@ -264,7 +264,7 @@ namespace BeatSaberAPI {
       // tsbEntryRemove
       // 
       this.tsbEntryRemove.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-      this.tsbEntryRemove.Image = global::BeatSaberAPI.Properties.Resources._20x20_Remove;
+      this.tsbEntryRemove.Image = global::BeatSaber_Playlist_Editor.Properties.Resources._20x20_Remove;
       this.tsbEntryRemove.ImageTransparentColor = System.Drawing.Color.Magenta;
       this.tsbEntryRemove.Name = "tsbEntryRemove";
       this.tsbEntryRemove.Size = new System.Drawing.Size(23, 22);
@@ -273,7 +273,7 @@ namespace BeatSaberAPI {
       // tsbEntryDown
       // 
       this.tsbEntryDown.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-      this.tsbEntryDown.Image = global::BeatSaberAPI.Properties.Resources._20x20_Down;
+      this.tsbEntryDown.Image = global::BeatSaber_Playlist_Editor.Properties.Resources._20x20_Down;
       this.tsbEntryDown.ImageTransparentColor = System.Drawing.Color.Magenta;
       this.tsbEntryDown.Name = "tsbEntryDown";
       this.tsbEntryDown.Size = new System.Drawing.Size(23, 22);
@@ -282,7 +282,7 @@ namespace BeatSaberAPI {
       // tsbEntryLast
       // 
       this.tsbEntryLast.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-      this.tsbEntryLast.Image = global::BeatSaberAPI.Properties.Resources._20x20_Last;
+      this.tsbEntryLast.Image = global::BeatSaber_Playlist_Editor.Properties.Resources._20x20_Last;
       this.tsbEntryLast.ImageTransparentColor = System.Drawing.Color.Magenta;
       this.tsbEntryLast.Name = "tsbEntryLast";
       this.tsbEntryLast.Size = new System.Drawing.Size(23, 22);
@@ -291,7 +291,7 @@ namespace BeatSaberAPI {
       // tsbEntryClear
       // 
       this.tsbEntryClear.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-      this.tsbEntryClear.Image = global::BeatSaberAPI.Properties.Resources._16x16_Clear;
+      this.tsbEntryClear.Image = global::BeatSaber_Playlist_Editor.Properties.Resources._16x16_Clear;
       this.tsbEntryClear.ImageTransparentColor = System.Drawing.Color.Magenta;
       this.tsbEntryClear.Name = "tsbEntryClear";
       this.tsbEntryClear.Size = new System.Drawing.Size(23, 22);
@@ -300,7 +300,7 @@ namespace BeatSaberAPI {
       // tsbPlaylistReread
       // 
       this.tsbPlaylistReread.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-      this.tsbPlaylistReread.Image = global::BeatSaberAPI.Properties.Resources._24x24_Reread;
+      this.tsbPlaylistReread.Image = global::BeatSaber_Playlist_Editor.Properties.Resources._24x24_Reread;
       this.tsbPlaylistReread.ImageTransparentColor = System.Drawing.Color.Magenta;
       this.tsbPlaylistReread.Name = "tsbPlaylistReread";
       this.tsbPlaylistReread.Size = new System.Drawing.Size(23, 22);
@@ -366,7 +366,7 @@ namespace BeatSaberAPI {
       // 
       tslFilter.AutoToolTip = true;
       tslFilter.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-      tslFilter.Image = global::BeatSaberAPI.Properties.Resources._20x20_Search;
+      tslFilter.Image = global::BeatSaber_Playlist_Editor.Properties.Resources._20x20_Search;
       tslFilter.Name = "tslFilter";
       tslFilter.Size = new System.Drawing.Size(16, 22);
       tslFilter.Text = "Filter";
@@ -384,7 +384,7 @@ namespace BeatSaberAPI {
       this.tsbModeStandard.CheckOnClick = true;
       this.tsbModeStandard.CheckState = System.Windows.Forms.CheckState.Checked;
       this.tsbModeStandard.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-      this.tsbModeStandard.Image = global::BeatSaberAPI.Properties.Resources._24x24_TwoSabers;
+      this.tsbModeStandard.Image = global::BeatSaber_Playlist_Editor.Properties.Resources._24x24_TwoSabers;
       this.tsbModeStandard.ImageTransparentColor = System.Drawing.Color.Magenta;
       this.tsbModeStandard.Name = "tsbModeStandard";
       this.tsbModeStandard.Size = new System.Drawing.Size(23, 22);
@@ -396,7 +396,7 @@ namespace BeatSaberAPI {
       this.tsbModeOneSaber.CheckOnClick = true;
       this.tsbModeOneSaber.CheckState = System.Windows.Forms.CheckState.Checked;
       this.tsbModeOneSaber.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-      this.tsbModeOneSaber.Image = global::BeatSaberAPI.Properties.Resources._24x24_OneSaber;
+      this.tsbModeOneSaber.Image = global::BeatSaber_Playlist_Editor.Properties.Resources._24x24_OneSaber;
       this.tsbModeOneSaber.ImageTransparentColor = System.Drawing.Color.Magenta;
       this.tsbModeOneSaber.Name = "tsbModeOneSaber";
       this.tsbModeOneSaber.Size = new System.Drawing.Size(23, 22);
@@ -408,7 +408,7 @@ namespace BeatSaberAPI {
       this.tsbModeNoArrows.CheckOnClick = true;
       this.tsbModeNoArrows.CheckState = System.Windows.Forms.CheckState.Checked;
       this.tsbModeNoArrows.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-      this.tsbModeNoArrows.Image = global::BeatSaberAPI.Properties.Resources._24x24_NoArrows;
+      this.tsbModeNoArrows.Image = global::BeatSaber_Playlist_Editor.Properties.Resources._24x24_NoArrows;
       this.tsbModeNoArrows.ImageTransparentColor = System.Drawing.Color.Magenta;
       this.tsbModeNoArrows.Name = "tsbModeNoArrows";
       this.tsbModeNoArrows.Size = new System.Drawing.Size(23, 22);
@@ -420,7 +420,7 @@ namespace BeatSaberAPI {
       this.tsbMode90.CheckOnClick = true;
       this.tsbMode90.CheckState = System.Windows.Forms.CheckState.Checked;
       this.tsbMode90.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-      this.tsbMode90.Image = global::BeatSaberAPI.Properties.Resources._24x24_90degrees;
+      this.tsbMode90.Image = global::BeatSaber_Playlist_Editor.Properties.Resources._24x24_90degrees;
       this.tsbMode90.ImageTransparentColor = System.Drawing.Color.Magenta;
       this.tsbMode90.Name = "tsbMode90";
       this.tsbMode90.Size = new System.Drawing.Size(23, 22);
@@ -432,7 +432,7 @@ namespace BeatSaberAPI {
       this.tsbMode360.CheckOnClick = true;
       this.tsbMode360.CheckState = System.Windows.Forms.CheckState.Checked;
       this.tsbMode360.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-      this.tsbMode360.Image = global::BeatSaberAPI.Properties.Resources._24x24_360degrees;
+      this.tsbMode360.Image = global::BeatSaber_Playlist_Editor.Properties.Resources._24x24_360degrees;
       this.tsbMode360.ImageTransparentColor = System.Drawing.Color.Magenta;
       this.tsbMode360.Name = "tsbMode360";
       this.tsbMode360.Size = new System.Drawing.Size(23, 22);
