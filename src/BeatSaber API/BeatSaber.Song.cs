@@ -2,10 +2,11 @@
 using System.Diagnostics;
 using System.Text;
 using System.Text.Json;
-using BeatSaber_Playlist_Editor.BeatSaberInstallation.JSON;
+using BeatSaberAPI.BeatSaberInstallation.JSON;
 using System.Collections;
+using System.Drawing;
 
-namespace BeatSaber_Playlist_Editor.BeatSaberInstallation; 
+namespace BeatSaberAPI.BeatSaberInstallation; 
 partial class BeatSaber {
 
   [DebuggerDisplay($"{{{nameof(Artist)}}} - {{{nameof(Title)}}}")]

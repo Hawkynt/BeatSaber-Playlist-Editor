@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics;
 
-namespace BeatSaber_Playlist_Editor.BeatSaberInstallation; 
+namespace BeatSaberAPI.BeatSaberInstallation; 
 partial class BeatSaber {
 
   [DebuggerDisplay($"{{{nameof(Name)}}}")]

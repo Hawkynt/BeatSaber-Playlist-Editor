@@ -1,8 +1,8 @@
 ﻿using System.Diagnostics;
 using System.Text.Json;
-using BeatSaber_Playlist_Editor.BeatSaberInstallation.JSON;
+using BeatSaberAPI.BeatSaberInstallation.JSON;
 
-namespace BeatSaber_Playlist_Editor.BeatSaberInstallation; 
+namespace BeatSaberAPI.BeatSaberInstallation; 
 partial class BeatSaber {
 
   [DebuggerDisplay($"{{{nameof(Name)}}}")]

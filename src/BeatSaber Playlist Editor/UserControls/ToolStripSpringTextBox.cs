@@ -1,4 +1,4 @@
-﻿namespace BeatSaber_Playlist_Editor.UserControls;
+﻿namespace BeatSaberAPI.UserControls;
 
 public class ToolStripSpringTextBox : ToolStripTextBox {
   public override Size GetPreferredSize(Size constrainingSize) {

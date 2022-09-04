@@ -1,6 +1,6 @@
-﻿namespace BeatSaber_Playlist_Editor.BeatSaberInstallation {
+﻿namespace BeatSaberAPI.BeatSaberInstallation{
 
-  partial class BeatSaber:IBeatSaberInstallation {
+  public partial class BeatSaber:IBeatSaberInstallation {
 
     private readonly DirectoryInfo _gameDirectory;
 

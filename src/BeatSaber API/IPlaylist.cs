@@ -1,5 +1,5 @@
-﻿namespace BeatSaber_Playlist_Editor.BeatSaberInstallation {
-  interface IPlaylist { 
+﻿namespace BeatSaberAPI.BeatSaberInstallation {
+  public interface IPlaylist { 
     string Name { get; }
     string Author { get; set; }
     IPlaylistEntryCollection Songs { get; }

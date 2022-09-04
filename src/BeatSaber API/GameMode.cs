@@ -1,6 +1,6 @@
-﻿namespace BeatSaber_Playlist_Editor.BeatSaberInstallation {
+﻿namespace BeatSaberAPI.BeatSaberInstallation {
   [Flags]
-  enum GameMode {
+  public enum GameMode {
     Normal=1,
     OneSaber=1<<1,
     NoArrows=1<<2,

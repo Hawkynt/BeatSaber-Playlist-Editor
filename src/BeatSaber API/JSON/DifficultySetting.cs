@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace BeatSaber_Playlist_Editor.BeatSaberInstallation.JSON {
+namespace BeatSaberAPI.BeatSaberInstallation.JSON {
   internal class DifficultySetting {
     // Root myDeserializedClass = JsonSerializer.Deserialize<Root>(myJsonResponse);
     public class Event {

@@ -1,6 +1,6 @@
 ﻿using System.Collections;
 
-namespace BeatSaber_Playlist_Editor.BeatSaberInstallation; 
+namespace BeatSaberAPI.BeatSaberInstallation; 
 partial class BeatSaber {
   private class PlaylistEntryCollection : IPlaylistEntryCollection {
     private readonly List<IPlaylistEntry> _entries=new();

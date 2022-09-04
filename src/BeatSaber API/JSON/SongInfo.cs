@@ -1,7 +1,7 @@
 ﻿using System.Diagnostics;
 using System.Text.Json.Serialization;
 
-namespace BeatSaber_Playlist_Editor.BeatSaberInstallation.JSON {
+namespace BeatSaberAPI.BeatSaberInstallation.JSON {
   internal class SongInfo {
     // Root myDeserializedClass = JsonSerializer.Deserialize<Root>(myJsonResponse);
     public class Beatsage {

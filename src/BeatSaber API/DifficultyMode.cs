@@ -1,6 +1,6 @@
-﻿namespace BeatSaber_Playlist_Editor.BeatSaberInstallation {
+﻿namespace BeatSaberAPI.BeatSaberInstallation {
   [Flags]
-  enum DifficultyMode {
+  public enum DifficultyMode {
     Easy=1,
     Normal=1<<1,
     Hard=1<<2,
