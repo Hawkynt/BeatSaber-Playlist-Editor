@@ -33,7 +33,6 @@
       System.Windows.Forms.ToolStrip tsPlaylist;
       System.Windows.Forms.GroupBox groupBox1;
       System.Windows.Forms.SplitContainer splitContainer3;
-      System.Windows.Forms.DataGridView dgvSongs;
       System.Windows.Forms.ToolStrip tsSongs;
       System.Windows.Forms.ToolStripLabel tslFilter;
       System.Windows.Forms.GroupBox groupBox2;
@@ -54,6 +53,7 @@
       this.tsbEntryLast = new System.Windows.Forms.BindableToolStripButton();
       this.tsbEntryClear = new System.Windows.Forms.BindableToolStripButton();
       this.tsbPlaylistReread = new System.Windows.Forms.BindableToolStripButton();
+      this.dgvSongs = new System.Windows.Forms.DataGridView();
       this.artistDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
       this.titleDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
       this.songsBindingSource = new System.Windows.Forms.BindingSource(this.components);
@@ -64,6 +64,7 @@
       this.tsbMode90 = new System.Windows.Forms.BindableToolStripButton();
       this.tsbMode360 = new System.Windows.Forms.BindableToolStripButton();
       this.fbdSelectRoot = new System.Windows.Forms.FolderBrowserDialog();
+      this.lDragContent = new System.Windows.Forms.Label();
       statusStrip1 = new System.Windows.Forms.StatusStrip();
       splitContainer1 = new System.Windows.Forms.SplitContainer();
       dgvPlaylists = new System.Windows.Forms.DataGridView();
@@ -73,7 +74,6 @@
       tsPlaylist = new System.Windows.Forms.ToolStrip();
       groupBox1 = new System.Windows.Forms.GroupBox();
       splitContainer3 = new System.Windows.Forms.SplitContainer();
-      dgvSongs = new System.Windows.Forms.DataGridView();
       tsSongs = new System.Windows.Forms.ToolStrip();
       tslFilter = new System.Windows.Forms.ToolStripLabel();
       groupBox2 = new System.Windows.Forms.GroupBox();
@@ -100,7 +100,7 @@
       splitContainer3.Panel1.SuspendLayout();
       splitContainer3.Panel2.SuspendLayout();
       splitContainer3.SuspendLayout();
-      ((System.ComponentModel.ISupportInitialize)(dgvSongs)).BeginInit();
+      ((System.ComponentModel.ISupportInitialize)(this.dgvSongs)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.songsBindingSource)).BeginInit();
       tsSongs.SuspendLayout();
       this.SuspendLayout();
@@ -276,7 +276,8 @@
       this.dgvPlaylistEntries.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
       this.dgvPlaylistEntries.Size = new System.Drawing.Size(239, 200);
       this.dgvPlaylistEntries.TabIndex = 1;
-      this.dgvPlaylistEntries.MouseUp += new System.Windows.Forms.MouseEventHandler(this.dgvPlaylistEntries_MouseUp);
+      this.dgvPlaylistEntries.DragDrop += new System.Windows.Forms.DragEventHandler(this.dgvPlaylistEntries_DragDrop);
+      this.dgvPlaylistEntries.DragEnter += new System.Windows.Forms.DragEventHandler(this.dgvPlaylistEntries_DragEnter);
       // 
       // nameDataGridViewTextBoxColumn
       // 
@@ -409,7 +410,7 @@
       // 
       // splitContainer3.Panel1
       // 
-      splitContainer3.Panel1.Controls.Add(dgvSongs);
+      splitContainer3.Panel1.Controls.Add(this.dgvSongs);
       splitContainer3.Panel1.Controls.Add(tsSongs);
       // 
       // splitContainer3.Panel2
@@ -421,28 +422,28 @@
       // 
       // dgvSongs
       // 
-      dgvSongs.AllowUserToAddRows = false;
-      dgvSongs.AllowUserToDeleteRows = false;
-      dgvSongs.AllowUserToResizeRows = false;
-      dgvSongs.AutoGenerateColumns = false;
-      dgvSongs.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-      dgvSongs.BackgroundColor = System.Drawing.SystemColors.Window;
-      dgvSongs.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-      dgvSongs.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-      dgvSongs.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+      this.dgvSongs.AllowUserToAddRows = false;
+      this.dgvSongs.AllowUserToDeleteRows = false;
+      this.dgvSongs.AllowUserToResizeRows = false;
+      this.dgvSongs.AutoGenerateColumns = false;
+      this.dgvSongs.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+      this.dgvSongs.BackgroundColor = System.Drawing.SystemColors.Window;
+      this.dgvSongs.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+      this.dgvSongs.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+      this.dgvSongs.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.artistDataGridViewTextBoxColumn,
             this.titleDataGridViewTextBoxColumn});
-      dgvSongs.DataSource = this.songsBindingSource;
-      dgvSongs.Dock = System.Windows.Forms.DockStyle.Fill;
-      dgvSongs.Location = new System.Drawing.Point(0, 25);
-      dgvSongs.Name = "dgvSongs";
-      dgvSongs.ReadOnly = true;
-      dgvSongs.RowHeadersVisible = false;
-      dgvSongs.RowTemplate.Height = 25;
-      dgvSongs.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-      dgvSongs.Size = new System.Drawing.Size(287, 198);
-      dgvSongs.TabIndex = 1;
-      dgvSongs.CellMouseDown += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dgvSongs_CellMouseDown);
+      this.dgvSongs.DataSource = this.songsBindingSource;
+      this.dgvSongs.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.dgvSongs.Location = new System.Drawing.Point(0, 25);
+      this.dgvSongs.Name = "dgvSongs";
+      this.dgvSongs.ReadOnly = true;
+      this.dgvSongs.RowHeadersVisible = false;
+      this.dgvSongs.RowTemplate.Height = 25;
+      this.dgvSongs.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+      this.dgvSongs.Size = new System.Drawing.Size(287, 198);
+      this.dgvSongs.TabIndex = 1;
+      this.dgvSongs.CellMouseDown += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dgvSongs_CellMouseDown);
       // 
       // artistDataGridViewTextBoxColumn
       // 
@@ -579,11 +580,22 @@
       // 
       this.fbdSelectRoot.Description = "Please select the installation path of your BeatSaber.";
       // 
+      // lDragContent
+      // 
+      this.lDragContent.AutoSize = true;
+      this.lDragContent.Location = new System.Drawing.Point(8, 33);
+      this.lDragContent.Name = "lDragContent";
+      this.lDragContent.Size = new System.Drawing.Size(16, 15);
+      this.lDragContent.TabIndex = 2;
+      this.lDragContent.Text = "...";
+      this.lDragContent.Visible = false;
+      // 
       // MainForm
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
       this.ClientSize = new System.Drawing.Size(800, 450);
+      this.Controls.Add(this.lDragContent);
       this.Controls.Add(splitContainer1);
       this.Controls.Add(statusStrip1);
       this.Name = "MainForm";
@@ -616,7 +628,7 @@
       splitContainer3.Panel2.ResumeLayout(false);
       ((System.ComponentModel.ISupportInitialize)(splitContainer3)).EndInit();
       splitContainer3.ResumeLayout(false);
-      ((System.ComponentModel.ISupportInitialize)(dgvSongs)).EndInit();
+      ((System.ComponentModel.ISupportInitialize)(this.dgvSongs)).EndInit();
       ((System.ComponentModel.ISupportInitialize)(this.songsBindingSource)).EndInit();
       tsSongs.ResumeLayout(false);
       tsSongs.PerformLayout();
@@ -658,5 +670,6 @@
         private DataGridViewTextBoxColumn artistDataGridViewTextBoxColumn;
         private DataGridViewTextBoxColumn titleDataGridViewTextBoxColumn;
         private BindingSource songsBindingSource;
+        private Label lDragContent;
     }
 }

@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using BeatSaber_Playlist_Editor.ViewModel;
 using static BeatSaber_Playlist_Editor.ViewModel.UIMain;
 
@@ -73,11 +74,31 @@ namespace BeatSaber_Playlist_Editor {
     }
 
     private void dgvSongs_CellMouseDown(object sender, DataGridViewCellMouseEventArgs e) {
+      if (e.ColumnIndex < 0 || e.RowIndex < 0) 
+        return;
 
+      // if dragged row not yet selected - select it
+      this.dgvSongs.Rows[e.RowIndex].Selected = true;
+
+
+      var selected = this.dgvSongs.GetSelectedItems<UISong>().ToArray();
+      this.dgvSongs.DoDragDrop(selected, DragDropEffects.Copy);
+    }
+        
+    private void dgvPlaylistEntries_DragEnter(object sender, DragEventArgs e) {
+      if (e.Data?.GetDataPresent(typeof(UISong[])) ?? false)
+        e.Effect = DragDropEffects.Copy;
     }
 
-    private void dgvPlaylistEntries_MouseUp(object sender, MouseEventArgs e) {
+    private void dgvPlaylistEntries_DragDrop(object sender, DragEventArgs e) {
+      var songs = e.Data?.GetData(typeof(UISong[])) as UISong[];
+      if(songs == null) {
+        e.Effect = DragDropEffects.None;
+        return;
+      }
 
+      this._viewModel?.AppendSongs(songs);
+      // TODO: would be nice to know where drop occured and insert songs there if possible
     }
   }
 }

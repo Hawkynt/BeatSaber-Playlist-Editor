@@ -323,4 +323,18 @@ internal class UIMain : INotifyPropertyChanged {
     this._MarkCurrentPlaylistModified();
   }
 
+  public void AppendSongs(IEnumerable<UISong> songs) {
+    var currentPlaylist = this.CurrentPlaylist;
+    if (currentPlaylist == null)
+      return;
+
+    var currentPlaylistEntries = this.CurrentPlaylistEntries;
+    foreach(var song in songs) {
+      var entry = currentPlaylist.Source.CreateEntry(song.Source);
+      currentPlaylistEntries.Add(new UIPlaylistEntry(entry));
+    }
+
+    this._MarkCurrentPlaylistModified();
+  }
+
 }
