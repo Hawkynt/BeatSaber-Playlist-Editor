@@ -1,3 +1,5 @@
+using System.Runtime.CompilerServices;
+using BeatSaber_Playlist_Editor.ViewModel;
 using BeatSaberAPI;
 
 namespace BeatSaber_Playlist_Editor {
@@ -45,12 +47,14 @@ namespace BeatSaber_Playlist_Editor {
       
       testList = bs.Playlists.Create("test");
       testList.WriteToDisk();
- */     
+ */
 
       // To customize application configuration such as set high DPI settings or default font,
       // see https://aka.ms/applicationconfiguration.
       ApplicationConfiguration.Initialize();
-      Application.Run(new MainForm());
+      var view = new MainForm();
+      view.Bind(new UIMain());
+      Application.Run(view);
     }
   }
 }

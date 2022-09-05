@@ -1,6 +1,4 @@
-﻿using BeatSaber_Playlist_Editor.UserControls;
-
-namespace BeatSaber_Playlist_Editor {
+﻿namespace BeatSaber_Playlist_Editor {
   partial class MainForm : Form {
     /// <summary>
     ///  Required designer variable.
@@ -25,6 +23,7 @@ namespace BeatSaber_Playlist_Editor {
     ///  the contents of this method with the code editor.
     /// </summary>
     private void InitializeComponent() {
+      this.components = new System.ComponentModel.Container();
       System.Windows.Forms.StatusStrip statusStrip1;
       System.Windows.Forms.SplitContainer splitContainer1;
       System.Windows.Forms.ToolStrip tsBeatsaber;
@@ -37,24 +36,33 @@ namespace BeatSaber_Playlist_Editor {
       System.Windows.Forms.ToolStripLabel tslFilter;
       System.Windows.Forms.GroupBox groupBox2;
       this.dgvPlaylists = new System.Windows.Forms.DataGridView();
-      this.tsbBeatsaberSetPath = new System.Windows.Forms.ToolStripButton();
-      this.tsbBeatsaberRefresh = new System.Windows.Forms.ToolStripButton();
+      this.bsViewModel = new System.Windows.Forms.BindingSource(this.components);
+      this.tsbBeatsaberSetPath = new System.Windows.Forms.BindableToolStripButton();
+      this.tsbBeatsaberRefresh = new System.Windows.Forms.BindableToolStripButton();
       this.dgvPlaylistEntries = new System.Windows.Forms.DataGridView();
-      this.tsbPlaylistSave = new System.Windows.Forms.ToolStripButton();
-      this.tsbEntryFirst = new System.Windows.Forms.ToolStripButton();
-      this.tsbEntryUp = new System.Windows.Forms.ToolStripButton();
-      this.tsbEntryRemove = new System.Windows.Forms.ToolStripButton();
-      this.tsbEntryDown = new System.Windows.Forms.ToolStripButton();
-      this.tsbEntryLast = new System.Windows.Forms.ToolStripButton();
-      this.tsbEntryClear = new System.Windows.Forms.ToolStripButton();
-      this.tsbPlaylistReread = new System.Windows.Forms.ToolStripButton();
+      this.tsbPlaylistSave = new System.Windows.Forms.BindableToolStripButton();
+      this.tsbEntryFirst = new System.Windows.Forms.BindableToolStripButton();
+      this.tsbEntryUp = new System.Windows.Forms.BindableToolStripButton();
+      this.tsbEntryRemove = new System.Windows.Forms.BindableToolStripButton();
+      this.tsbEntryDown = new System.Windows.Forms.BindableToolStripButton();
+      this.tsbEntryLast = new System.Windows.Forms.BindableToolStripButton();
+      this.tsbEntryClear = new System.Windows.Forms.BindableToolStripButton();
+      this.tsbPlaylistReread = new System.Windows.Forms.BindableToolStripButton();
       this.lvSongs = new System.Windows.Forms.ListView();
-      this.tstbSongFilter = new BeatSaber_Playlist_Editor.UserControls.ToolStripSpringTextBox();
-      this.tsbModeStandard = new System.Windows.Forms.ToolStripButton();
-      this.tsbModeOneSaber = new System.Windows.Forms.ToolStripButton();
-      this.tsbModeNoArrows = new System.Windows.Forms.ToolStripButton();
-      this.tsbMode90 = new System.Windows.Forms.ToolStripButton();
-      this.tsbMode360 = new System.Windows.Forms.ToolStripButton();
+      this.tstbSongFilter = new System.Windows.Forms.BindableToolStripSpringTextBox();
+      this.tsbModeStandard = new System.Windows.Forms.BindableToolStripButton();
+      this.tsbModeOneSaber = new System.Windows.Forms.BindableToolStripButton();
+      this.tsbModeNoArrows = new System.Windows.Forms.BindableToolStripButton();
+      this.tsbMode90 = new System.Windows.Forms.BindableToolStripButton();
+      this.tsbMode360 = new System.Windows.Forms.BindableToolStripButton();
+      this.currentPlaylistEntriesBindingSource = new System.Windows.Forms.BindingSource(this.components);
+      this.sourceDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+      this.nameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+      this.playlistsBindingSource = new System.Windows.Forms.BindingSource(this.components);
+      this.sourceDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+      this.nameDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+      this.authorDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+      this.fbdSelectRoot = new System.Windows.Forms.FolderBrowserDialog();
       statusStrip1 = new System.Windows.Forms.StatusStrip();
       splitContainer1 = new System.Windows.Forms.SplitContainer();
       tsBeatsaber = new System.Windows.Forms.ToolStrip();
@@ -71,6 +79,7 @@ namespace BeatSaber_Playlist_Editor {
       splitContainer1.Panel2.SuspendLayout();
       splitContainer1.SuspendLayout();
       ((System.ComponentModel.ISupportInitialize)(this.dgvPlaylists)).BeginInit();
+      ((System.ComponentModel.ISupportInitialize)(this.bsViewModel)).BeginInit();
       tsBeatsaber.SuspendLayout();
       ((System.ComponentModel.ISupportInitialize)(splitContainer2)).BeginInit();
       splitContainer2.Panel1.SuspendLayout();
@@ -87,6 +96,8 @@ namespace BeatSaber_Playlist_Editor {
       splitContainer3.Panel2.SuspendLayout();
       splitContainer3.SuspendLayout();
       tsSongs.SuspendLayout();
+      ((System.ComponentModel.ISupportInitialize)(this.currentPlaylistEntriesBindingSource)).BeginInit();
+      ((System.ComponentModel.ISupportInitialize)(this.playlistsBindingSource)).BeginInit();
       this.SuspendLayout();
       // 
       // statusStrip1
@@ -121,9 +132,17 @@ namespace BeatSaber_Playlist_Editor {
       this.dgvPlaylists.AllowUserToDeleteRows = false;
       this.dgvPlaylists.AllowUserToOrderColumns = true;
       this.dgvPlaylists.AllowUserToResizeRows = false;
+      this.dgvPlaylists.AutoGenerateColumns = false;
+      this.dgvPlaylists.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
       this.dgvPlaylists.BackgroundColor = System.Drawing.SystemColors.Window;
       this.dgvPlaylists.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
       this.dgvPlaylists.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+      this.dgvPlaylists.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.sourceDataGridViewTextBoxColumn1,
+            this.nameDataGridViewTextBoxColumn1,
+            this.authorDataGridViewTextBoxColumn});
+      this.dgvPlaylists.DataBindings.Add(new System.Windows.Forms.Binding("Enabled", this.bsViewModel, "IsPlaylistsAvailable", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+      this.dgvPlaylists.DataSource = this.playlistsBindingSource;
       this.dgvPlaylists.Dock = System.Windows.Forms.DockStyle.Fill;
       this.dgvPlaylists.Location = new System.Drawing.Point(0, 25);
       this.dgvPlaylists.Name = "dgvPlaylists";
@@ -132,6 +151,11 @@ namespace BeatSaber_Playlist_Editor {
       this.dgvPlaylists.RowTemplate.Height = 25;
       this.dgvPlaylists.Size = new System.Drawing.Size(266, 403);
       this.dgvPlaylists.TabIndex = 1;
+      // 
+      // bsViewModel
+      // 
+      this.bsViewModel.AllowNew = false;
+      this.bsViewModel.DataSource = typeof(BeatSaber_Playlist_Editor.ViewModel.UIMain);
       // 
       // tsBeatsaber
       // 
@@ -153,9 +177,11 @@ namespace BeatSaber_Playlist_Editor {
       this.tsbBeatsaberSetPath.Name = "tsbBeatsaberSetPath";
       this.tsbBeatsaberSetPath.Size = new System.Drawing.Size(23, 22);
       this.tsbBeatsaberSetPath.Text = "Select BeatSaber Installation";
+      this.tsbBeatsaberSetPath.Click += new System.EventHandler(this.tsbBeatsaberSetPath_Click);
       // 
       // tsbBeatsaberRefresh
       // 
+      this.tsbBeatsaberRefresh.DataBindings.Add(new System.Windows.Forms.Binding("Enabled", this.bsViewModel, "IsRefreshAvailable", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
       this.tsbBeatsaberRefresh.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
       this.tsbBeatsaberRefresh.Image = global::BeatSaber_Playlist_Editor.Properties.Resources._16x16_Refresh;
       this.tsbBeatsaberRefresh.ImageTransparentColor = System.Drawing.Color.Magenta;
@@ -204,9 +230,16 @@ namespace BeatSaber_Playlist_Editor {
       this.dgvPlaylistEntries.AllowUserToAddRows = false;
       this.dgvPlaylistEntries.AllowUserToDeleteRows = false;
       this.dgvPlaylistEntries.AllowUserToResizeRows = false;
+      this.dgvPlaylistEntries.AutoGenerateColumns = false;
+      this.dgvPlaylistEntries.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
       this.dgvPlaylistEntries.BackgroundColor = System.Drawing.SystemColors.Window;
       this.dgvPlaylistEntries.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
       this.dgvPlaylistEntries.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+      this.dgvPlaylistEntries.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.sourceDataGridViewTextBoxColumn,
+            this.nameDataGridViewTextBoxColumn});
+      this.dgvPlaylistEntries.DataBindings.Add(new System.Windows.Forms.Binding("Enabled", this.bsViewModel, "IsCurrentPlaylistAvailable", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+      this.dgvPlaylistEntries.DataSource = this.currentPlaylistEntriesBindingSource;
       this.dgvPlaylistEntries.Dock = System.Windows.Forms.DockStyle.Fill;
       this.dgvPlaylistEntries.Location = new System.Drawing.Point(0, 25);
       this.dgvPlaylistEntries.Name = "dgvPlaylistEntries";
@@ -218,6 +251,7 @@ namespace BeatSaber_Playlist_Editor {
       // 
       // tsPlaylist
       // 
+      tsPlaylist.DataBindings.Add(new System.Windows.Forms.Binding("Enabled", this.bsViewModel, "IsCurrentPlaylistAvailable", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
       tsPlaylist.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
       tsPlaylist.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tsbPlaylistSave,
@@ -337,6 +371,7 @@ namespace BeatSaber_Playlist_Editor {
       // 
       // lvSongs
       // 
+      this.lvSongs.DataBindings.Add(new System.Windows.Forms.Binding("Enabled", this.bsViewModel, "IsSongsAvailable", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
       this.lvSongs.Dock = System.Windows.Forms.DockStyle.Fill;
       this.lvSongs.Location = new System.Drawing.Point(0, 25);
       this.lvSongs.Name = "lvSongs";
@@ -347,6 +382,7 @@ namespace BeatSaber_Playlist_Editor {
       // tsSongs
       // 
       tsSongs.CanOverflow = false;
+      tsSongs.DataBindings.Add(new System.Windows.Forms.Binding("Enabled", this.bsViewModel, "IsSongsAvailable", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
       tsSongs.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
       tsSongs.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             tslFilter,
@@ -448,6 +484,55 @@ namespace BeatSaber_Playlist_Editor {
       groupBox2.TabStop = false;
       groupBox2.Text = "Song properties";
       // 
+      // currentPlaylistEntriesBindingSource
+      // 
+      this.currentPlaylistEntriesBindingSource.DataMember = "CurrentPlaylistEntries";
+      this.currentPlaylistEntriesBindingSource.DataSource = this.bsViewModel;
+      // 
+      // sourceDataGridViewTextBoxColumn
+      // 
+      this.sourceDataGridViewTextBoxColumn.DataPropertyName = "Source";
+      this.sourceDataGridViewTextBoxColumn.HeaderText = "Source";
+      this.sourceDataGridViewTextBoxColumn.Name = "sourceDataGridViewTextBoxColumn";
+      this.sourceDataGridViewTextBoxColumn.ReadOnly = true;
+      // 
+      // nameDataGridViewTextBoxColumn
+      // 
+      this.nameDataGridViewTextBoxColumn.DataPropertyName = "Name";
+      this.nameDataGridViewTextBoxColumn.HeaderText = "Name";
+      this.nameDataGridViewTextBoxColumn.Name = "nameDataGridViewTextBoxColumn";
+      this.nameDataGridViewTextBoxColumn.ReadOnly = true;
+      // 
+      // playlistsBindingSource
+      // 
+      this.playlistsBindingSource.DataMember = "Playlists";
+      this.playlistsBindingSource.DataSource = this.bsViewModel;
+      // 
+      // sourceDataGridViewTextBoxColumn1
+      // 
+      this.sourceDataGridViewTextBoxColumn1.DataPropertyName = "Source";
+      this.sourceDataGridViewTextBoxColumn1.HeaderText = "Source";
+      this.sourceDataGridViewTextBoxColumn1.Name = "sourceDataGridViewTextBoxColumn1";
+      this.sourceDataGridViewTextBoxColumn1.ReadOnly = true;
+      // 
+      // nameDataGridViewTextBoxColumn1
+      // 
+      this.nameDataGridViewTextBoxColumn1.DataPropertyName = "Name";
+      this.nameDataGridViewTextBoxColumn1.HeaderText = "Name";
+      this.nameDataGridViewTextBoxColumn1.Name = "nameDataGridViewTextBoxColumn1";
+      this.nameDataGridViewTextBoxColumn1.ReadOnly = true;
+      // 
+      // authorDataGridViewTextBoxColumn
+      // 
+      this.authorDataGridViewTextBoxColumn.DataPropertyName = "Author";
+      this.authorDataGridViewTextBoxColumn.HeaderText = "Author";
+      this.authorDataGridViewTextBoxColumn.Name = "authorDataGridViewTextBoxColumn";
+      this.authorDataGridViewTextBoxColumn.ReadOnly = true;
+      // 
+      // fbdSelectRoot
+      // 
+      this.fbdSelectRoot.Description = "Please select the installation path of your BeatSaber.";
+      // 
       // MainForm
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -463,6 +548,7 @@ namespace BeatSaber_Playlist_Editor {
       ((System.ComponentModel.ISupportInitialize)(splitContainer1)).EndInit();
       splitContainer1.ResumeLayout(false);
       ((System.ComponentModel.ISupportInitialize)(this.dgvPlaylists)).EndInit();
+      ((System.ComponentModel.ISupportInitialize)(this.bsViewModel)).EndInit();
       tsBeatsaber.ResumeLayout(false);
       tsBeatsaber.PerformLayout();
       splitContainer2.Panel1.ResumeLayout(false);
@@ -484,6 +570,8 @@ namespace BeatSaber_Playlist_Editor {
       splitContainer3.ResumeLayout(false);
       tsSongs.ResumeLayout(false);
       tsSongs.PerformLayout();
+      ((System.ComponentModel.ISupportInitialize)(this.currentPlaylistEntriesBindingSource)).EndInit();
+      ((System.ComponentModel.ISupportInitialize)(this.playlistsBindingSource)).EndInit();
       this.ResumeLayout(false);
       this.PerformLayout();
 
@@ -494,21 +582,30 @@ namespace BeatSaber_Playlist_Editor {
     private DataGridView dgvPlaylists;
     private DataGridView dgvPlaylistEntries;
     private ListView lvSongs;
-    private ToolStripSpringTextBox tstbSongFilter;
-    private ToolStripButton tsbModeOneSaber;
-    private ToolStripButton tsbModeStandard;
-    private ToolStripButton tsbModeNoArrows;
-    private ToolStripButton tsbMode90;
-    private ToolStripButton tsbMode360;
-    private ToolStripButton tsbEntryClear;
-    private ToolStripButton tsbEntryRemove;
-    private ToolStripButton tsbEntryLast;
-    private ToolStripButton tsbEntryFirst;
-    private ToolStripButton tsbEntryDown;
-    private ToolStripButton tsbEntryUp;
-    private ToolStripButton tsbPlaylistSave;
-    private ToolStripButton tsbPlaylistReread;
-    private ToolStripButton tsbBeatsaberSetPath;
-    private ToolStripButton tsbBeatsaberRefresh;
-  }
+    private BindableToolStripSpringTextBox tstbSongFilter;
+    private BindableToolStripButton tsbModeOneSaber;
+    private BindableToolStripButton tsbModeStandard;
+    private BindableToolStripButton tsbModeNoArrows;
+    private BindableToolStripButton tsbMode90;
+    private BindableToolStripButton tsbMode360;
+    private BindableToolStripButton tsbEntryClear;
+    private BindableToolStripButton tsbEntryRemove;
+    private BindableToolStripButton tsbEntryLast;
+    private BindableToolStripButton tsbEntryFirst;
+    private BindableToolStripButton tsbEntryDown;
+    private BindableToolStripButton tsbEntryUp;
+    private BindableToolStripButton tsbPlaylistSave;
+    private BindableToolStripButton tsbPlaylistReread;
+    private BindableToolStripButton tsbBeatsaberSetPath;
+    private BindableToolStripButton tsbBeatsaberRefresh;
+        private BindingSource bsViewModel;
+        private DataGridViewTextBoxColumn sourceDataGridViewTextBoxColumn1;
+        private DataGridViewTextBoxColumn nameDataGridViewTextBoxColumn1;
+        private DataGridViewTextBoxColumn authorDataGridViewTextBoxColumn;
+        private BindingSource playlistsBindingSource;
+        private DataGridViewTextBoxColumn sourceDataGridViewTextBoxColumn;
+        private DataGridViewTextBoxColumn nameDataGridViewTextBoxColumn;
+        private BindingSource currentPlaylistEntriesBindingSource;
+        private FolderBrowserDialog fbdSelectRoot;
+    }
 }

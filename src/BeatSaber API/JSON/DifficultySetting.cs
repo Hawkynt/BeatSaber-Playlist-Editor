@@ -51,16 +51,16 @@ internal class DifficultySetting {
 
   public class Root {
     [JsonPropertyName("_version")]
-    public string Version { get; set; }
+    public string? Version { get; set; }
 
     [JsonPropertyName("_events")]
-    public List<Event> Events { get; set; }
+    public List<Event>? Events { get; set; }
 
     [JsonPropertyName("_notes")]
-    public List<Note> Notes { get; set; }
+    public List<Note>? Notes { get; set; }
 
     [JsonPropertyName("_obstacles")]
-    public List<Obstacle> Obstacles { get; set; }
+    public List<Obstacle>? Obstacles { get; set; }
   }
 
 
