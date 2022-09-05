@@ -1,4 +1,3 @@
-using System.Diagnostics;
 using BeatSaber_Playlist_Editor.ViewModel;
 using static BeatSaber_Playlist_Editor.ViewModel.UIMain;
 
@@ -6,6 +5,8 @@ namespace BeatSaber_Playlist_Editor {
   internal partial class MainForm : Form {
 
     private UIMain? _viewModel;
+
+    private bool _HasPlaylistChanged => this._viewModel != null && this._viewModel.IsCurrentPlaylistSaveAvailable;
 
     public MainForm() => InitializeComponent();
 
@@ -25,7 +26,9 @@ namespace BeatSaber_Playlist_Editor {
     }
 
     private void tsbBeatsaberRefresh_Click(object sender, EventArgs e) {
-      // TODO: ask confirmation if changed
+      if (_HasPlaylistChanged && MessageBox.Show("Executing this will revert all changes made to the current playlist.\r\nAre you sure?","Warning",MessageBoxButtons.YesNo,MessageBoxIcon.Warning) != DialogResult.Yes)
+        return;
+
       this._viewModel?.Refresh();
     }
 
@@ -64,12 +67,16 @@ namespace BeatSaber_Playlist_Editor {
     }
 
     private void tsbEntryClear_Click(object sender, EventArgs e) {
-      // TODO: ask confirmation if changed
+      if (_HasPlaylistChanged && MessageBox.Show("Executing this will revert all changes made to the current playlist.\r\nAre you sure?", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) != DialogResult.Yes)
+        return;
+
       this._viewModel?.ClearCurrentPlaylist();
     }
 
     private void tsbPlaylistReread_Click(object sender, EventArgs e) {
-      // TODO: ask confirmation if changed
+      if (_HasPlaylistChanged && MessageBox.Show("Executing this will revert all changes made to the current playlist.\r\nAre you sure?", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) != DialogResult.Yes)
+        return;
+
       this._viewModel?.RereadCurrentPlaylist();
     }
 
