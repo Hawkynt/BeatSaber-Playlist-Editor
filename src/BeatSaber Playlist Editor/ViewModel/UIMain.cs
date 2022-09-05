@@ -19,14 +19,14 @@ internal class UIMain : INotifyPropertyChanged {
 
   }
 
-  public class UIPlayerlistEntry {
+  public class UIPlaylistEntry {
 
     [Browsable(false)]
     public IPlaylistEntry Source { get; }
 
     public string Name => this.Source.Name;
 
-    public UIPlayerlistEntry(IPlaylistEntry source) => this.Source = source;
+    public UIPlaylistEntry(IPlaylistEntry source) => this.Source = source;
   }
 
   public class UISong {
@@ -78,7 +78,7 @@ internal class UIMain : INotifyPropertyChanged {
 
   public bool IsCurrentPlaylistSaveAvailable {
     get => _isCurrentPlaylistSaveAvailable;
-    private set => this.SetProperty(this.OnPropertyChanged, ref _isCurrentPlaylistSaveAvailable ,value);
+    private set => this.SetProperty(this.OnPropertyChanged, ref _isCurrentPlaylistSaveAvailable, value);
   }
 
   public bool IsSongsAvailable {
@@ -151,27 +151,12 @@ internal class UIMain : INotifyPropertyChanged {
       if (!this.SetProperty(this.OnPropertyChanged, ref _currentPlaylist, value))
         return;
 
-      this.CurrentPlaylistEntries.Clear();
-      if (value != null)
-        this.CurrentPlaylistEntries.AddRange(value.Source.Songs.Select(i => new UIPlayerlistEntry(i)));
-
-      this.IsCurrentPlaylistAvailable = this.CurrentPlaylistEntries.Count > 0;
-      this.IsCurrentPlaylistSaveAvailable = false;
+      this.RereadCurrentPlaylist();
     }
   }
 
-  public void MoveUp(IEnumerable<UIPlayerlistEntry> entries) {
-    var pl = this.CurrentPlaylist;
-    if (pl == null)
-      return;
-
-
-
-
-  }
-
   public SortableBindingList<UIPlaylist> Playlists { get; } = new();
-  public SortableBindingList<UIPlayerlistEntry> CurrentPlaylistEntries { get; } = new();
+  public SortableBindingList<UIPlaylistEntry> CurrentPlaylistEntries { get; } = new();
   public SortableBindingList<UISong> Songs { get; } = new();
 
   public void SetInstallation(DirectoryInfo? rootDirectory)
@@ -228,6 +213,114 @@ internal class UIMain : INotifyPropertyChanged {
       this.Playlists.AddRange(bs.Playlists.Select(i => new UIPlaylist(i)));
 
     this.IsPlaylistsAvailable = this.Playlists.Count > 0;
+  }
+
+  public void SaveCurrentPlaylist() {
+    var cp = this.CurrentPlaylist;
+    if (cp == null)
+      return;
+
+    cp.Source.Songs.Clear();
+    foreach (var entry in this.CurrentPlaylistEntries)
+      cp.Source.Songs.Add(entry.Source);
+
+    cp.Source.WriteToDisk();
+    this.IsCurrentPlaylistSaveAvailable = false;
+  }
+
+  public void ClearCurrentPlaylist() {
+    this.CurrentPlaylistEntries.Clear();
+    this.IsCurrentPlaylistSaveAvailable = false;
+  }
+
+  public void RereadCurrentPlaylist() {
+    var cp = this.CurrentPlaylist;
+    this.CurrentPlaylistEntries.Clear();
+    if (cp != null)
+      this.CurrentPlaylistEntries.AddRange(cp.Source.Songs.Select(i => new UIPlaylistEntry(i)));
+
+    this.IsCurrentPlaylistAvailable = cp != null;
+    this.IsCurrentPlaylistSaveAvailable = false;
+  }
+
+  private void _MarkCurrentPlaylistModified() => this.IsCurrentPlaylistSaveAvailable = true;
+
+  public void MoveToFront(IEnumerable<UIPlaylistEntry> entries) {
+    var currentPlaylistEntries = this.CurrentPlaylistEntries;
+
+    foreach (var entry in entries.Reverse()) {
+      var oldPosition = currentPlaylistEntries.IndexOf(entry);
+      if (oldPosition <= 0)
+        continue;
+
+      currentPlaylistEntries.RemoveAt(oldPosition);
+      currentPlaylistEntries.Insert(0, entry);
+    }
+
+    this._MarkCurrentPlaylistModified();
+  }
+
+  public void MoveUp(IEnumerable<UIPlaylistEntry> entries) {
+    // TODO: fix when moving more than one
+    var currentPlaylistEntries = this.CurrentPlaylistEntries;
+
+    foreach (var entry in entries.Reverse()) {
+      var oldPosition = currentPlaylistEntries.IndexOf(entry);
+      if (oldPosition <= 0)
+        continue;
+
+      currentPlaylistEntries.RemoveAt(oldPosition);
+      currentPlaylistEntries.Insert(oldPosition - 1, entry);
+    }
+
+    this._MarkCurrentPlaylistModified();
+  }
+
+  public void Remove(IEnumerable<UIPlaylistEntry> entries) {
+    var currentPlaylistEntries = this.CurrentPlaylistEntries;
+
+    foreach (var entry in entries) {
+      var oldPosition = currentPlaylistEntries.IndexOf(entry);
+      if (oldPosition < 0)
+        continue;
+
+      currentPlaylistEntries.RemoveAt(oldPosition);
+    }
+
+    this._MarkCurrentPlaylistModified();
+  }
+
+  public void MoveDown(IEnumerable<UIPlaylistEntry> entries) {
+    // TODO: fix when moving more than one
+    var currentPlaylistEntries = this.CurrentPlaylistEntries;
+    var length = currentPlaylistEntries.Count - 1;
+
+    foreach (var entry in entries) {
+      var oldPosition = currentPlaylistEntries.IndexOf(entry);
+      if (oldPosition < 0 || oldPosition >= length)
+        continue;
+
+      currentPlaylistEntries.RemoveAt(oldPosition);
+      currentPlaylistEntries.Insert(oldPosition + 1, entry);
+    }
+
+    this._MarkCurrentPlaylistModified();
+  }
+
+  public void MoveToBack(IEnumerable<UIPlaylistEntry> entries) {
+    var currentPlaylistEntries = this.CurrentPlaylistEntries;
+    var length = currentPlaylistEntries.Count - 1;
+
+    foreach (var entry in entries) {
+      var oldPosition = currentPlaylistEntries.IndexOf(entry);
+      if (oldPosition < 0 || oldPosition >= length)
+        continue;
+
+      currentPlaylistEntries.RemoveAt(oldPosition);
+      currentPlaylistEntries.Insert(length, entry);
+    }
+
+    this._MarkCurrentPlaylistModified();
   }
 
 }
