@@ -47,6 +47,7 @@ partial class BeatSaberInstallation {
 
       using var fileStream = this.File.OpenWrite();
       JsonSerializer.Serialize(fileStream, root,options: new JsonSerializerOptions {WriteIndented=true });
+      fileStream.SetLength(fileStream.Position);
     }
 
     public IPlaylistEntry CreateEntry(ISong song, string? displayName = null) => new PlaylistEntry(displayName ?? $"{song.Artist} - {song.Title}", song.CalculateChecksum());
