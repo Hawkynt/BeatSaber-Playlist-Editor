@@ -53,7 +53,13 @@ namespace BeatSaber_Playlist_Editor {
       // see https://aka.ms/applicationconfiguration.
       ApplicationConfiguration.Initialize();
       var view = new MainForm();
-      view.Bind(new UIMain());
+      view.Bind(new UIMain() {
+        IsStandardGameModeVisible = true,
+        IsOneSaberGameModeVisible = true,
+        IsNoArrowsGameModeVisible = true,
+        Is90GameModeVisible = true,
+        Is360GameModeVisible = true,
+      });
       Application.Run(view);
     }
   }
