@@ -26,7 +26,6 @@
       this.components = new System.ComponentModel.Container();
       System.Windows.Forms.StatusStrip statusStrip1;
       System.Windows.Forms.SplitContainer splitContainer1;
-      System.Windows.Forms.DataGridView dgvPlaylists;
       System.Windows.Forms.ToolStrip tsBeatsaber;
       System.Windows.Forms.SplitContainer splitContainer2;
       System.Windows.Forms.SplitContainer splitContainer4;
@@ -36,15 +35,11 @@
       System.Windows.Forms.ToolStrip tsSongs;
       System.Windows.Forms.ToolStripLabel tslFilter;
       System.Windows.Forms.GroupBox groupBox2;
-      this.nameDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-      this.authorDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+      this.dgvPlaylists = new System.Windows.Forms.DataGridView();
       this.bsViewModel = new System.Windows.Forms.BindingSource(this.components);
-      this.playlistsBindingSource = new System.Windows.Forms.BindingSource(this.components);
       this.tsbBeatsaberSetPath = new System.Windows.Forms.BindableToolStripButton();
       this.tsbBeatsaberRefresh = new System.Windows.Forms.BindableToolStripButton();
       this.dgvPlaylistEntries = new System.Windows.Forms.DataGridView();
-      this.nameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-      this.currentPlaylistEntriesBindingSource = new System.Windows.Forms.BindingSource(this.components);
       this.tsbPlaylistSave = new System.Windows.Forms.BindableToolStripButton();
       this.tsbEntryFirst = new System.Windows.Forms.BindableToolStripButton();
       this.tsbEntryUp = new System.Windows.Forms.BindableToolStripButton();
@@ -54,9 +49,6 @@
       this.tsbEntryClear = new System.Windows.Forms.BindableToolStripButton();
       this.tsbPlaylistReread = new System.Windows.Forms.BindableToolStripButton();
       this.dgvSongs = new System.Windows.Forms.DataGridView();
-      this.artistDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-      this.titleDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-      this.songsBindingSource = new System.Windows.Forms.BindingSource(this.components);
       this.tstbSongFilter = new System.Windows.Forms.BindableToolStripSpringTextBox();
       this.tsbModeStandard = new System.Windows.Forms.BindableToolStripButton();
       this.tsbModeOneSaber = new System.Windows.Forms.BindableToolStripButton();
@@ -64,10 +56,8 @@
       this.tsbMode90 = new System.Windows.Forms.BindableToolStripButton();
       this.tsbMode360 = new System.Windows.Forms.BindableToolStripButton();
       this.fbdSelectRoot = new System.Windows.Forms.FolderBrowserDialog();
-      this.lDragContent = new System.Windows.Forms.Label();
       statusStrip1 = new System.Windows.Forms.StatusStrip();
       splitContainer1 = new System.Windows.Forms.SplitContainer();
-      dgvPlaylists = new System.Windows.Forms.DataGridView();
       tsBeatsaber = new System.Windows.Forms.ToolStrip();
       splitContainer2 = new System.Windows.Forms.SplitContainer();
       splitContainer4 = new System.Windows.Forms.SplitContainer();
@@ -81,9 +71,8 @@
       splitContainer1.Panel1.SuspendLayout();
       splitContainer1.Panel2.SuspendLayout();
       splitContainer1.SuspendLayout();
-      ((System.ComponentModel.ISupportInitialize)(dgvPlaylists)).BeginInit();
+      ((System.ComponentModel.ISupportInitialize)(this.dgvPlaylists)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.bsViewModel)).BeginInit();
-      ((System.ComponentModel.ISupportInitialize)(this.playlistsBindingSource)).BeginInit();
       tsBeatsaber.SuspendLayout();
       ((System.ComponentModel.ISupportInitialize)(splitContainer2)).BeginInit();
       splitContainer2.Panel1.SuspendLayout();
@@ -94,14 +83,12 @@
       splitContainer4.Panel2.SuspendLayout();
       splitContainer4.SuspendLayout();
       ((System.ComponentModel.ISupportInitialize)(this.dgvPlaylistEntries)).BeginInit();
-      ((System.ComponentModel.ISupportInitialize)(this.currentPlaylistEntriesBindingSource)).BeginInit();
       tsPlaylist.SuspendLayout();
       ((System.ComponentModel.ISupportInitialize)(splitContainer3)).BeginInit();
       splitContainer3.Panel1.SuspendLayout();
       splitContainer3.Panel2.SuspendLayout();
       splitContainer3.SuspendLayout();
       ((System.ComponentModel.ISupportInitialize)(this.dgvSongs)).BeginInit();
-      ((System.ComponentModel.ISupportInitialize)(this.songsBindingSource)).BeginInit();
       tsSongs.SuspendLayout();
       this.SuspendLayout();
       // 
@@ -121,7 +108,7 @@
       // 
       // splitContainer1.Panel1
       // 
-      splitContainer1.Panel1.Controls.Add(dgvPlaylists);
+      splitContainer1.Panel1.Controls.Add(this.dgvPlaylists);
       splitContainer1.Panel1.Controls.Add(tsBeatsaber);
       // 
       // splitContainer1.Panel2
@@ -133,55 +120,31 @@
       // 
       // dgvPlaylists
       // 
-      dgvPlaylists.AllowUserToAddRows = false;
-      dgvPlaylists.AllowUserToDeleteRows = false;
-      dgvPlaylists.AllowUserToOrderColumns = true;
-      dgvPlaylists.AllowUserToResizeRows = false;
-      dgvPlaylists.AutoGenerateColumns = false;
-      dgvPlaylists.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-      dgvPlaylists.BackgroundColor = System.Drawing.SystemColors.Window;
-      dgvPlaylists.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-      dgvPlaylists.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-      dgvPlaylists.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.nameDataGridViewTextBoxColumn1,
-            this.authorDataGridViewTextBoxColumn});
-      dgvPlaylists.DataBindings.Add(new System.Windows.Forms.Binding("Enabled", this.bsViewModel, "IsPlaylistsAvailable", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-      dgvPlaylists.DataSource = this.playlistsBindingSource;
-      dgvPlaylists.Dock = System.Windows.Forms.DockStyle.Fill;
-      dgvPlaylists.Location = new System.Drawing.Point(0, 25);
-      dgvPlaylists.MultiSelect = false;
-      dgvPlaylists.Name = "dgvPlaylists";
-      dgvPlaylists.ReadOnly = true;
-      dgvPlaylists.RowHeadersVisible = false;
-      dgvPlaylists.RowTemplate.Height = 25;
-      dgvPlaylists.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-      dgvPlaylists.Size = new System.Drawing.Size(266, 403);
-      dgvPlaylists.TabIndex = 1;
-      dgvPlaylists.SelectionChanged += new System.EventHandler(this.dgvPlaylists_SelectionChanged);
-      // 
-      // nameDataGridViewTextBoxColumn1
-      // 
-      this.nameDataGridViewTextBoxColumn1.DataPropertyName = "Name";
-      this.nameDataGridViewTextBoxColumn1.HeaderText = "Name";
-      this.nameDataGridViewTextBoxColumn1.Name = "nameDataGridViewTextBoxColumn1";
-      this.nameDataGridViewTextBoxColumn1.ReadOnly = true;
-      // 
-      // authorDataGridViewTextBoxColumn
-      // 
-      this.authorDataGridViewTextBoxColumn.DataPropertyName = "Author";
-      this.authorDataGridViewTextBoxColumn.HeaderText = "Author";
-      this.authorDataGridViewTextBoxColumn.Name = "authorDataGridViewTextBoxColumn";
-      this.authorDataGridViewTextBoxColumn.ReadOnly = true;
+      this.dgvPlaylists.AllowUserToAddRows = false;
+      this.dgvPlaylists.AllowUserToDeleteRows = false;
+      this.dgvPlaylists.AllowUserToOrderColumns = true;
+      this.dgvPlaylists.AllowUserToResizeRows = false;
+      this.dgvPlaylists.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+      this.dgvPlaylists.BackgroundColor = System.Drawing.SystemColors.Window;
+      this.dgvPlaylists.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+      this.dgvPlaylists.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+      this.dgvPlaylists.DataBindings.Add(new System.Windows.Forms.Binding("Enabled", this.bsViewModel, "IsPlaylistsAvailable", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+      this.dgvPlaylists.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.dgvPlaylists.Location = new System.Drawing.Point(0, 25);
+      this.dgvPlaylists.MultiSelect = false;
+      this.dgvPlaylists.Name = "dgvPlaylists";
+      this.dgvPlaylists.ReadOnly = true;
+      this.dgvPlaylists.RowHeadersVisible = false;
+      this.dgvPlaylists.RowTemplate.Height = 25;
+      this.dgvPlaylists.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+      this.dgvPlaylists.Size = new System.Drawing.Size(266, 403);
+      this.dgvPlaylists.TabIndex = 1;
+      this.dgvPlaylists.SelectionChanged += new System.EventHandler(this.dgvPlaylists_SelectionChanged);
       // 
       // bsViewModel
       // 
       this.bsViewModel.AllowNew = false;
       this.bsViewModel.DataSource = typeof(BeatSaber_Playlist_Editor.ViewModel.UIMain);
-      // 
-      // playlistsBindingSource
-      // 
-      this.playlistsBindingSource.DataMember = "Playlists";
-      this.playlistsBindingSource.DataSource = this.bsViewModel;
       // 
       // tsBeatsaber
       // 
@@ -258,15 +221,11 @@
       this.dgvPlaylistEntries.AllowUserToAddRows = false;
       this.dgvPlaylistEntries.AllowUserToDeleteRows = false;
       this.dgvPlaylistEntries.AllowUserToResizeRows = false;
-      this.dgvPlaylistEntries.AutoGenerateColumns = false;
       this.dgvPlaylistEntries.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
       this.dgvPlaylistEntries.BackgroundColor = System.Drawing.SystemColors.Window;
       this.dgvPlaylistEntries.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
       this.dgvPlaylistEntries.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-      this.dgvPlaylistEntries.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.nameDataGridViewTextBoxColumn});
       this.dgvPlaylistEntries.DataBindings.Add(new System.Windows.Forms.Binding("Enabled", this.bsViewModel, "IsCurrentPlaylistAvailable", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-      this.dgvPlaylistEntries.DataSource = this.currentPlaylistEntriesBindingSource;
       this.dgvPlaylistEntries.Dock = System.Windows.Forms.DockStyle.Fill;
       this.dgvPlaylistEntries.Location = new System.Drawing.Point(0, 25);
       this.dgvPlaylistEntries.Name = "dgvPlaylistEntries";
@@ -278,18 +237,6 @@
       this.dgvPlaylistEntries.TabIndex = 1;
       this.dgvPlaylistEntries.DragDrop += new System.Windows.Forms.DragEventHandler(this.dgvPlaylistEntries_DragDrop);
       this.dgvPlaylistEntries.DragEnter += new System.Windows.Forms.DragEventHandler(this.dgvPlaylistEntries_DragEnter);
-      // 
-      // nameDataGridViewTextBoxColumn
-      // 
-      this.nameDataGridViewTextBoxColumn.DataPropertyName = "Name";
-      this.nameDataGridViewTextBoxColumn.HeaderText = "Name";
-      this.nameDataGridViewTextBoxColumn.Name = "nameDataGridViewTextBoxColumn";
-      this.nameDataGridViewTextBoxColumn.ReadOnly = true;
-      // 
-      // currentPlaylistEntriesBindingSource
-      // 
-      this.currentPlaylistEntriesBindingSource.DataMember = "CurrentPlaylistEntries";
-      this.currentPlaylistEntriesBindingSource.DataSource = this.bsViewModel;
       // 
       // tsPlaylist
       // 
@@ -425,15 +372,10 @@
       this.dgvSongs.AllowUserToAddRows = false;
       this.dgvSongs.AllowUserToDeleteRows = false;
       this.dgvSongs.AllowUserToResizeRows = false;
-      this.dgvSongs.AutoGenerateColumns = false;
       this.dgvSongs.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
       this.dgvSongs.BackgroundColor = System.Drawing.SystemColors.Window;
       this.dgvSongs.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
       this.dgvSongs.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-      this.dgvSongs.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.artistDataGridViewTextBoxColumn,
-            this.titleDataGridViewTextBoxColumn});
-      this.dgvSongs.DataSource = this.songsBindingSource;
       this.dgvSongs.Dock = System.Windows.Forms.DockStyle.Fill;
       this.dgvSongs.Location = new System.Drawing.Point(0, 25);
       this.dgvSongs.Name = "dgvSongs";
@@ -444,25 +386,6 @@
       this.dgvSongs.Size = new System.Drawing.Size(287, 198);
       this.dgvSongs.TabIndex = 1;
       this.dgvSongs.CellMouseDown += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dgvSongs_CellMouseDown);
-      // 
-      // artistDataGridViewTextBoxColumn
-      // 
-      this.artistDataGridViewTextBoxColumn.DataPropertyName = "Artist";
-      this.artistDataGridViewTextBoxColumn.HeaderText = "Artist";
-      this.artistDataGridViewTextBoxColumn.Name = "artistDataGridViewTextBoxColumn";
-      this.artistDataGridViewTextBoxColumn.ReadOnly = true;
-      // 
-      // titleDataGridViewTextBoxColumn
-      // 
-      this.titleDataGridViewTextBoxColumn.DataPropertyName = "Title";
-      this.titleDataGridViewTextBoxColumn.HeaderText = "Title";
-      this.titleDataGridViewTextBoxColumn.Name = "titleDataGridViewTextBoxColumn";
-      this.titleDataGridViewTextBoxColumn.ReadOnly = true;
-      // 
-      // songsBindingSource
-      // 
-      this.songsBindingSource.DataMember = "Songs";
-      this.songsBindingSource.DataSource = this.bsViewModel;
       // 
       // tsSongs
       // 
@@ -503,9 +426,7 @@
       // 
       // tsbModeStandard
       // 
-      this.tsbModeStandard.Checked = true;
       this.tsbModeStandard.CheckOnClick = true;
-      this.tsbModeStandard.CheckState = System.Windows.Forms.CheckState.Checked;
       this.tsbModeStandard.DataBindings.Add(new System.Windows.Forms.Binding("Checked", this.bsViewModel, "IsStandardGameModeVisible", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
       this.tsbModeStandard.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
       this.tsbModeStandard.Image = global::BeatSaber_Playlist_Editor.Properties.Resources._24x24_TwoSabers;
@@ -516,9 +437,7 @@
       // 
       // tsbModeOneSaber
       // 
-      this.tsbModeOneSaber.Checked = true;
       this.tsbModeOneSaber.CheckOnClick = true;
-      this.tsbModeOneSaber.CheckState = System.Windows.Forms.CheckState.Checked;
       this.tsbModeOneSaber.DataBindings.Add(new System.Windows.Forms.Binding("Checked", this.bsViewModel, "IsOneSaberGameModeVisible", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
       this.tsbModeOneSaber.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
       this.tsbModeOneSaber.Image = global::BeatSaber_Playlist_Editor.Properties.Resources._24x24_OneSaber;
@@ -529,9 +448,7 @@
       // 
       // tsbModeNoArrows
       // 
-      this.tsbModeNoArrows.Checked = true;
       this.tsbModeNoArrows.CheckOnClick = true;
-      this.tsbModeNoArrows.CheckState = System.Windows.Forms.CheckState.Checked;
       this.tsbModeNoArrows.DataBindings.Add(new System.Windows.Forms.Binding("Checked", this.bsViewModel, "IsNoArrowsGameModeVisible", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
       this.tsbModeNoArrows.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
       this.tsbModeNoArrows.Image = global::BeatSaber_Playlist_Editor.Properties.Resources._24x24_NoArrows;
@@ -542,9 +459,7 @@
       // 
       // tsbMode90
       // 
-      this.tsbMode90.Checked = true;
       this.tsbMode90.CheckOnClick = true;
-      this.tsbMode90.CheckState = System.Windows.Forms.CheckState.Checked;
       this.tsbMode90.DataBindings.Add(new System.Windows.Forms.Binding("Checked", this.bsViewModel, "Is90GameModeVisible", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
       this.tsbMode90.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
       this.tsbMode90.Image = global::BeatSaber_Playlist_Editor.Properties.Resources._24x24_90degrees;
@@ -555,9 +470,7 @@
       // 
       // tsbMode360
       // 
-      this.tsbMode360.Checked = true;
       this.tsbMode360.CheckOnClick = true;
-      this.tsbMode360.CheckState = System.Windows.Forms.CheckState.Checked;
       this.tsbMode360.DataBindings.Add(new System.Windows.Forms.Binding("Checked", this.bsViewModel, "Is360GameModeVisible", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
       this.tsbMode360.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
       this.tsbMode360.Image = global::BeatSaber_Playlist_Editor.Properties.Resources._24x24_360degrees;
@@ -580,22 +493,11 @@
       // 
       this.fbdSelectRoot.Description = "Please select the installation path of your BeatSaber.";
       // 
-      // lDragContent
-      // 
-      this.lDragContent.AutoSize = true;
-      this.lDragContent.Location = new System.Drawing.Point(8, 33);
-      this.lDragContent.Name = "lDragContent";
-      this.lDragContent.Size = new System.Drawing.Size(16, 15);
-      this.lDragContent.TabIndex = 2;
-      this.lDragContent.Text = "...";
-      this.lDragContent.Visible = false;
-      // 
       // MainForm
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
       this.ClientSize = new System.Drawing.Size(800, 450);
-      this.Controls.Add(this.lDragContent);
       this.Controls.Add(splitContainer1);
       this.Controls.Add(statusStrip1);
       this.Name = "MainForm";
@@ -605,9 +507,8 @@
       splitContainer1.Panel2.ResumeLayout(false);
       ((System.ComponentModel.ISupportInitialize)(splitContainer1)).EndInit();
       splitContainer1.ResumeLayout(false);
-      ((System.ComponentModel.ISupportInitialize)(dgvPlaylists)).EndInit();
+      ((System.ComponentModel.ISupportInitialize)(this.dgvPlaylists)).EndInit();
       ((System.ComponentModel.ISupportInitialize)(this.bsViewModel)).EndInit();
-      ((System.ComponentModel.ISupportInitialize)(this.playlistsBindingSource)).EndInit();
       tsBeatsaber.ResumeLayout(false);
       tsBeatsaber.PerformLayout();
       splitContainer2.Panel1.ResumeLayout(false);
@@ -620,7 +521,6 @@
       ((System.ComponentModel.ISupportInitialize)(splitContainer4)).EndInit();
       splitContainer4.ResumeLayout(false);
       ((System.ComponentModel.ISupportInitialize)(this.dgvPlaylistEntries)).EndInit();
-      ((System.ComponentModel.ISupportInitialize)(this.currentPlaylistEntriesBindingSource)).EndInit();
       tsPlaylist.ResumeLayout(false);
       tsPlaylist.PerformLayout();
       splitContainer3.Panel1.ResumeLayout(false);
@@ -629,7 +529,6 @@
       ((System.ComponentModel.ISupportInitialize)(splitContainer3)).EndInit();
       splitContainer3.ResumeLayout(false);
       ((System.ComponentModel.ISupportInitialize)(this.dgvSongs)).EndInit();
-      ((System.ComponentModel.ISupportInitialize)(this.songsBindingSource)).EndInit();
       tsSongs.ResumeLayout(false);
       tsSongs.PerformLayout();
       this.ResumeLayout(false);
@@ -659,17 +558,8 @@
     private BindableToolStripButton tsbBeatsaberRefresh;
         private BindingSource bsViewModel;
         private DataGridViewTextBoxColumn sourceDataGridViewTextBoxColumn1;
-        private DataGridViewTextBoxColumn nameDataGridViewTextBoxColumn1;
-        private DataGridViewTextBoxColumn authorDataGridViewTextBoxColumn;
-        private BindingSource playlistsBindingSource;
         private DataGridViewTextBoxColumn sourceDataGridViewTextBoxColumn;
-        private DataGridViewTextBoxColumn nameDataGridViewTextBoxColumn;
-        private BindingSource currentPlaylistEntriesBindingSource;
         private FolderBrowserDialog fbdSelectRoot;
         private DataGridView dgvSongs;
-        private DataGridViewTextBoxColumn artistDataGridViewTextBoxColumn;
-        private DataGridViewTextBoxColumn titleDataGridViewTextBoxColumn;
-        private BindingSource songsBindingSource;
-        private Label lDragContent;
-    }
+  }
 }

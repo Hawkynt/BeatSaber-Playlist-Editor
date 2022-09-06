@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using BeatSaberAPI;
 
@@ -7,6 +8,7 @@ internal class UIMain : INotifyPropertyChanged {
 
   #region nested types
 
+  [DebuggerDisplay($"{{{nameof(Name)}}}")]
   public class UIPlaylist {
 
     [Browsable(false)]
@@ -19,6 +21,7 @@ internal class UIMain : INotifyPropertyChanged {
 
   }
 
+  [DebuggerDisplay($"{{{nameof(Name)}}}")]
   public class UIPlaylistEntry {
 
     [Browsable(false)]
@@ -29,6 +32,7 @@ internal class UIMain : INotifyPropertyChanged {
     public UIPlaylistEntry(IPlaylistEntry source) => this.Source = source;
   }
 
+  [DebuggerDisplay($"{{{nameof(Artist)}}} - {{{nameof(Title)}}}")]
   public class UISong {
 
     [Browsable(false)]
@@ -147,7 +151,8 @@ internal class UIMain : INotifyPropertyChanged {
 
   public UIPlaylist? CurrentPlaylist {
     get => _currentPlaylist;
-    set {
+    private set {
+      var oldValue = _currentPlaylist;
       if (!this.SetProperty(this.OnPropertyChanged, ref _currentPlaylist, value))
         return;
 
@@ -156,7 +161,7 @@ internal class UIMain : INotifyPropertyChanged {
   }
 
   public SortableBindingList<UIPlaylist> Playlists { get; } = new();
-  public SortableBindingList<UIPlaylistEntry> CurrentPlaylistEntries { get; } = new();
+  public BindingList<UIPlaylistEntry> CurrentPlaylistEntries { get; } = new();
   public SortableBindingList<UISong> Songs { get; } = new();
 
   public void SetInstallation(DirectoryInfo? rootDirectory)
@@ -166,6 +171,8 @@ internal class UIMain : INotifyPropertyChanged {
   public void SetInstallation(IBeatSaberInstallation? beatSaber)
     => this.BeatSaber = beatSaber
   ;
+
+  public void SetCurrentPlaylist(UIPlaylist playlist) => this.CurrentPlaylist = playlist;
 
   public void Refresh() {
     this.RefreshPlaylists();
@@ -225,12 +232,12 @@ internal class UIMain : INotifyPropertyChanged {
       cp.Source.Songs.Add(entry.Source);
 
     cp.Source.WriteToDisk();
-    this.IsCurrentPlaylistSaveAvailable = false;
+    this._MarkCurrentPlaylistUnmodified();
   }
 
   public void ClearCurrentPlaylist() {
     this.CurrentPlaylistEntries.Clear();
-    this.IsCurrentPlaylistSaveAvailable = false;
+    this._MarkCurrentPlaylistUnmodified();
   }
 
   public void RereadCurrentPlaylist() {
@@ -240,10 +247,11 @@ internal class UIMain : INotifyPropertyChanged {
       this.CurrentPlaylistEntries.AddRange(cp.Source.Songs.Select(i => new UIPlaylistEntry(i)));
 
     this.IsCurrentPlaylistAvailable = cp != null;
-    this.IsCurrentPlaylistSaveAvailable = false;
+    this._MarkCurrentPlaylistUnmodified();
   }
 
   private void _MarkCurrentPlaylistModified() => this.IsCurrentPlaylistSaveAvailable = true;
+  private void _MarkCurrentPlaylistUnmodified() => this.IsCurrentPlaylistSaveAvailable = false;
 
   public void MoveToFront(IEnumerable<UIPlaylistEntry> entries) {
     var currentPlaylistEntries = this.CurrentPlaylistEntries;

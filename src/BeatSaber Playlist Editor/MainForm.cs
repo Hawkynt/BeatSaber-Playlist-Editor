@@ -13,74 +13,77 @@ namespace BeatSaber_Playlist_Editor {
     public void Bind(UIMain viewModel) {
       this.bsViewModel.Clear();
       this.bsViewModel.Add(this._viewModel = viewModel);
+      this.dgvPlaylists.DataSource = viewModel?.Playlists;
+      this.dgvPlaylistEntries.DataSource = viewModel?.CurrentPlaylistEntries;
+      this.dgvSongs.DataSource = viewModel?.Songs;
     }
 
-    private void tsbBeatsaberSetPath_Click(object sender, EventArgs e) {
+    private void tsbBeatsaberSetPath_Click(object _, EventArgs __) {
       if (this.fbdSelectRoot.ShowDialog() == DialogResult.OK)
         this._viewModel?.SetInstallation(new DirectoryInfo(this.fbdSelectRoot.SelectedPath));
     }
 
-    private void dgvPlaylists_SelectionChanged(object sender, EventArgs e) {
-      if (((DataGridView)sender).TryGetFirstSelectedItem<UIPlaylist>(out var item) && this._viewModel != null)
-        this._viewModel.CurrentPlaylist = item;
+    private void dgvPlaylists_SelectionChanged(object sender, EventArgs _) {
+      if (((DataGridView)sender).TryGetFirstSelectedItem<UIPlaylist>(out var item))
+        this._viewModel?.SetCurrentPlaylist(item);
     }
 
-    private void tsbBeatsaberRefresh_Click(object sender, EventArgs e) {
+    private void tsbBeatsaberRefresh_Click(object _, EventArgs __) {
       if (_HasPlaylistChanged && MessageBox.Show("Executing this will revert all changes made to the current playlist.\r\nAre you sure?","Warning",MessageBoxButtons.YesNo,MessageBoxIcon.Warning) != DialogResult.Yes)
         return;
 
       this._viewModel?.Refresh();
     }
 
-    private void tsbPlaylistSave_Click(object sender, EventArgs e) {
+    private void tsbPlaylistSave_Click(object _, EventArgs __) {
       this._viewModel?.SaveCurrentPlaylist();
     }
 
-    private void tsbEntryFirst_Click(object sender, EventArgs e) {
+    private void tsbEntryFirst_Click(object _, EventArgs __) {
       var selected = this.dgvPlaylistEntries.GetSelectedItems<UIPlaylistEntry>();
       if (selected.IsNotNullOrEmpty())
         this._viewModel?.MoveToFront(selected);
     }
 
-    private void tsbEntryUp_Click(object sender, EventArgs e) {
+    private void tsbEntryUp_Click(object _, EventArgs __) {
       var selected = this.dgvPlaylistEntries.GetSelectedItems<UIPlaylistEntry>();
       if (selected.IsNotNullOrEmpty())
         this._viewModel?.MoveUp(selected);
     }
 
-    private void tsbEntryRemove_Click(object sender, EventArgs e) {
+    private void tsbEntryRemove_Click(object _, EventArgs __) {
       var selected = this.dgvPlaylistEntries.GetSelectedItems<UIPlaylistEntry>();
       if (selected.IsNotNullOrEmpty())
         this._viewModel?.Remove(selected);
     }
 
-    private void tsbEntryDown_Click(object sender, EventArgs e) {
+    private void tsbEntryDown_Click(object _, EventArgs __) {
       var selected = this.dgvPlaylistEntries.GetSelectedItems<UIPlaylistEntry>();
       if (selected.IsNotNullOrEmpty())
         this._viewModel?.MoveDown(selected);
     }
 
-    private void tsbEntryLast_Click(object sender, EventArgs e) {
+    private void tsbEntryLast_Click(object _, EventArgs __) {
       var selected = this.dgvPlaylistEntries.GetSelectedItems<UIPlaylistEntry>();
       if (selected.IsNotNullOrEmpty())
         this._viewModel?.MoveToBack(selected);
     }
 
-    private void tsbEntryClear_Click(object sender, EventArgs e) {
+    private void tsbEntryClear_Click(object _, EventArgs __) {
       if (_HasPlaylistChanged && MessageBox.Show("Executing this will revert all changes made to the current playlist.\r\nAre you sure?", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) != DialogResult.Yes)
         return;
 
       this._viewModel?.ClearCurrentPlaylist();
     }
 
-    private void tsbPlaylistReread_Click(object sender, EventArgs e) {
+    private void tsbPlaylistReread_Click(object _, EventArgs __) {
       if (_HasPlaylistChanged && MessageBox.Show("Executing this will revert all changes made to the current playlist.\r\nAre you sure?", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) != DialogResult.Yes)
         return;
 
       this._viewModel?.RereadCurrentPlaylist();
     }
 
-    private void dgvSongs_CellMouseDown(object sender, DataGridViewCellMouseEventArgs e) {
+    private void dgvSongs_CellMouseDown(object _, DataGridViewCellMouseEventArgs e) {
       if (e.ColumnIndex < 0 || e.RowIndex < 0) 
         return;
 
