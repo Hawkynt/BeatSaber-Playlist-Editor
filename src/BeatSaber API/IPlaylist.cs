@@ -1,10 +1,14 @@
-﻿namespace BeatSaberAPI; 
+﻿using System.Drawing;
+
+namespace BeatSaberAPI; 
 
 public interface IPlaylist { 
   string Name { get; }
-  string Author { get; set; }
+  string? Author { get; set; }
+  Image? Image { get; }
   IPlaylistEntryCollection Songs { get; }
   IPlaylistEntry CreateEntry(ISong song, string? displayName = null);
   void WriteToDisk();
+  void SetImage(Image? image);
 }
 

@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
+    <TargetFramework>net6.0-windows</TargetFramework>
     <RootNamespace>BeatSaberAPI</RootNamespace>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
@@ -24,6 +24,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\..\Framework\Corlib.Extensions\Corlib.Extensions.csproj" />
+    <ProjectReference Include="..\..\..\..\Framework\System.Drawing.Extensions\System.Drawing.Extensions.csproj" />
   </ItemGroup>
 
 </Project>

@@ -13,8 +13,14 @@ namespace BeatSaber_Playlist_Editor {
     public void Bind(UIMain viewModel) {
       this.bsViewModel.Clear();
       this.bsViewModel.Add(this._viewModel = viewModel);
+
+      this.dgvPlaylists.EnableExtendedAttributes();
       this.dgvPlaylists.DataSource = viewModel?.Playlists;
+
+      this.dgvPlaylistEntries.EnableExtendedAttributes();
       this.dgvPlaylistEntries.DataSource = viewModel?.CurrentPlaylistEntries;
+
+      this.dgvSongs.EnableExtendedAttributes();
       this.dgvSongs.DataSource = viewModel?.Songs;
     }
 
@@ -29,7 +35,7 @@ namespace BeatSaber_Playlist_Editor {
     }
 
     private void tsbBeatsaberRefresh_Click(object _, EventArgs __) {
-      if (_HasPlaylistChanged && MessageBox.Show("Executing this will revert all changes made to the current playlist.\r\nAre you sure?","Warning",MessageBoxButtons.YesNo,MessageBoxIcon.Warning) != DialogResult.Yes)
+      if (_HasPlaylistChanged && MessageBox.Show("Executing this will revert all changes made to the current playlist.\r\nAre you sure?", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) != DialogResult.Yes)
         return;
 
       this._viewModel?.Refresh();
@@ -84,7 +90,7 @@ namespace BeatSaber_Playlist_Editor {
     }
 
     private void dgvSongs_CellMouseDown(object _, DataGridViewCellMouseEventArgs e) {
-      if (e.ColumnIndex < 0 || e.RowIndex < 0) 
+      if (e.ColumnIndex < 0 || e.RowIndex < 0)
         return;
 
       // if dragged row not yet selected - select it
@@ -94,15 +100,14 @@ namespace BeatSaber_Playlist_Editor {
       var selected = this.dgvSongs.GetSelectedItems<UISong>().ToArray();
       this.dgvSongs.DoDragDrop(selected, DragDropEffects.Copy);
     }
-        
+
     private void dgvPlaylistEntries_DragEnter(object sender, DragEventArgs e) {
       if (e.Data?.GetDataPresent(typeof(UISong[])) ?? false)
         e.Effect = DragDropEffects.Copy;
     }
 
     private void dgvPlaylistEntries_DragDrop(object sender, DragEventArgs e) {
-      var songs = e.Data?.GetData(typeof(UISong[])) as UISong[];
-      if(songs == null) {
+      if (e.Data?.GetData(typeof(UISong[])) is not UISong[] songs) {
         e.Effect = DragDropEffects.None;
         return;
       }

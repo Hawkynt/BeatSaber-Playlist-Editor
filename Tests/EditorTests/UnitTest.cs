@@ -2,6 +2,7 @@ namespace EditorTests;
 
 using System.Collections;
 using System.Collections.Generic;
+using System.Drawing;
 using BeatSaberAPI;
 
 public class Tests {
@@ -35,12 +36,17 @@ public class Tests {
       set => throw new NotImplementedException(); 
     }
 
+    public Image? Image {
+      get => throw new NotImplementedException();
+    }
+
     public IPlaylistEntryCollection Songs { get; }
 
     public PlaylistMock(IPlaylistEntryCollection songs) => this.Songs = songs;
 
     public IPlaylistEntry CreateEntry(ISong song, string? displayName = null) => throw new NotImplementedException();
     public void WriteToDisk() => throw new NotImplementedException();
+    public void SetImage(Image? image) => throw new NotImplementedException();
   }
 
   private class PlaylistEntryCollectionMock : IPlaylistEntryCollection {

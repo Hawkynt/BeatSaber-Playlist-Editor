@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
+using BeatSaber_Playlist_Editor.Properties;
 using BeatSaberAPI;
 
 namespace BeatSaber_Playlist_Editor.ViewModel;
@@ -17,8 +18,17 @@ internal class UIMain : INotifyPropertyChanged {
     public string Name => this.Source.Name;
     public string? Author => this.Source.Author;
 
-    public UIPlaylist(IPlaylist source) => this.Source = source;
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    public string CoverDetails => this._cover.Value == null ? "No image" : $"{this.Cover.Width} x {this.Cover.Height}";
 
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    public Image Cover => this._cover.Value ?? Resources.NoPictureAvailable;
+    private readonly System.Lazy<Image?> _cover;
+
+    public UIPlaylist(IPlaylist source) {
+      this.Source = source;
+      this._cover = new System.Lazy<Image?>(() => source.Image);
+    }
   }
 
   [DebuggerDisplay($"{{{nameof(Name)}}}")]
@@ -185,7 +195,7 @@ internal class UIMain : INotifyPropertyChanged {
     if (bs != null) {
       IEnumerable<ISong> songs = bs.Songs;
       if (this.SongFilterText.IsNotNullOrWhiteSpace()) {
-        var parts = this.SongFilterText.Split(" ").Select(i => i.Trim());
+        var parts = (this.SongFilterText ?? string.Empty).Split(" ").Select(i => i.Trim());
         foreach (var part in parts)
           songs = songs.Where(s => (s.Artist?.Contains(part, StringComparison.CurrentCultureIgnoreCase) ?? true) || s.Title.Contains(part, StringComparison.CurrentCultureIgnoreCase));
       }
@@ -337,7 +347,7 @@ internal class UIMain : INotifyPropertyChanged {
       return;
 
     var currentPlaylistEntries = this.CurrentPlaylistEntries;
-    foreach(var song in songs) {
+    foreach (var song in songs) {
       var entry = currentPlaylist.Source.CreateEntry(song.Source);
       currentPlaylistEntries.Add(new UIPlaylistEntry(entry));
     }

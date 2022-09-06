@@ -6,7 +6,7 @@ using System.Collections;
 using System.Drawing;
 using BeatSaberAPI.JSON;
 
-namespace BeatSaberAPI; 
+namespace BeatSaberAPI;
 
 partial class BeatSaberInstallation {
 
@@ -17,13 +17,14 @@ partial class BeatSaberInstallation {
 
     public DirectoryInfo Directory { get; }
     private SongInfo.Root _Data => _data.Value;
-    public string Title => this._Data.SongName;
+    public string Title => this._Data.SongName!;
     public string? Artist => this._Data.SongAuthorName.DefaultIfNullOrWhiteSpace();
-    public bool SupportsStandardMode => this._Data.DifficultyBeatmapSets.Any(i => i.BeatmapCharacteristicName.Equals("Standard", StringComparison.OrdinalIgnoreCase));
-    public bool SupportsOneSaberMode => this._Data.DifficultyBeatmapSets.Any(i => i.BeatmapCharacteristicName.Equals("OneSaber", StringComparison.OrdinalIgnoreCase));
-    public bool SupportsNoArrowsMode => this._Data.DifficultyBeatmapSets.Any(i => i.BeatmapCharacteristicName.Equals("NoArrows", StringComparison.OrdinalIgnoreCase));
-    public bool Supports90DegreesMode => this._Data.DifficultyBeatmapSets.Any(i => i.BeatmapCharacteristicName.Equals("90Degree", StringComparison.OrdinalIgnoreCase));
-    public bool Supports360DegreesMode => this._Data.DifficultyBeatmapSets.Any(i => i.BeatmapCharacteristicName.Equals("360Degree", StringComparison.OrdinalIgnoreCase));
+    private IEnumerable<SongInfo.DifficultyBeatmapSet> _DifficultyBeatmapSets => this._Data.DifficultyBeatmapSets as IEnumerable<SongInfo.DifficultyBeatmapSet> ?? Array.Empty<SongInfo.DifficultyBeatmapSet>();
+    public bool SupportsStandardMode => this._DifficultyBeatmapSets.Any(i => i.BeatmapCharacteristicName!.Equals("Standard", StringComparison.OrdinalIgnoreCase));
+    public bool SupportsOneSaberMode => this._DifficultyBeatmapSets.Any(i => i.BeatmapCharacteristicName!.Equals("OneSaber", StringComparison.OrdinalIgnoreCase));
+    public bool SupportsNoArrowsMode => this._DifficultyBeatmapSets.Any(i => i.BeatmapCharacteristicName!.Equals("NoArrows", StringComparison.OrdinalIgnoreCase));
+    public bool Supports90DegreesMode => this._DifficultyBeatmapSets.Any(i => i.BeatmapCharacteristicName!.Equals("90Degree", StringComparison.OrdinalIgnoreCase));
+    public bool Supports360DegreesMode => this._DifficultyBeatmapSets.Any(i => i.BeatmapCharacteristicName!.Equals("360Degree", StringComparison.OrdinalIgnoreCase));
     public GameMode SupportedGameModes =>
       (this.SupportsStandardMode ? GameMode.Normal : 0)
       | (this.SupportsOneSaberMode ? GameMode.OneSaber : 0)
@@ -32,39 +33,41 @@ partial class BeatSaberInstallation {
       | (this.Supports360DegreesMode ? GameMode.ThreeSixtyDegrees : 0)
       ;
 
-    public IReadOnlyDictionary<GameMode,DifficultyMode> Difficulties { get {
-        var result=new Dictionary<GameMode,DifficultyMode>();
-        foreach(var mode in this._Data.DifficultyBeatmapSets) {
-          var gameMode= mode.BeatmapCharacteristicName.ToLowerInvariant() switch {
-            "standard"=>GameMode.Normal,
-            "onesaber"=>GameMode.OneSaber,
-            "noarrows"=>GameMode.NoArrows,
-            "90degree"=>GameMode.NinetyDegrees,
-            "360degree"=>GameMode.ThreeSixtyDegrees,
-            _=>(GameMode)(-1)
+    public IReadOnlyDictionary<GameMode, DifficultyMode> Difficulties {
+      get {
+        var result = new Dictionary<GameMode, DifficultyMode>();
+        foreach (var mode in this._DifficultyBeatmapSets) {
+          var gameMode = mode.BeatmapCharacteristicName!.ToLowerInvariant() switch {
+            "standard" => GameMode.Normal,
+            "onesaber" => GameMode.OneSaber,
+            "noarrows" => GameMode.NoArrows,
+            "90degree" => GameMode.NinetyDegrees,
+            "360degree" => GameMode.ThreeSixtyDegrees,
+            _ => (GameMode)(-1)
           };
           if ((int)gameMode == -1)
             continue;
 
           DifficultyMode value = 0;
-          foreach(var difficulty in mode.DifficultyBeatmaps) 
-            value |= difficulty.Difficulty.ToLowerInvariant() switch {
-              "easy"=>DifficultyMode.Easy,
-              "normal"=>DifficultyMode.Normal,
-              "hard"=>DifficultyMode.Hard,
-              "expert"=>DifficultyMode.Expert,
-              "expertplus"=>DifficultyMode.ExpertPlus,
+          foreach (var difficulty in mode.DifficultyBeatmaps!)
+            value |= (difficulty.Difficulty ?? string.Empty).ToLowerInvariant() switch {
+              "easy" => DifficultyMode.Easy,
+              "normal" => DifficultyMode.Normal,
+              "hard" => DifficultyMode.Hard,
+              "expert" => DifficultyMode.Expert,
+              "expertplus" => DifficultyMode.ExpertPlus,
               _ => 0
             };
-          
+
           result.Add(gameMode, value);
         }
         return result;
-      } }
+      }
+    }
 
     public Song(DirectoryInfo directory) {
       this.Directory = directory;
-      this._data = new (this._ReadMetadata);
+      this._data = new(this._ReadMetadata);
     }
 
     public FileInfo? GetCoverFile() {
@@ -86,8 +89,8 @@ partial class BeatSaberInstallation {
     public string CalculateChecksum() {
       var sb = new StringBuilder();
       _AddFileToBuilder(sb, _GetInfoFile(this.Directory));
-      foreach (var set in this._Data.DifficultyBeatmapSets)
-        foreach (var map in set.DifficultyBeatmaps)
+      foreach (var set in this._DifficultyBeatmapSets)
+        foreach (var map in set.DifficultyBeatmaps!)
           _AddFileToBuilder(sb, this.Directory.File(map.BeatmapFilename));
 
       var str = sb.ToString();
@@ -95,17 +98,17 @@ partial class BeatSaberInstallation {
       return crypto.ComputeHash(Encoding.UTF8.GetBytes(str)).ToHex(true);
     }
 
-    private static void _AddFileToBuilder(StringBuilder builder, FileInfo textFile) 
+    private static void _AddFileToBuilder(StringBuilder builder, FileInfo textFile)
       => builder.Append(textFile.ReadAllText(Encoding.UTF8))
     ;
 
     public Image? GetCover() => this._ReadCover();
 
-    private static FileInfo? _GetInfoFile(DirectoryInfo source) => source.File("Info.dat");
+    private static FileInfo _GetInfoFile(DirectoryInfo source) => source.File("Info.dat");
 
     private SongInfo.Root _ReadMetadata() {
       using var fileStream = _GetInfoFile(this.Directory).OpenRead();
-      return JsonSerializer.Deserialize<SongInfo.Root>(fileStream);
+      return JsonSerializer.Deserialize<SongInfo.Root>(fileStream)!;
     }
 
     private Image? _ReadCover() {
@@ -114,22 +117,22 @@ partial class BeatSaberInstallation {
         return null;
 
       try {
-        var image = Image.FromFile(coverFile.FullName);
+        var image = Image.FromFile(coverFile!.FullName);
         return image;
-      } catch (Exception e){
-        Trace.WriteLine($"{nameof(_ReadCover)}:Error loading cover '{coverFile.FullName}': {e}");
+      } catch (Exception e) {
+        Trace.WriteLine($"{nameof(_ReadCover)}:Error loading cover '{coverFile!.FullName}': {e}");
         return null;
       }
     }
 
-    public static bool TryCreateSongFromFolder(DirectoryInfo path,out Song? result) {
+    public static bool TryCreateSongFromFolder(DirectoryInfo path, out Song? result) {
       if (path.IsNullOrDoesNotExist()) {
         result = default;
         return false;
       }
 
-      var infoFile=_GetInfoFile(path);
-      if(infoFile.IsNullOrDoesNotExist()) {
+      var infoFile = _GetInfoFile(path);
+      if (infoFile.IsNullOrDoesNotExist()) {
         result = default;
         return false;
       }
