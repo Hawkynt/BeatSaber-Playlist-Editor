@@ -59,6 +59,7 @@
       this.tsbMode90 = new System.Windows.Forms.BindableToolStripButton();
       this.tsbMode360 = new System.Windows.Forms.BindableToolStripButton();
       this.fbdSelectRoot = new System.Windows.Forms.FolderBrowserDialog();
+      this.ofdSelectImage = new System.Windows.Forms.OpenFileDialog();
       statusStrip1 = new System.Windows.Forms.StatusStrip();
       splitContainer1 = new System.Windows.Forms.SplitContainer();
       tsBeatsaber = new System.Windows.Forms.ToolStrip();
@@ -391,6 +392,7 @@
       // 
       this.tableLayoutPanel1.SetColumnSpan(this.pbPlaylistCover, 2);
       this.pbPlaylistCover.DataBindings.Add(new System.Windows.Forms.Binding("Image", this.bsViewModel, "CurrentPlaylist.Cover", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+      this.pbPlaylistCover.DataBindings.Add(new System.Windows.Forms.Binding("Enabled", this.bsViewModel, "IsCurrentPlaylistAvailable", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
       this.pbPlaylistCover.Dock = System.Windows.Forms.DockStyle.Fill;
       this.pbPlaylistCover.Image = global::BeatSaber_Playlist_Editor.Properties.Resources.NoPictureAvailable;
       this.pbPlaylistCover.Location = new System.Drawing.Point(3, 3);
@@ -399,6 +401,7 @@
       this.pbPlaylistCover.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
       this.pbPlaylistCover.TabIndex = 1;
       this.pbPlaylistCover.TabStop = false;
+      this.pbPlaylistCover.Click += new System.EventHandler(this.pbPlaylistCover_Click);
       // 
       // splitContainer3
       // 
@@ -428,6 +431,7 @@
       this.dgvSongs.BackgroundColor = System.Drawing.SystemColors.Window;
       this.dgvSongs.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
       this.dgvSongs.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+      this.dgvSongs.DataBindings.Add(new System.Windows.Forms.Binding("Enabled", this.bsViewModel, "IsSongsAvailable", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
       this.dgvSongs.Dock = System.Windows.Forms.DockStyle.Fill;
       this.dgvSongs.Location = new System.Drawing.Point(0, 25);
       this.dgvSongs.Name = "dgvSongs";
@@ -545,6 +549,14 @@
       // 
       this.fbdSelectRoot.Description = "Please select the installation path of your BeatSaber.";
       // 
+      // ofdSelectImage
+      // 
+      this.ofdSelectImage.FileName = "Cover";
+      this.ofdSelectImage.ReadOnlyChecked = true;
+      this.ofdSelectImage.RestoreDirectory = true;
+      this.ofdSelectImage.SupportMultiDottedExtensions = true;
+      this.ofdSelectImage.Title = "Select image to apply";
+      // 
       // MainForm
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -618,5 +630,6 @@
     private TableLayoutPanel tableLayoutPanel1;
     private Label lPlaylistCoverDetails;
     private PictureBox pbPlaylistCover;
-  }
+        private OpenFileDialog ofdSelectImage;
+    }
 }

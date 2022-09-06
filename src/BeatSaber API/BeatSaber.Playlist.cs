@@ -63,35 +63,36 @@ partial class BeatSaberInstallation {
       var rawFormat = image.RawFormat;
       string mimeType = string.Empty;
       for(; ; ) {
-        if (rawFormat == ImageFormat.Bmp) {
+        var rawGuid = rawFormat.Guid;
+        if (rawGuid == ImageFormat.Bmp.Guid) {
           mimeType = "image/bmp";
           break;
         }
-        if (rawFormat == ImageFormat.Jpeg) {
+        if (rawGuid == ImageFormat.Jpeg.Guid) {
           mimeType = "image/jpeg";
           break;
         }
-        if (rawFormat == ImageFormat.Png) {
+        if (rawGuid == ImageFormat.Png.Guid) {
           mimeType = "image/png";
           break;
         }
-        if (rawFormat == ImageFormat.Tiff) {
+        if (rawGuid == ImageFormat.Tiff.Guid) {
           mimeType = "image/tiff";
           break;
         }
-        if (rawFormat == ImageFormat.Gif) {
+        if (rawGuid == ImageFormat.Gif.Guid) {
           mimeType = "image/gif";
           break;
         }
-        if (rawFormat == ImageFormat.Icon) {
+        if (rawGuid == ImageFormat.Icon.Guid) {
           mimeType = "image/x-icon";
           break;
         }
-        if (rawFormat == ImageFormat.Wmf) {
+        if (rawGuid == ImageFormat.Wmf.Guid) {
           mimeType = "windows/metafile";
           break;
         }
-        if (rawFormat == ImageFormat.MemoryBmp) {
+        if (rawGuid == ImageFormat.MemoryBmp.Guid) {
           mimeType = "image/bmp";
           break;
         }

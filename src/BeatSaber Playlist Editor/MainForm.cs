@@ -1,4 +1,5 @@
 using BeatSaber_Playlist_Editor.ViewModel;
+using BeatSaberAPI;
 using static BeatSaber_Playlist_Editor.ViewModel.UIMain;
 
 namespace BeatSaber_Playlist_Editor {
@@ -114,6 +115,11 @@ namespace BeatSaber_Playlist_Editor {
 
       this._viewModel?.AppendSongs(songs);
       // TODO: would be nice to know where drop occured and insert songs there if possible
+    }
+
+    private void pbPlaylistCover_Click(object sender, EventArgs e) {
+      if (this.ofdSelectImage.ShowDialog() == DialogResult.OK)
+        this._viewModel?.SetPlaylistCover(new FileInfo(this.ofdSelectImage.FileName));
     }
   }
 }

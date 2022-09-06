@@ -10,7 +10,7 @@ internal class UIMain : INotifyPropertyChanged {
   #region nested types
 
   [DebuggerDisplay($"{{{nameof(Name)}}}")]
-  public class UIPlaylist {
+  public class UIPlaylist:INotifyPropertyChanged {
 
     [Browsable(false)]
     public IPlaylist Source { get; }
@@ -22,8 +22,24 @@ internal class UIMain : INotifyPropertyChanged {
     public string CoverDetails => this._cover.Value == null ? "No image" : $"{this.Cover.Width} x {this.Cover.Height}";
 
     [EditorBrowsable(EditorBrowsableState.Never)]
-    public Image Cover => this._cover.Value ?? Resources.NoPictureAvailable;
-    private readonly System.Lazy<Image?> _cover;
+    public Image Cover {
+      get {
+        return this._cover.Value ?? Resources.NoPictureAvailable;
+      }
+      set {
+        if (value == this.Cover)
+          return;
+
+        this.Source.SetImage(value);
+        this._cover= new System.Lazy<Image?>(() => this.Source.Image);
+        this._OnPropertyChanged();
+      }
+    }
+
+    private System.Lazy<Image?> _cover;
+
+    public event PropertyChangedEventHandler? PropertyChanged;
+    protected void _OnPropertyChanged([CallerMemberName] string? propertyName = null) => this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName!));
 
     public UIPlaylist(IPlaylist source) {
       this.Source = source;
@@ -351,6 +367,17 @@ internal class UIMain : INotifyPropertyChanged {
       var entry = currentPlaylist.Source.CreateEntry(song.Source);
       currentPlaylistEntries.Add(new UIPlaylistEntry(entry));
     }
+
+    this._MarkCurrentPlaylistModified();
+  }
+
+  public void SetPlaylistCover(FileInfo file) {
+    var currentPlaylist = this.CurrentPlaylist;
+    if (currentPlaylist == null)
+      return;
+
+    using var img = Image.FromFile(file.FullName);
+    currentPlaylist.Cover = img;
 
     this._MarkCurrentPlaylistModified();
   }
