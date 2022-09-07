@@ -99,7 +99,7 @@ partial class BeatSaberInstallation {
 
         using var ms = new MemoryStream();
         image.Save(ms, ImageFormat.Png);
-        return $"data:{mimeType};base64,{Convert.ToBase64String(ms.ToArray())}";
+        return $"data:image/png;base64,{Convert.ToBase64String(ms.ToArray())}";
       }
 
       using var ms2 = new MemoryStream();
