@@ -39,7 +39,7 @@ partial class BeatSaberInstallation {
     }
 
     private static Image? _LoadImage(string? data) {
-      if(data.IsNullOrWhiteSpace())
+      if (data.IsNullOrWhiteSpace())
         return null;
 
       var base64 = data!;
@@ -62,7 +62,7 @@ partial class BeatSaberInstallation {
 
       var rawFormat = image.RawFormat;
       string mimeType = string.Empty;
-      for(; ; ) {
+      for (; ; ) {
         var rawGuid = rawFormat.Guid;
         if (rawGuid == ImageFormat.Bmp.Guid) {
           mimeType = "image/bmp";
@@ -97,12 +97,14 @@ partial class BeatSaberInstallation {
           break;
         }
 
-        throw new NotSupportedException($"Unsupported image format: {rawFormat}");
+        using var ms = new MemoryStream();
+        image.Save(ms, ImageFormat.Png);
+        return $"data:{mimeType};base64,{Convert.ToBase64String(ms.ToArray())}";
       }
-      using var ms = new MemoryStream();
-      image.Save(ms, rawFormat);
-      var result = $"data:{mimeType};base64,{Convert.ToBase64String(ms.ToArray())}";
-      return result;
+
+      using var ms2 = new MemoryStream();
+      image.Save(ms2, rawFormat);
+      return $"data:{mimeType};base64,{Convert.ToBase64String(ms2.ToArray())}";
     }
 
     private PlaylistEntryCollection _CreateEntryCollection() => new PlaylistEntryCollection(this._Data.Songs!.Select(s => new PlaylistEntry(s.SongName!, s.Hash!)));
@@ -170,14 +172,19 @@ partial class BeatSaberInstallation {
       }, file
     );
 
-    public void SetImage(Image? image)
-      => this.Image = image == null
-        ? null
-        : image.Width > 256 || image.Height > 256
-          ? image.Resize(256)
-          : (Image)image.Clone()
-    ;
+    public void SetImage(Image? image) {
+      if (image == null) {
+        this.Image = null;
+        return;
+      }
+      if (image.Width > 256 || image.Height > 256) {
+        using var img= image.Resize(256);
+        this.Image = img;
+        return;
+      }
 
+      this.Image = image;
+    }
   }
 
 }
