@@ -1,88 +1,9 @@
 ﻿using System.ComponentModel;
-using System.Diagnostics;
 using System.Runtime.CompilerServices;
-using BeatSaber_Playlist_Editor.Properties;
 using BeatSaberAPI;
 
 namespace BeatSaber_Playlist_Editor.ViewModel;
-internal class UIMain : INotifyPropertyChanged {
-
-  #region nested types
-
-  [DebuggerDisplay($"{{{nameof(Name)}}}")]
-  public class UIPlaylist : INotifyPropertyChanged {
-
-    [Browsable(false)]
-    public IPlaylist Source { get; }
-
-    public string Name => this.Source.Name;
-    public string? Author => this.Source.Author;
-
-    [EditorBrowsable(EditorBrowsableState.Never)]
-    public string CoverDetails => this._cover.Value == null ? "No image" : $"{this.Cover.Width} x {this.Cover.Height}";
-
-    [EditorBrowsable(EditorBrowsableState.Never)]
-    public Image Cover {
-      get {
-        return this._cover.Value ?? Resources.NoPictureAvailable;
-      }
-      set {
-        if (value == this.Cover)
-          return;
-
-        this.Source.SetImage(value);
-        this._cover = new System.Lazy<Image?>(() => this.Source.Image);
-        this._OnPropertyChanged();
-      }
-    }
-
-    private System.Lazy<Image?> _cover;
-
-    public event PropertyChangedEventHandler? PropertyChanged;
-    protected void _OnPropertyChanged([CallerMemberName] string? propertyName = null) => this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName!));
-
-    public UIPlaylist(IPlaylist source) {
-      this.Source = source;
-      this._cover = new System.Lazy<Image?>(() => source.Image);
-    }
-  }
-
-  [DebuggerDisplay($"{{{nameof(Name)}}}")]
-  public class UIPlaylistEntry {
-
-    [Browsable(false)]
-    public IPlaylistEntry Source { get; }
-
-    public string Name => this.Source.Name;
-
-    public UIPlaylistEntry(IPlaylistEntry source) => this.Source = source;
-  }
-
-  [DebuggerDisplay($"{{{nameof(Artist)}}} - {{{nameof(Title)}}}")]
-  public class UISong {
-
-    [Browsable(false)]
-    public ISong Source { get; }
-
-    public string? Artist => this.Source.Artist;
-    public string Title => this.Source.Title;
-
-    [EditorBrowsable(EditorBrowsableState.Never)]
-    public string CoverDetails => this._cover.Value == null ? "No image" : $"{this.Cover.Width} x {this.Cover.Height}";
-
-    private System.Lazy<Image?> _cover;
-
-    [EditorBrowsable(EditorBrowsableState.Never)]
-    public Image Cover => this._cover.Value ?? Resources.NoPictureAvailable;
-    public UISong(ISong source) {
-      this.Source = source;
-      this._cover = new System.Lazy<Image?>(() => source.Image);
-    }
-  }
-
-
-  #endregion
-
+internal partial class UIMain : INotifyPropertyChanged {
   private bool _isPlaylistsAvailable;
   private bool _isRefreshAvailable;
   private bool _isCurrentPlaylistAvailable;

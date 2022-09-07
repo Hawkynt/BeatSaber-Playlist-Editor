@@ -38,6 +38,16 @@
       System.Windows.Forms.ToolStripLabel tslFilter;
       System.Windows.Forms.GroupBox gbSongProperties;
       System.Windows.Forms.PictureBox pbSongCover;
+      System.Windows.Forms.Label lArtist;
+      System.Windows.Forms.Label lArtistData;
+      System.Windows.Forms.Label lTitleData;
+      System.Windows.Forms.Label lLevelAuthorData;
+      System.Windows.Forms.Label lLevelAuthor;
+      System.Windows.Forms.Label lTitle;
+      System.Windows.Forms.Label lEnvironment;
+      System.Windows.Forms.Label lBeatsPerMinute;
+      System.Windows.Forms.Label lEnvironmentData;
+      System.Windows.Forms.Label lBeatsPerMinuteData;
       this.dgvPlaylists = new System.Windows.Forms.DataGridView();
       this.bsViewModel = new System.Windows.Forms.BindingSource(this.components);
       this.tsbBeatsaberSetPath = new System.Windows.Forms.BindableToolStripButton();
@@ -77,6 +87,16 @@
       tslFilter = new System.Windows.Forms.ToolStripLabel();
       gbSongProperties = new System.Windows.Forms.GroupBox();
       pbSongCover = new System.Windows.Forms.PictureBox();
+      lArtist = new System.Windows.Forms.Label();
+      lArtistData = new System.Windows.Forms.Label();
+      lTitleData = new System.Windows.Forms.Label();
+      lLevelAuthorData = new System.Windows.Forms.Label();
+      lLevelAuthor = new System.Windows.Forms.Label();
+      lTitle = new System.Windows.Forms.Label();
+      lEnvironment = new System.Windows.Forms.Label();
+      lBeatsPerMinute = new System.Windows.Forms.Label();
+      lEnvironmentData = new System.Windows.Forms.Label();
+      lBeatsPerMinuteData = new System.Windows.Forms.Label();
       ((System.ComponentModel.ISupportInitialize)(splitContainer1)).BeginInit();
       splitContainer1.Panel1.SuspendLayout();
       splitContainer1.Panel2.SuspendLayout();
@@ -561,19 +581,31 @@
       // tableLayoutPanel1
       // 
       this.tableLayoutPanel1.ColumnCount = 2;
-      this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-      this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+      this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+      this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
       this.tableLayoutPanel1.Controls.Add(this.lSongCoverDetails, 0, 1);
       this.tableLayoutPanel1.Controls.Add(pbSongCover, 0, 0);
+      this.tableLayoutPanel1.Controls.Add(lArtist, 0, 2);
+      this.tableLayoutPanel1.Controls.Add(lArtistData, 1, 2);
+      this.tableLayoutPanel1.Controls.Add(lTitleData, 1, 3);
+      this.tableLayoutPanel1.Controls.Add(lLevelAuthorData, 1, 4);
+      this.tableLayoutPanel1.Controls.Add(lLevelAuthor, 0, 4);
+      this.tableLayoutPanel1.Controls.Add(lTitle, 0, 3);
+      this.tableLayoutPanel1.Controls.Add(lEnvironment, 0, 5);
+      this.tableLayoutPanel1.Controls.Add(lBeatsPerMinute, 0, 6);
+      this.tableLayoutPanel1.Controls.Add(lEnvironmentData, 1, 5);
+      this.tableLayoutPanel1.Controls.Add(lBeatsPerMinuteData, 1, 6);
       this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
       this.tableLayoutPanel1.Location = new System.Drawing.Point(3, 19);
       this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-      this.tableLayoutPanel1.RowCount = 5;
-      this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+      this.tableLayoutPanel1.RowCount = 7;
+      this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
       this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-      this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-      this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-      this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+      this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
+      this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
+      this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
+      this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
+      this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
       this.tableLayoutPanel1.Size = new System.Drawing.Size(281, 179);
       this.tableLayoutPanel1.TabIndex = 0;
       // 
@@ -583,7 +615,7 @@
       this.lSongCoverDetails.AutoSize = true;
       this.tableLayoutPanel1.SetColumnSpan(this.lSongCoverDetails, 2);
       this.lSongCoverDetails.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.bsViewModel, "CurrentSong.CoverDetails", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-      this.lSongCoverDetails.Location = new System.Drawing.Point(3, 104);
+      this.lSongCoverDetails.Location = new System.Drawing.Point(3, 89);
       this.lSongCoverDetails.Name = "lSongCoverDetails";
       this.lSongCoverDetails.Size = new System.Drawing.Size(275, 15);
       this.lSongCoverDetails.TabIndex = 0;
@@ -600,10 +632,115 @@
       pbSongCover.InitialImage = global::BeatSaber_Playlist_Editor.Properties.Resources.NoPictureAvailable;
       pbSongCover.Location = new System.Drawing.Point(3, 3);
       pbSongCover.Name = "pbSongCover";
-      pbSongCover.Size = new System.Drawing.Size(275, 98);
+      pbSongCover.Size = new System.Drawing.Size(275, 83);
       pbSongCover.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
       pbSongCover.TabIndex = 1;
       pbSongCover.TabStop = false;
+      // 
+      // lArtist
+      // 
+      lArtist.Anchor = System.Windows.Forms.AnchorStyles.Left;
+      lArtist.AutoSize = true;
+      lArtist.Location = new System.Drawing.Point(3, 104);
+      lArtist.Name = "lArtist";
+      lArtist.Size = new System.Drawing.Size(35, 15);
+      lArtist.TabIndex = 2;
+      lArtist.Text = "Artist";
+      // 
+      // lArtistData
+      // 
+      lArtistData.Anchor = System.Windows.Forms.AnchorStyles.Left;
+      lArtistData.AutoSize = true;
+      lArtistData.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.bsViewModel, "CurrentSong.Artist", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+      lArtistData.Location = new System.Drawing.Point(84, 104);
+      lArtistData.Name = "lArtistData";
+      lArtistData.Size = new System.Drawing.Size(43, 15);
+      lArtistData.TabIndex = 2;
+      lArtistData.Text = "{Artist}";
+      // 
+      // lTitleData
+      // 
+      lTitleData.Anchor = System.Windows.Forms.AnchorStyles.Left;
+      lTitleData.AutoSize = true;
+      lTitleData.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.bsViewModel, "CurrentSong.Title", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+      lTitleData.Location = new System.Drawing.Point(84, 119);
+      lTitleData.Name = "lTitleData";
+      lTitleData.Size = new System.Drawing.Size(37, 15);
+      lTitleData.TabIndex = 2;
+      lTitleData.Text = "{Title}";
+      // 
+      // lLevelAuthorData
+      // 
+      lLevelAuthorData.Anchor = System.Windows.Forms.AnchorStyles.Left;
+      lLevelAuthorData.AutoSize = true;
+      lLevelAuthorData.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.bsViewModel, "CurrentSong.LevelAuthor.CurrentSong", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+      lLevelAuthorData.Location = new System.Drawing.Point(84, 134);
+      lLevelAuthorData.Name = "lLevelAuthorData";
+      lLevelAuthorData.Size = new System.Drawing.Size(79, 15);
+      lLevelAuthorData.TabIndex = 2;
+      lLevelAuthorData.Text = "{LevelAuthor}";
+      // 
+      // lLevelAuthor
+      // 
+      lLevelAuthor.Anchor = System.Windows.Forms.AnchorStyles.Left;
+      lLevelAuthor.AutoSize = true;
+      lLevelAuthor.Location = new System.Drawing.Point(3, 134);
+      lLevelAuthor.Name = "lLevelAuthor";
+      lLevelAuthor.Size = new System.Drawing.Size(74, 15);
+      lLevelAuthor.TabIndex = 2;
+      lLevelAuthor.Text = "Level Author";
+      // 
+      // lTitle
+      // 
+      lTitle.Anchor = System.Windows.Forms.AnchorStyles.Left;
+      lTitle.AutoSize = true;
+      lTitle.Location = new System.Drawing.Point(3, 119);
+      lTitle.Name = "lTitle";
+      lTitle.Size = new System.Drawing.Size(29, 15);
+      lTitle.TabIndex = 2;
+      lTitle.Text = "Title";
+      // 
+      // lEnvironment
+      // 
+      lEnvironment.Anchor = System.Windows.Forms.AnchorStyles.Left;
+      lEnvironment.AutoSize = true;
+      lEnvironment.Location = new System.Drawing.Point(3, 149);
+      lEnvironment.Name = "lEnvironment";
+      lEnvironment.Size = new System.Drawing.Size(75, 15);
+      lEnvironment.TabIndex = 2;
+      lEnvironment.Text = "Environment";
+      // 
+      // lBeatsPerMinute
+      // 
+      lBeatsPerMinute.Anchor = System.Windows.Forms.AnchorStyles.Left;
+      lBeatsPerMinute.AutoSize = true;
+      lBeatsPerMinute.Location = new System.Drawing.Point(3, 164);
+      lBeatsPerMinute.Name = "lBeatsPerMinute";
+      lBeatsPerMinute.Size = new System.Drawing.Size(32, 15);
+      lBeatsPerMinute.TabIndex = 2;
+      lBeatsPerMinute.Text = "BPM";
+      // 
+      // lEnvironmentData
+      // 
+      lEnvironmentData.Anchor = System.Windows.Forms.AnchorStyles.Left;
+      lEnvironmentData.AutoSize = true;
+      lEnvironmentData.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.bsViewModel, "CurrentSong.Environment.CurrentSong", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+      lEnvironmentData.Location = new System.Drawing.Point(84, 149);
+      lEnvironmentData.Name = "lEnvironmentData";
+      lEnvironmentData.Size = new System.Drawing.Size(83, 15);
+      lEnvironmentData.TabIndex = 2;
+      lEnvironmentData.Text = "{Environment}";
+      // 
+      // lBeatsPerMinuteData
+      // 
+      lBeatsPerMinuteData.Anchor = System.Windows.Forms.AnchorStyles.Left;
+      lBeatsPerMinuteData.AutoSize = true;
+      lBeatsPerMinuteData.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.bsViewModel, "CurrentSong.BeatsPerMinute", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged, null, "N0"));
+      lBeatsPerMinuteData.Location = new System.Drawing.Point(84, 164);
+      lBeatsPerMinuteData.Name = "lBeatsPerMinuteData";
+      lBeatsPerMinuteData.Size = new System.Drawing.Size(25, 15);
+      lBeatsPerMinuteData.TabIndex = 2;
+      lBeatsPerMinuteData.Text = "100";
       // 
       // fbdSelectRoot
       // 
@@ -697,5 +834,11 @@
         private OpenFileDialog ofdSelectImage;
         private TableLayoutPanel tableLayoutPanel1;
         private Label lSongCoverDetails;
+        private Label lArtist;
+        private Label lArtistData;
+        private Label lTitleData;
+        private Label lLevelAuthorData;
+        private Label lLevelAuthor;
+        private Label lTitle;
     }
 }

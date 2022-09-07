@@ -66,6 +66,9 @@ partial class BeatSaberInstallation {
     }
 
     public Image? Image => this.GetCover();
+    public string? LevelAuthor => this._Data.LevelAuthorName;
+    public double BeatsPerMinute => this._Data.BeatsPerMinute;
+    public string? Environment => this._Data.EnvironmentName;
 
     public Song(DirectoryInfo directory) {
       this.Directory = directory;
