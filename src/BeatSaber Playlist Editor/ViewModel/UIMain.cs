@@ -18,6 +18,8 @@ internal partial class UIMain : INotifyPropertyChanged {
   private bool _is360GameModeVisible;
   private bool _isCurrentPlaylistSaveAvailable;
   private UISong? _currentSong;
+  private string _currentPlaylistName;
+  private string _currentPlaylistAuthor;
 
   public event PropertyChangedEventHandler? PropertyChanged;
 
@@ -96,6 +98,22 @@ internal partial class UIMain : INotifyPropertyChanged {
     }
   }
 
+  public string CurrentPlaylistName {
+    get => _currentPlaylistName;
+    set {
+      if (this.SetProperty(this.OnPropertyChanged, ref _currentPlaylistName, value))
+        this._MarkCurrentPlaylistModified();
+    }
+  }
+
+  public string CurrentPlaylistAuthor {
+    get => _currentPlaylistAuthor;
+    set {
+      if (this.SetProperty(this.OnPropertyChanged, ref _currentPlaylistAuthor, value))
+        this._MarkCurrentPlaylistModified();
+    }
+  }
+
   public IBeatSaberInstallation? BeatSaber {
     get => _beatSaber;
     private set {
@@ -120,7 +138,7 @@ internal partial class UIMain : INotifyPropertyChanged {
 
   public UISong? CurrentSong {
     get => _currentSong;
-    set => this.SetProperty(this.OnPropertyChanged,ref _currentSong, value);
+    set => this.SetProperty(this.OnPropertyChanged, ref _currentSong, value);
   }
 
   public SortableBindingList<UIPlaylist> Playlists { get; } = new();
@@ -210,6 +228,8 @@ internal partial class UIMain : INotifyPropertyChanged {
       this.CurrentPlaylistEntries.AddRange(cp.Source.Songs.Select(i => new UIPlaylistEntry(i)));
 
     this.IsCurrentPlaylistAvailable = cp != null;
+    this.CurrentPlaylistAuthor = cp?.Author ?? string.Empty;
+    this.CurrentPlaylistName= cp?.Name??string.Empty;
     this._MarkCurrentPlaylistUnmodified();
   }
 

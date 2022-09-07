@@ -24,7 +24,11 @@ partial class BeatSaberInstallation {
     private Playlist(PlaylistFile.Root root, FileInfo file) : this(file, () => root) { }
 
     public FileInfo File { get; private set; }
-    public string Name => this._Data.PlaylistTitle ?? string.Empty;
+    public string Name { 
+      get => this._Data.PlaylistTitle ?? string.Empty; 
+      set => this._Data.PlaylistTitle = value;
+    }
+
     public string? Author {
       get => this._Data.PlaylistAuthor;
       set => this._Data.PlaylistAuthor = value;

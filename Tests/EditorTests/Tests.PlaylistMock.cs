@@ -4,7 +4,10 @@ using BeatSaberAPI;
 
 public partial class Tests {
   private class PlaylistMock : IPlaylist {
-    public string Name => "Unit-Test";
+    public string Name { 
+      get => "Unit-Test";
+      set => throw new NotImplementedException();
+    }
 
     public string Author { 
       get => "Hawkynt"; 

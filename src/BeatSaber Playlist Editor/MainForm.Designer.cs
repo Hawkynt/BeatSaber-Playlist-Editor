@@ -33,6 +33,10 @@
       System.Windows.Forms.GroupBox gbPlaylistProperties;
       System.Windows.Forms.TableLayoutPanel tlpPlaylistProperties;
       System.Windows.Forms.PictureBox pbPlaylistCover;
+      System.Windows.Forms.Label lPlaylistName;
+      System.Windows.Forms.Label lPlaylistAuthor;
+      System.Windows.Forms.TextBox tbPlaylistName;
+      System.Windows.Forms.TextBox tbPlaylistAuthor;
       System.Windows.Forms.SplitContainer splitContainer3;
       System.Windows.Forms.ToolStrip tsSongs;
       System.Windows.Forms.ToolStripLabel tslFilter;
@@ -82,6 +86,10 @@
       gbPlaylistProperties = new System.Windows.Forms.GroupBox();
       tlpPlaylistProperties = new System.Windows.Forms.TableLayoutPanel();
       pbPlaylistCover = new System.Windows.Forms.PictureBox();
+      lPlaylistName = new System.Windows.Forms.Label();
+      lPlaylistAuthor = new System.Windows.Forms.Label();
+      tbPlaylistName = new System.Windows.Forms.TextBox();
+      tbPlaylistAuthor = new System.Windows.Forms.TextBox();
       splitContainer3 = new System.Windows.Forms.SplitContainer();
       tsSongs = new System.Windows.Forms.ToolStrip();
       tslFilter = new System.Windows.Forms.ToolStripLabel();
@@ -388,18 +396,22 @@
       // tlpPlaylistProperties
       // 
       tlpPlaylistProperties.ColumnCount = 2;
-      tlpPlaylistProperties.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-      tlpPlaylistProperties.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+      tlpPlaylistProperties.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+      tlpPlaylistProperties.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
       tlpPlaylistProperties.Controls.Add(this.lPlaylistCoverDetails, 0, 1);
       tlpPlaylistProperties.Controls.Add(pbPlaylistCover, 0, 0);
+      tlpPlaylistProperties.Controls.Add(lPlaylistName, 0, 2);
+      tlpPlaylistProperties.Controls.Add(lPlaylistAuthor, 0, 3);
+      tlpPlaylistProperties.Controls.Add(tbPlaylistName, 1, 2);
+      tlpPlaylistProperties.Controls.Add(tbPlaylistAuthor, 1, 3);
       tlpPlaylistProperties.Dock = System.Windows.Forms.DockStyle.Fill;
       tlpPlaylistProperties.Location = new System.Drawing.Point(3, 19);
       tlpPlaylistProperties.Name = "tlpPlaylistProperties";
       tlpPlaylistProperties.RowCount = 5;
-      tlpPlaylistProperties.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+      tlpPlaylistProperties.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
       tlpPlaylistProperties.RowStyles.Add(new System.Windows.Forms.RowStyle());
-      tlpPlaylistProperties.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-      tlpPlaylistProperties.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+      tlpPlaylistProperties.RowStyles.Add(new System.Windows.Forms.RowStyle());
+      tlpPlaylistProperties.RowStyles.Add(new System.Windows.Forms.RowStyle());
       tlpPlaylistProperties.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
       tlpPlaylistProperties.Size = new System.Drawing.Size(233, 177);
       tlpPlaylistProperties.TabIndex = 0;
@@ -410,7 +422,7 @@
       this.lPlaylistCoverDetails.AutoSize = true;
       tlpPlaylistProperties.SetColumnSpan(this.lPlaylistCoverDetails, 2);
       this.lPlaylistCoverDetails.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.bsViewModel, "CurrentPlaylist.CoverDetails", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-      this.lPlaylistCoverDetails.Location = new System.Drawing.Point(3, 102);
+      this.lPlaylistCoverDetails.Location = new System.Drawing.Point(3, 84);
       this.lPlaylistCoverDetails.Name = "lPlaylistCoverDetails";
       this.lPlaylistCoverDetails.Size = new System.Drawing.Size(227, 15);
       this.lPlaylistCoverDetails.TabIndex = 0;
@@ -428,11 +440,49 @@
       pbPlaylistCover.InitialImage = global::BeatSaber_Playlist_Editor.Properties.Resources.NoPictureAvailable;
       pbPlaylistCover.Location = new System.Drawing.Point(3, 3);
       pbPlaylistCover.Name = "pbPlaylistCover";
-      pbPlaylistCover.Size = new System.Drawing.Size(227, 96);
+      pbPlaylistCover.Size = new System.Drawing.Size(227, 78);
       pbPlaylistCover.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
       pbPlaylistCover.TabIndex = 1;
       pbPlaylistCover.TabStop = false;
       pbPlaylistCover.Click += new System.EventHandler(this.pbPlaylistCover_Click);
+      // 
+      // lPlaylistName
+      // 
+      lPlaylistName.Anchor = System.Windows.Forms.AnchorStyles.Left;
+      lPlaylistName.AutoSize = true;
+      lPlaylistName.Location = new System.Drawing.Point(3, 106);
+      lPlaylistName.Name = "lPlaylistName";
+      lPlaylistName.Size = new System.Drawing.Size(39, 15);
+      lPlaylistName.TabIndex = 2;
+      lPlaylistName.Text = "Name";
+      // 
+      // lPlaylistAuthor
+      // 
+      lPlaylistAuthor.Anchor = System.Windows.Forms.AnchorStyles.Left;
+      lPlaylistAuthor.AutoSize = true;
+      lPlaylistAuthor.Location = new System.Drawing.Point(3, 135);
+      lPlaylistAuthor.Name = "lPlaylistAuthor";
+      lPlaylistAuthor.Size = new System.Drawing.Size(44, 15);
+      lPlaylistAuthor.TabIndex = 2;
+      lPlaylistAuthor.Text = "Author";
+      // 
+      // tbPlaylistName
+      // 
+      tbPlaylistName.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.bsViewModel, "CurrentPlaylistName", true));
+      tbPlaylistName.Dock = System.Windows.Forms.DockStyle.Top;
+      tbPlaylistName.Location = new System.Drawing.Point(53, 102);
+      tbPlaylistName.Name = "tbPlaylistName";
+      tbPlaylistName.Size = new System.Drawing.Size(177, 23);
+      tbPlaylistName.TabIndex = 3;
+      // 
+      // tbPlaylistAuthor
+      // 
+      tbPlaylistAuthor.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.bsViewModel, "CurrentPlaylistAuthor", true));
+      tbPlaylistAuthor.Dock = System.Windows.Forms.DockStyle.Top;
+      tbPlaylistAuthor.Location = new System.Drawing.Point(53, 131);
+      tbPlaylistAuthor.Name = "tbPlaylistAuthor";
+      tbPlaylistAuthor.Size = new System.Drawing.Size(177, 23);
+      tbPlaylistAuthor.TabIndex = 4;
       // 
       // splitContainer3
       // 

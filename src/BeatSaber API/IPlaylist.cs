@@ -3,7 +3,7 @@
 namespace BeatSaberAPI; 
 
 public interface IPlaylist { 
-  string Name { get; }
+  string Name { get; set; }
   string? Author { get; set; }
   Image? Image { get; }
   IPlaylistEntryCollection Songs { get; }

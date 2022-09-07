@@ -13,8 +13,15 @@ partial class UIMain {
     [Browsable(false)]
     public IPlaylist Source { get; }
 
-    public string Name => this.Source.Name;
-    public string? Author => this.Source.Author;
+    public string Name {
+      get => this.Source.Name;
+      set => this.Source.Name = value;
+    }
+
+    public string? Author { 
+      get => this.Source.Author;
+      set => this.Source.Author=value;
+    }
 
     [EditorBrowsable(EditorBrowsableState.Never)]
     public string CoverDetails => this._cover.Value == null ? "No image" : $"{this.Cover.Width} x {this.Cover.Height}";
