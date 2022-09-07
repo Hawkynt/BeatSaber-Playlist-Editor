@@ -34,77 +34,8 @@ partial class BeatSaberInstallation {
     public IPlaylistEntryCollection Songs => this._entries.Value;
 
     public Image? Image {
-      get => _LoadImage(this._Data.Image);
-      private set => this._Data.Image = _SaveImage(value);
-    }
-
-    private static Image? _LoadImage(string? data) {
-      if (data.IsNullOrWhiteSpace())
-        return null;
-
-      var base64 = data!;
-      if (data.StartsWith("data:image/")) {
-        var index = data.IndexOf("base64,");
-        if (index < 0)
-          return null;
-
-        base64 = data.Substring(index + 7);
-      }
-
-      var bytes = Convert.FromBase64String(base64);
-      using var ms = new MemoryStream(bytes, 0, bytes.Length);
-      return Image.FromStream(ms, true);
-    }
-
-    private static string _SaveImage(Image? image) {
-      if (image == null)
-        return string.Empty;
-
-      var rawFormat = image.RawFormat;
-      string mimeType = string.Empty;
-      for (; ; ) {
-        var rawGuid = rawFormat.Guid;
-        if (rawGuid == ImageFormat.Bmp.Guid) {
-          mimeType = "image/bmp";
-          break;
-        }
-        if (rawGuid == ImageFormat.Jpeg.Guid) {
-          mimeType = "image/jpeg";
-          break;
-        }
-        if (rawGuid == ImageFormat.Png.Guid) {
-          mimeType = "image/png";
-          break;
-        }
-        if (rawGuid == ImageFormat.Tiff.Guid) {
-          mimeType = "image/tiff";
-          break;
-        }
-        if (rawGuid == ImageFormat.Gif.Guid) {
-          mimeType = "image/gif";
-          break;
-        }
-        if (rawGuid == ImageFormat.Icon.Guid) {
-          mimeType = "image/x-icon";
-          break;
-        }
-        if (rawGuid == ImageFormat.Wmf.Guid) {
-          mimeType = "windows/metafile";
-          break;
-        }
-        if (rawGuid == ImageFormat.MemoryBmp.Guid) {
-          mimeType = "image/bmp";
-          break;
-        }
-
-        using var ms = new MemoryStream();
-        image.Save(ms, ImageFormat.Png);
-        return $"data:image/png;base64,{Convert.ToBase64String(ms.ToArray())}";
-      }
-
-      using var ms2 = new MemoryStream();
-      image.Save(ms2, rawFormat);
-      return $"data:{mimeType};base64,{Convert.ToBase64String(ms2.ToArray())}";
+      get => this._Data.Image.IsNullOrWhiteSpace() ? null : this._Data.Image.FromBase64DataUri();
+      private set => this._Data.Image = value == null ? string.Empty : value.ToBase64DataUri();
     }
 
     private PlaylistEntryCollection _CreateEntryCollection() => new PlaylistEntryCollection(this._Data.Songs!.Select(s => new PlaylistEntry(s.SongName!, s.Hash!)));
