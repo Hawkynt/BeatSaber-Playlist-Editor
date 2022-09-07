@@ -208,11 +208,14 @@ internal partial class UIMain : INotifyPropertyChanged {
     if (cp == null)
       return;
 
+    cp.Source.Name = this.CurrentPlaylistName;
+    cp.Source.Author = this.CurrentPlaylistAuthor;
     cp.Source.Songs.Clear();
     foreach (var entry in this.CurrentPlaylistEntries)
       cp.Source.Songs.Add(entry.Source);
 
     cp.Source.WriteToDisk();
+    cp.TriggerAllPropertiesChanged();
     this._MarkCurrentPlaylistUnmodified();
   }
 
@@ -338,5 +341,7 @@ internal partial class UIMain : INotifyPropertyChanged {
 
     this._MarkCurrentPlaylistModified();
   }
+
+  public bool ValidatePlaylistName(string text) => text.IsNotNullOrWhiteSpace();
 
 }

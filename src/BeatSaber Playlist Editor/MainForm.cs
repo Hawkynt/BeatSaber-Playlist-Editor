@@ -129,5 +129,14 @@ namespace BeatSaber_Playlist_Editor {
       if (this.dgvSongs.TryGetFirstSelectedItem<UISong>(out var song))
         this._viewModel.CurrentSong = song;
     }
+
+    private void tbPlaylistName_Validating(object sender, System.ComponentModel.CancelEventArgs e) {
+      var tb = (TextBox)sender;
+      if (this._viewModel?.ValidatePlaylistName(tb.Text) ?? false)
+        return;
+
+      MessageBox.Show("Playlist name must not be empty.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+      e.Cancel = true;
+    }
   }
 }

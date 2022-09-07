@@ -469,15 +469,18 @@
       // tbPlaylistName
       // 
       tbPlaylistName.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.bsViewModel, "CurrentPlaylistName", true));
+      tbPlaylistName.DataBindings.Add(new System.Windows.Forms.Binding("Enabled", this.bsViewModel, "IsCurrentPlaylistAvailable", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
       tbPlaylistName.Dock = System.Windows.Forms.DockStyle.Top;
       tbPlaylistName.Location = new System.Drawing.Point(53, 102);
       tbPlaylistName.Name = "tbPlaylistName";
       tbPlaylistName.Size = new System.Drawing.Size(177, 23);
       tbPlaylistName.TabIndex = 3;
+      tbPlaylistName.Validating += new System.ComponentModel.CancelEventHandler(this.tbPlaylistName_Validating);
       // 
       // tbPlaylistAuthor
       // 
       tbPlaylistAuthor.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.bsViewModel, "CurrentPlaylistAuthor", true));
+      tbPlaylistAuthor.DataBindings.Add(new System.Windows.Forms.Binding("Enabled", this.bsViewModel, "IsCurrentPlaylistAvailable", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
       tbPlaylistAuthor.Dock = System.Windows.Forms.DockStyle.Top;
       tbPlaylistAuthor.Location = new System.Drawing.Point(53, 131);
       tbPlaylistAuthor.Name = "tbPlaylistAuthor";
