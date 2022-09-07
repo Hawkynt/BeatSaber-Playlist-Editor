@@ -115,7 +115,7 @@ partial class BeatSaberInstallation {
 
     private Image? _ReadCover() {
       var coverFile = this.GetCoverFile();
-      if (coverFile.NotExists())
+      if (coverFile?.NotExists() ?? false)
         return null;
 
       try {
