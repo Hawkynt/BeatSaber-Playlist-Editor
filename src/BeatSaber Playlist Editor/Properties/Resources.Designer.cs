@@ -93,6 +93,16 @@ namespace BeatSaber_Playlist_Editor.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap _16x16_Trash {
+            get {
+                object obj = ResourceManager.GetObject("16x16 Trash", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap _20x20_BeatSaber {
             get {
                 object obj = ResourceManager.GetObject("20x20 BeatSaber", resourceCulture);

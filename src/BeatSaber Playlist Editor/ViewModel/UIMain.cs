@@ -18,8 +18,8 @@ internal partial class UIMain : INotifyPropertyChanged {
   private bool _is360GameModeVisible;
   private bool _isCurrentPlaylistSaveAvailable;
   private UISong? _currentSong;
-  private string _currentPlaylistName;
-  private string _currentPlaylistAuthor;
+  private string _currentPlaylistName = string.Empty;
+  private string _currentPlaylistAuthor = string.Empty;
 
   public event PropertyChangedEventHandler? PropertyChanged;
 
@@ -342,6 +342,21 @@ internal partial class UIMain : INotifyPropertyChanged {
     this._MarkCurrentPlaylistModified();
   }
 
-  public bool ValidatePlaylistName(string text) => text.IsNotNullOrWhiteSpace();
+  public bool ValidatePlaylistNameNotEmpty(string text) => text.IsNotNullOrWhiteSpace();
+  
+  public void DeleteCurrentPlaylist() {
+    var currentPlaylist = this.CurrentPlaylist;
+    if (currentPlaylist == null)
+      return;
+
+    var beatSaber = this.BeatSaber;
+    if (beatSaber == null)
+      return;
+
+    var name = currentPlaylist.Name;
+    beatSaber.Playlists.Delete(name);
+    this.Playlists.Remove(currentPlaylist);
+    this.CurrentPlaylist = null;
+  }
 
 }

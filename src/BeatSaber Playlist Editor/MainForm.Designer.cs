@@ -27,11 +27,23 @@
       System.Windows.Forms.StatusStrip ssStatus;
       System.Windows.Forms.SplitContainer splitContainer1;
       System.Windows.Forms.ToolStrip tsBeatsaber;
+      System.Windows.Forms.BindableToolStripButton tsbBeatsaberSetPath;
+      System.Windows.Forms.BindableToolStripButton tsbBeatsaberRefresh;
+      System.Windows.Forms.BindableToolStripButton tsbDeletePlaylist;
       System.Windows.Forms.SplitContainer splitContainer2;
       System.Windows.Forms.SplitContainer splitContainer4;
       System.Windows.Forms.ToolStrip tsPlaylist;
+      System.Windows.Forms.BindableToolStripButton tsbPlaylistSave;
+      System.Windows.Forms.BindableToolStripButton tsbEntryFirst;
+      System.Windows.Forms.BindableToolStripButton tsbEntryUp;
+      System.Windows.Forms.BindableToolStripButton tsbEntryRemove;
+      System.Windows.Forms.BindableToolStripButton tsbEntryDown;
+      System.Windows.Forms.BindableToolStripButton tsbEntryLast;
+      System.Windows.Forms.BindableToolStripButton tsbEntryClear;
+      System.Windows.Forms.BindableToolStripButton tsbPlaylistReread;
       System.Windows.Forms.GroupBox gbPlaylistProperties;
       System.Windows.Forms.TableLayoutPanel tlpPlaylistProperties;
+      System.Windows.Forms.Label lPlaylistCoverDetails;
       System.Windows.Forms.PictureBox pbPlaylistCover;
       System.Windows.Forms.Label lPlaylistName;
       System.Windows.Forms.Label lPlaylistAuthor;
@@ -40,7 +52,15 @@
       System.Windows.Forms.SplitContainer splitContainer3;
       System.Windows.Forms.ToolStrip tsSongs;
       System.Windows.Forms.ToolStripLabel tslFilter;
+      System.Windows.Forms.BindableToolStripSpringTextBox tstbSongFilter;
+      System.Windows.Forms.BindableToolStripButton tsbModeStandard;
+      System.Windows.Forms.BindableToolStripButton tsbModeOneSaber;
+      System.Windows.Forms.BindableToolStripButton tsbModeNoArrows;
+      System.Windows.Forms.BindableToolStripButton tsbMode90;
+      System.Windows.Forms.BindableToolStripButton tsbMode360;
       System.Windows.Forms.GroupBox gbSongProperties;
+      System.Windows.Forms.TableLayoutPanel tlpSongProperties;
+      System.Windows.Forms.Label lSongCoverDetails;
       System.Windows.Forms.PictureBox pbSongCover;
       System.Windows.Forms.Label lArtist;
       System.Windows.Forms.Label lArtistData;
@@ -54,37 +74,30 @@
       System.Windows.Forms.Label lBeatsPerMinuteData;
       this.dgvPlaylists = new System.Windows.Forms.DataGridView();
       this.bsViewModel = new System.Windows.Forms.BindingSource(this.components);
-      this.tsbBeatsaberSetPath = new System.Windows.Forms.BindableToolStripButton();
-      this.tsbBeatsaberRefresh = new System.Windows.Forms.BindableToolStripButton();
       this.dgvPlaylistEntries = new System.Windows.Forms.DataGridView();
-      this.tsbPlaylistSave = new System.Windows.Forms.BindableToolStripButton();
-      this.tsbEntryFirst = new System.Windows.Forms.BindableToolStripButton();
-      this.tsbEntryUp = new System.Windows.Forms.BindableToolStripButton();
-      this.tsbEntryRemove = new System.Windows.Forms.BindableToolStripButton();
-      this.tsbEntryDown = new System.Windows.Forms.BindableToolStripButton();
-      this.tsbEntryLast = new System.Windows.Forms.BindableToolStripButton();
-      this.tsbEntryClear = new System.Windows.Forms.BindableToolStripButton();
-      this.tsbPlaylistReread = new System.Windows.Forms.BindableToolStripButton();
-      this.lPlaylistCoverDetails = new System.Windows.Forms.Label();
       this.dgvSongs = new System.Windows.Forms.DataGridView();
-      this.tstbSongFilter = new System.Windows.Forms.BindableToolStripSpringTextBox();
-      this.tsbModeStandard = new System.Windows.Forms.BindableToolStripButton();
-      this.tsbModeOneSaber = new System.Windows.Forms.BindableToolStripButton();
-      this.tsbModeNoArrows = new System.Windows.Forms.BindableToolStripButton();
-      this.tsbMode90 = new System.Windows.Forms.BindableToolStripButton();
-      this.tsbMode360 = new System.Windows.Forms.BindableToolStripButton();
-      this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-      this.lSongCoverDetails = new System.Windows.Forms.Label();
       this.fbdSelectRoot = new System.Windows.Forms.FolderBrowserDialog();
       this.ofdSelectImage = new System.Windows.Forms.OpenFileDialog();
       ssStatus = new System.Windows.Forms.StatusStrip();
       splitContainer1 = new System.Windows.Forms.SplitContainer();
       tsBeatsaber = new System.Windows.Forms.ToolStrip();
+      tsbBeatsaberSetPath = new System.Windows.Forms.BindableToolStripButton();
+      tsbBeatsaberRefresh = new System.Windows.Forms.BindableToolStripButton();
+      tsbDeletePlaylist = new System.Windows.Forms.BindableToolStripButton();
       splitContainer2 = new System.Windows.Forms.SplitContainer();
       splitContainer4 = new System.Windows.Forms.SplitContainer();
       tsPlaylist = new System.Windows.Forms.ToolStrip();
+      tsbPlaylistSave = new System.Windows.Forms.BindableToolStripButton();
+      tsbEntryFirst = new System.Windows.Forms.BindableToolStripButton();
+      tsbEntryUp = new System.Windows.Forms.BindableToolStripButton();
+      tsbEntryRemove = new System.Windows.Forms.BindableToolStripButton();
+      tsbEntryDown = new System.Windows.Forms.BindableToolStripButton();
+      tsbEntryLast = new System.Windows.Forms.BindableToolStripButton();
+      tsbEntryClear = new System.Windows.Forms.BindableToolStripButton();
+      tsbPlaylistReread = new System.Windows.Forms.BindableToolStripButton();
       gbPlaylistProperties = new System.Windows.Forms.GroupBox();
       tlpPlaylistProperties = new System.Windows.Forms.TableLayoutPanel();
+      lPlaylistCoverDetails = new System.Windows.Forms.Label();
       pbPlaylistCover = new System.Windows.Forms.PictureBox();
       lPlaylistName = new System.Windows.Forms.Label();
       lPlaylistAuthor = new System.Windows.Forms.Label();
@@ -93,7 +106,15 @@
       splitContainer3 = new System.Windows.Forms.SplitContainer();
       tsSongs = new System.Windows.Forms.ToolStrip();
       tslFilter = new System.Windows.Forms.ToolStripLabel();
+      tstbSongFilter = new System.Windows.Forms.BindableToolStripSpringTextBox();
+      tsbModeStandard = new System.Windows.Forms.BindableToolStripButton();
+      tsbModeOneSaber = new System.Windows.Forms.BindableToolStripButton();
+      tsbModeNoArrows = new System.Windows.Forms.BindableToolStripButton();
+      tsbMode90 = new System.Windows.Forms.BindableToolStripButton();
+      tsbMode360 = new System.Windows.Forms.BindableToolStripButton();
       gbSongProperties = new System.Windows.Forms.GroupBox();
+      tlpSongProperties = new System.Windows.Forms.TableLayoutPanel();
+      lSongCoverDetails = new System.Windows.Forms.Label();
       pbSongCover = new System.Windows.Forms.PictureBox();
       lArtist = new System.Windows.Forms.Label();
       lArtistData = new System.Windows.Forms.Label();
@@ -132,7 +153,7 @@
       ((System.ComponentModel.ISupportInitialize)(this.dgvSongs)).BeginInit();
       tsSongs.SuspendLayout();
       gbSongProperties.SuspendLayout();
-      this.tableLayoutPanel1.SuspendLayout();
+      tlpSongProperties.SuspendLayout();
       ((System.ComponentModel.ISupportInitialize)(pbSongCover)).BeginInit();
       this.SuspendLayout();
       // 
@@ -194,8 +215,9 @@
       // 
       tsBeatsaber.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
       tsBeatsaber.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.tsbBeatsaberSetPath,
-            this.tsbBeatsaberRefresh});
+            tsbBeatsaberSetPath,
+            tsbBeatsaberRefresh,
+            tsbDeletePlaylist});
       tsBeatsaber.Location = new System.Drawing.Point(0, 0);
       tsBeatsaber.Name = "tsBeatsaber";
       tsBeatsaber.Size = new System.Drawing.Size(266, 25);
@@ -204,24 +226,35 @@
       // 
       // tsbBeatsaberSetPath
       // 
-      this.tsbBeatsaberSetPath.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-      this.tsbBeatsaberSetPath.Image = global::BeatSaber_Playlist_Editor.Properties.Resources._20x20_BeatSaber;
-      this.tsbBeatsaberSetPath.ImageTransparentColor = System.Drawing.Color.Magenta;
-      this.tsbBeatsaberSetPath.Name = "tsbBeatsaberSetPath";
-      this.tsbBeatsaberSetPath.Size = new System.Drawing.Size(23, 22);
-      this.tsbBeatsaberSetPath.Text = "Select BeatSaber Installation";
-      this.tsbBeatsaberSetPath.Click += new System.EventHandler(this.tsbBeatsaberSetPath_Click);
+      tsbBeatsaberSetPath.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+      tsbBeatsaberSetPath.Image = global::BeatSaber_Playlist_Editor.Properties.Resources._20x20_BeatSaber;
+      tsbBeatsaberSetPath.ImageTransparentColor = System.Drawing.Color.Magenta;
+      tsbBeatsaberSetPath.Name = "tsbBeatsaberSetPath";
+      tsbBeatsaberSetPath.Size = new System.Drawing.Size(23, 22);
+      tsbBeatsaberSetPath.Text = "Select BeatSaber Installation";
+      tsbBeatsaberSetPath.Click += new System.EventHandler(this.tsbBeatsaberSetPath_Click);
       // 
       // tsbBeatsaberRefresh
       // 
-      this.tsbBeatsaberRefresh.DataBindings.Add(new System.Windows.Forms.Binding("Enabled", this.bsViewModel, "IsRefreshAvailable", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-      this.tsbBeatsaberRefresh.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-      this.tsbBeatsaberRefresh.Image = global::BeatSaber_Playlist_Editor.Properties.Resources._16x16_Refresh;
-      this.tsbBeatsaberRefresh.ImageTransparentColor = System.Drawing.Color.Magenta;
-      this.tsbBeatsaberRefresh.Name = "tsbBeatsaberRefresh";
-      this.tsbBeatsaberRefresh.Size = new System.Drawing.Size(23, 22);
-      this.tsbBeatsaberRefresh.Text = "Refresh";
-      this.tsbBeatsaberRefresh.Click += new System.EventHandler(this.tsbBeatsaberRefresh_Click);
+      tsbBeatsaberRefresh.DataBindings.Add(new System.Windows.Forms.Binding("Enabled", this.bsViewModel, "IsRefreshAvailable", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+      tsbBeatsaberRefresh.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+      tsbBeatsaberRefresh.Image = global::BeatSaber_Playlist_Editor.Properties.Resources._16x16_Refresh;
+      tsbBeatsaberRefresh.ImageTransparentColor = System.Drawing.Color.Magenta;
+      tsbBeatsaberRefresh.Name = "tsbBeatsaberRefresh";
+      tsbBeatsaberRefresh.Size = new System.Drawing.Size(23, 22);
+      tsbBeatsaberRefresh.Text = "Refresh";
+      tsbBeatsaberRefresh.Click += new System.EventHandler(this.tsbBeatsaberRefresh_Click);
+      // 
+      // tsbDeletePlaylist
+      // 
+      tsbDeletePlaylist.DataBindings.Add(new System.Windows.Forms.Binding("Enabled", this.bsViewModel, "IsCurrentPlaylistAvailable", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+      tsbDeletePlaylist.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+      tsbDeletePlaylist.Image = global::BeatSaber_Playlist_Editor.Properties.Resources._16x16_Trash;
+      tsbDeletePlaylist.ImageTransparentColor = System.Drawing.Color.Magenta;
+      tsbDeletePlaylist.Name = "tsbDeletePlaylist";
+      tsbDeletePlaylist.Size = new System.Drawing.Size(23, 22);
+      tsbDeletePlaylist.Text = "Delete Playlist";
+      tsbDeletePlaylist.Click += new System.EventHandler(this.tsbDeletePlaylist_Click);
       // 
       // splitContainer2
       // 
@@ -287,14 +320,14 @@
       tsPlaylist.DataBindings.Add(new System.Windows.Forms.Binding("Enabled", this.bsViewModel, "IsCurrentPlaylistAvailable", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
       tsPlaylist.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
       tsPlaylist.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.tsbPlaylistSave,
-            this.tsbEntryFirst,
-            this.tsbEntryUp,
-            this.tsbEntryRemove,
-            this.tsbEntryDown,
-            this.tsbEntryLast,
-            this.tsbEntryClear,
-            this.tsbPlaylistReread});
+            tsbPlaylistSave,
+            tsbEntryFirst,
+            tsbEntryUp,
+            tsbEntryRemove,
+            tsbEntryDown,
+            tsbEntryLast,
+            tsbEntryClear,
+            tsbPlaylistReread});
       tsPlaylist.Location = new System.Drawing.Point(0, 0);
       tsPlaylist.Name = "tsPlaylist";
       tsPlaylist.Size = new System.Drawing.Size(239, 25);
@@ -303,84 +336,84 @@
       // 
       // tsbPlaylistSave
       // 
-      this.tsbPlaylistSave.DataBindings.Add(new System.Windows.Forms.Binding("Enabled", this.bsViewModel, "IsCurrentPlaylistSaveAvailable", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-      this.tsbPlaylistSave.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-      this.tsbPlaylistSave.Image = global::BeatSaber_Playlist_Editor.Properties.Resources._16x16_Save;
-      this.tsbPlaylistSave.ImageTransparentColor = System.Drawing.Color.Magenta;
-      this.tsbPlaylistSave.Name = "tsbPlaylistSave";
-      this.tsbPlaylistSave.Size = new System.Drawing.Size(23, 22);
-      this.tsbPlaylistSave.Text = "Save";
-      this.tsbPlaylistSave.Click += new System.EventHandler(this.tsbPlaylistSave_Click);
+      tsbPlaylistSave.DataBindings.Add(new System.Windows.Forms.Binding("Enabled", this.bsViewModel, "IsCurrentPlaylistSaveAvailable", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+      tsbPlaylistSave.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+      tsbPlaylistSave.Image = global::BeatSaber_Playlist_Editor.Properties.Resources._16x16_Save;
+      tsbPlaylistSave.ImageTransparentColor = System.Drawing.Color.Magenta;
+      tsbPlaylistSave.Name = "tsbPlaylistSave";
+      tsbPlaylistSave.Size = new System.Drawing.Size(23, 22);
+      tsbPlaylistSave.Text = "Save";
+      tsbPlaylistSave.Click += new System.EventHandler(this.tsbPlaylistSave_Click);
       // 
       // tsbEntryFirst
       // 
-      this.tsbEntryFirst.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-      this.tsbEntryFirst.Image = global::BeatSaber_Playlist_Editor.Properties.Resources._20x20_First;
-      this.tsbEntryFirst.ImageTransparentColor = System.Drawing.Color.Magenta;
-      this.tsbEntryFirst.Name = "tsbEntryFirst";
-      this.tsbEntryFirst.Size = new System.Drawing.Size(23, 22);
-      this.tsbEntryFirst.Text = "First";
-      this.tsbEntryFirst.Click += new System.EventHandler(this.tsbEntryFirst_Click);
+      tsbEntryFirst.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+      tsbEntryFirst.Image = global::BeatSaber_Playlist_Editor.Properties.Resources._20x20_First;
+      tsbEntryFirst.ImageTransparentColor = System.Drawing.Color.Magenta;
+      tsbEntryFirst.Name = "tsbEntryFirst";
+      tsbEntryFirst.Size = new System.Drawing.Size(23, 22);
+      tsbEntryFirst.Text = "First";
+      tsbEntryFirst.Click += new System.EventHandler(this.tsbEntryFirst_Click);
       // 
       // tsbEntryUp
       // 
-      this.tsbEntryUp.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-      this.tsbEntryUp.Image = global::BeatSaber_Playlist_Editor.Properties.Resources._20x20_Up;
-      this.tsbEntryUp.ImageTransparentColor = System.Drawing.Color.Magenta;
-      this.tsbEntryUp.Name = "tsbEntryUp";
-      this.tsbEntryUp.Size = new System.Drawing.Size(23, 22);
-      this.tsbEntryUp.Text = "Up";
-      this.tsbEntryUp.Click += new System.EventHandler(this.tsbEntryUp_Click);
+      tsbEntryUp.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+      tsbEntryUp.Image = global::BeatSaber_Playlist_Editor.Properties.Resources._20x20_Up;
+      tsbEntryUp.ImageTransparentColor = System.Drawing.Color.Magenta;
+      tsbEntryUp.Name = "tsbEntryUp";
+      tsbEntryUp.Size = new System.Drawing.Size(23, 22);
+      tsbEntryUp.Text = "Up";
+      tsbEntryUp.Click += new System.EventHandler(this.tsbEntryUp_Click);
       // 
       // tsbEntryRemove
       // 
-      this.tsbEntryRemove.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-      this.tsbEntryRemove.Image = global::BeatSaber_Playlist_Editor.Properties.Resources._20x20_Remove;
-      this.tsbEntryRemove.ImageTransparentColor = System.Drawing.Color.Magenta;
-      this.tsbEntryRemove.Name = "tsbEntryRemove";
-      this.tsbEntryRemove.Size = new System.Drawing.Size(23, 22);
-      this.tsbEntryRemove.Text = "Remove";
-      this.tsbEntryRemove.Click += new System.EventHandler(this.tsbEntryRemove_Click);
+      tsbEntryRemove.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+      tsbEntryRemove.Image = global::BeatSaber_Playlist_Editor.Properties.Resources._20x20_Remove;
+      tsbEntryRemove.ImageTransparentColor = System.Drawing.Color.Magenta;
+      tsbEntryRemove.Name = "tsbEntryRemove";
+      tsbEntryRemove.Size = new System.Drawing.Size(23, 22);
+      tsbEntryRemove.Text = "Remove";
+      tsbEntryRemove.Click += new System.EventHandler(this.tsbEntryRemove_Click);
       // 
       // tsbEntryDown
       // 
-      this.tsbEntryDown.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-      this.tsbEntryDown.Image = global::BeatSaber_Playlist_Editor.Properties.Resources._20x20_Down;
-      this.tsbEntryDown.ImageTransparentColor = System.Drawing.Color.Magenta;
-      this.tsbEntryDown.Name = "tsbEntryDown";
-      this.tsbEntryDown.Size = new System.Drawing.Size(23, 22);
-      this.tsbEntryDown.Text = "Down";
-      this.tsbEntryDown.Click += new System.EventHandler(this.tsbEntryDown_Click);
+      tsbEntryDown.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+      tsbEntryDown.Image = global::BeatSaber_Playlist_Editor.Properties.Resources._20x20_Down;
+      tsbEntryDown.ImageTransparentColor = System.Drawing.Color.Magenta;
+      tsbEntryDown.Name = "tsbEntryDown";
+      tsbEntryDown.Size = new System.Drawing.Size(23, 22);
+      tsbEntryDown.Text = "Down";
+      tsbEntryDown.Click += new System.EventHandler(this.tsbEntryDown_Click);
       // 
       // tsbEntryLast
       // 
-      this.tsbEntryLast.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-      this.tsbEntryLast.Image = global::BeatSaber_Playlist_Editor.Properties.Resources._20x20_Last;
-      this.tsbEntryLast.ImageTransparentColor = System.Drawing.Color.Magenta;
-      this.tsbEntryLast.Name = "tsbEntryLast";
-      this.tsbEntryLast.Size = new System.Drawing.Size(23, 22);
-      this.tsbEntryLast.Text = "Last";
-      this.tsbEntryLast.Click += new System.EventHandler(this.tsbEntryLast_Click);
+      tsbEntryLast.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+      tsbEntryLast.Image = global::BeatSaber_Playlist_Editor.Properties.Resources._20x20_Last;
+      tsbEntryLast.ImageTransparentColor = System.Drawing.Color.Magenta;
+      tsbEntryLast.Name = "tsbEntryLast";
+      tsbEntryLast.Size = new System.Drawing.Size(23, 22);
+      tsbEntryLast.Text = "Last";
+      tsbEntryLast.Click += new System.EventHandler(this.tsbEntryLast_Click);
       // 
       // tsbEntryClear
       // 
-      this.tsbEntryClear.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-      this.tsbEntryClear.Image = global::BeatSaber_Playlist_Editor.Properties.Resources._16x16_Clear;
-      this.tsbEntryClear.ImageTransparentColor = System.Drawing.Color.Magenta;
-      this.tsbEntryClear.Name = "tsbEntryClear";
-      this.tsbEntryClear.Size = new System.Drawing.Size(23, 22);
-      this.tsbEntryClear.Text = "Clear";
-      this.tsbEntryClear.Click += new System.EventHandler(this.tsbEntryClear_Click);
+      tsbEntryClear.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+      tsbEntryClear.Image = global::BeatSaber_Playlist_Editor.Properties.Resources._16x16_Clear;
+      tsbEntryClear.ImageTransparentColor = System.Drawing.Color.Magenta;
+      tsbEntryClear.Name = "tsbEntryClear";
+      tsbEntryClear.Size = new System.Drawing.Size(23, 22);
+      tsbEntryClear.Text = "Clear";
+      tsbEntryClear.Click += new System.EventHandler(this.tsbEntryClear_Click);
       // 
       // tsbPlaylistReread
       // 
-      this.tsbPlaylistReread.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-      this.tsbPlaylistReread.Image = global::BeatSaber_Playlist_Editor.Properties.Resources._24x24_Reread;
-      this.tsbPlaylistReread.ImageTransparentColor = System.Drawing.Color.Magenta;
-      this.tsbPlaylistReread.Name = "tsbPlaylistReread";
-      this.tsbPlaylistReread.Size = new System.Drawing.Size(23, 22);
-      this.tsbPlaylistReread.Text = "Re-read";
-      this.tsbPlaylistReread.Click += new System.EventHandler(this.tsbPlaylistReread_Click);
+      tsbPlaylistReread.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+      tsbPlaylistReread.Image = global::BeatSaber_Playlist_Editor.Properties.Resources._24x24_Reread;
+      tsbPlaylistReread.ImageTransparentColor = System.Drawing.Color.Magenta;
+      tsbPlaylistReread.Name = "tsbPlaylistReread";
+      tsbPlaylistReread.Size = new System.Drawing.Size(23, 22);
+      tsbPlaylistReread.Text = "Re-read";
+      tsbPlaylistReread.Click += new System.EventHandler(this.tsbPlaylistReread_Click);
       // 
       // gbPlaylistProperties
       // 
@@ -398,7 +431,7 @@
       tlpPlaylistProperties.ColumnCount = 2;
       tlpPlaylistProperties.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
       tlpPlaylistProperties.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-      tlpPlaylistProperties.Controls.Add(this.lPlaylistCoverDetails, 0, 1);
+      tlpPlaylistProperties.Controls.Add(lPlaylistCoverDetails, 0, 1);
       tlpPlaylistProperties.Controls.Add(pbPlaylistCover, 0, 0);
       tlpPlaylistProperties.Controls.Add(lPlaylistName, 0, 2);
       tlpPlaylistProperties.Controls.Add(lPlaylistAuthor, 0, 3);
@@ -418,16 +451,16 @@
       // 
       // lPlaylistCoverDetails
       // 
-      this.lPlaylistCoverDetails.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-      this.lPlaylistCoverDetails.AutoSize = true;
-      tlpPlaylistProperties.SetColumnSpan(this.lPlaylistCoverDetails, 2);
-      this.lPlaylistCoverDetails.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.bsViewModel, "CurrentPlaylist.CoverDetails", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-      this.lPlaylistCoverDetails.Location = new System.Drawing.Point(3, 84);
-      this.lPlaylistCoverDetails.Name = "lPlaylistCoverDetails";
-      this.lPlaylistCoverDetails.Size = new System.Drawing.Size(227, 15);
-      this.lPlaylistCoverDetails.TabIndex = 0;
-      this.lPlaylistCoverDetails.Text = "100 x 100";
-      this.lPlaylistCoverDetails.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+      lPlaylistCoverDetails.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+      lPlaylistCoverDetails.AutoSize = true;
+      tlpPlaylistProperties.SetColumnSpan(lPlaylistCoverDetails, 2);
+      lPlaylistCoverDetails.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.bsViewModel, "CurrentPlaylist.CoverDetails", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+      lPlaylistCoverDetails.Location = new System.Drawing.Point(3, 84);
+      lPlaylistCoverDetails.Name = "lPlaylistCoverDetails";
+      lPlaylistCoverDetails.Size = new System.Drawing.Size(227, 15);
+      lPlaylistCoverDetails.TabIndex = 0;
+      lPlaylistCoverDetails.Text = "100 x 100";
+      lPlaylistCoverDetails.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
       // 
       // pbPlaylistCover
       // 
@@ -535,12 +568,12 @@
       tsSongs.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
       tsSongs.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             tslFilter,
-            this.tstbSongFilter,
-            this.tsbModeStandard,
-            this.tsbModeOneSaber,
-            this.tsbModeNoArrows,
-            this.tsbMode90,
-            this.tsbMode360});
+            tstbSongFilter,
+            tsbModeStandard,
+            tsbModeOneSaber,
+            tsbModeNoArrows,
+            tsbMode90,
+            tsbMode360});
       tsSongs.Location = new System.Drawing.Point(0, 0);
       tsSongs.Name = "tsSongs";
       tsSongs.Size = new System.Drawing.Size(287, 25);
@@ -560,69 +593,69 @@
       // 
       // tstbSongFilter
       // 
-      this.tstbSongFilter.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-      this.tstbSongFilter.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.bsViewModel, "SongFilterText", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-      this.tstbSongFilter.Name = "tstbSongFilter";
-      this.tstbSongFilter.Size = new System.Drawing.Size(116, 25);
+      tstbSongFilter.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+      tstbSongFilter.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.bsViewModel, "SongFilterText", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+      tstbSongFilter.Name = "tstbSongFilter";
+      tstbSongFilter.Size = new System.Drawing.Size(116, 25);
       // 
       // tsbModeStandard
       // 
-      this.tsbModeStandard.CheckOnClick = true;
-      this.tsbModeStandard.DataBindings.Add(new System.Windows.Forms.Binding("Checked", this.bsViewModel, "IsStandardGameModeVisible", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-      this.tsbModeStandard.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-      this.tsbModeStandard.Image = global::BeatSaber_Playlist_Editor.Properties.Resources._24x24_TwoSabers;
-      this.tsbModeStandard.ImageTransparentColor = System.Drawing.Color.Magenta;
-      this.tsbModeStandard.Name = "tsbModeStandard";
-      this.tsbModeStandard.Size = new System.Drawing.Size(23, 22);
-      this.tsbModeStandard.Text = "Standard";
+      tsbModeStandard.CheckOnClick = true;
+      tsbModeStandard.DataBindings.Add(new System.Windows.Forms.Binding("Checked", this.bsViewModel, "IsStandardGameModeVisible", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+      tsbModeStandard.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+      tsbModeStandard.Image = global::BeatSaber_Playlist_Editor.Properties.Resources._24x24_TwoSabers;
+      tsbModeStandard.ImageTransparentColor = System.Drawing.Color.Magenta;
+      tsbModeStandard.Name = "tsbModeStandard";
+      tsbModeStandard.Size = new System.Drawing.Size(23, 22);
+      tsbModeStandard.Text = "Standard";
       // 
       // tsbModeOneSaber
       // 
-      this.tsbModeOneSaber.CheckOnClick = true;
-      this.tsbModeOneSaber.DataBindings.Add(new System.Windows.Forms.Binding("Checked", this.bsViewModel, "IsOneSaberGameModeVisible", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-      this.tsbModeOneSaber.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-      this.tsbModeOneSaber.Image = global::BeatSaber_Playlist_Editor.Properties.Resources._24x24_OneSaber;
-      this.tsbModeOneSaber.ImageTransparentColor = System.Drawing.Color.Magenta;
-      this.tsbModeOneSaber.Name = "tsbModeOneSaber";
-      this.tsbModeOneSaber.Size = new System.Drawing.Size(23, 22);
-      this.tsbModeOneSaber.Text = "One Saber";
+      tsbModeOneSaber.CheckOnClick = true;
+      tsbModeOneSaber.DataBindings.Add(new System.Windows.Forms.Binding("Checked", this.bsViewModel, "IsOneSaberGameModeVisible", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+      tsbModeOneSaber.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+      tsbModeOneSaber.Image = global::BeatSaber_Playlist_Editor.Properties.Resources._24x24_OneSaber;
+      tsbModeOneSaber.ImageTransparentColor = System.Drawing.Color.Magenta;
+      tsbModeOneSaber.Name = "tsbModeOneSaber";
+      tsbModeOneSaber.Size = new System.Drawing.Size(23, 22);
+      tsbModeOneSaber.Text = "One Saber";
       // 
       // tsbModeNoArrows
       // 
-      this.tsbModeNoArrows.CheckOnClick = true;
-      this.tsbModeNoArrows.DataBindings.Add(new System.Windows.Forms.Binding("Checked", this.bsViewModel, "IsNoArrowsGameModeVisible", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-      this.tsbModeNoArrows.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-      this.tsbModeNoArrows.Image = global::BeatSaber_Playlist_Editor.Properties.Resources._24x24_NoArrows;
-      this.tsbModeNoArrows.ImageTransparentColor = System.Drawing.Color.Magenta;
-      this.tsbModeNoArrows.Name = "tsbModeNoArrows";
-      this.tsbModeNoArrows.Size = new System.Drawing.Size(23, 22);
-      this.tsbModeNoArrows.Text = "No Arrows";
+      tsbModeNoArrows.CheckOnClick = true;
+      tsbModeNoArrows.DataBindings.Add(new System.Windows.Forms.Binding("Checked", this.bsViewModel, "IsNoArrowsGameModeVisible", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+      tsbModeNoArrows.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+      tsbModeNoArrows.Image = global::BeatSaber_Playlist_Editor.Properties.Resources._24x24_NoArrows;
+      tsbModeNoArrows.ImageTransparentColor = System.Drawing.Color.Magenta;
+      tsbModeNoArrows.Name = "tsbModeNoArrows";
+      tsbModeNoArrows.Size = new System.Drawing.Size(23, 22);
+      tsbModeNoArrows.Text = "No Arrows";
       // 
       // tsbMode90
       // 
-      this.tsbMode90.CheckOnClick = true;
-      this.tsbMode90.DataBindings.Add(new System.Windows.Forms.Binding("Checked", this.bsViewModel, "Is90GameModeVisible", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-      this.tsbMode90.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-      this.tsbMode90.Image = global::BeatSaber_Playlist_Editor.Properties.Resources._24x24_90degrees;
-      this.tsbMode90.ImageTransparentColor = System.Drawing.Color.Magenta;
-      this.tsbMode90.Name = "tsbMode90";
-      this.tsbMode90.Size = new System.Drawing.Size(23, 22);
-      this.tsbMode90.Text = "90°";
+      tsbMode90.CheckOnClick = true;
+      tsbMode90.DataBindings.Add(new System.Windows.Forms.Binding("Checked", this.bsViewModel, "Is90GameModeVisible", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+      tsbMode90.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+      tsbMode90.Image = global::BeatSaber_Playlist_Editor.Properties.Resources._24x24_90degrees;
+      tsbMode90.ImageTransparentColor = System.Drawing.Color.Magenta;
+      tsbMode90.Name = "tsbMode90";
+      tsbMode90.Size = new System.Drawing.Size(23, 22);
+      tsbMode90.Text = "90°";
       // 
       // tsbMode360
       // 
-      this.tsbMode360.CheckOnClick = true;
-      this.tsbMode360.DataBindings.Add(new System.Windows.Forms.Binding("Checked", this.bsViewModel, "Is360GameModeVisible", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-      this.tsbMode360.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-      this.tsbMode360.Image = global::BeatSaber_Playlist_Editor.Properties.Resources._24x24_360degrees;
-      this.tsbMode360.ImageTransparentColor = System.Drawing.Color.Magenta;
-      this.tsbMode360.Name = "tsbMode360";
-      this.tsbMode360.Size = new System.Drawing.Size(23, 22);
-      this.tsbMode360.Text = "360°";
+      tsbMode360.CheckOnClick = true;
+      tsbMode360.DataBindings.Add(new System.Windows.Forms.Binding("Checked", this.bsViewModel, "Is360GameModeVisible", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+      tsbMode360.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+      tsbMode360.Image = global::BeatSaber_Playlist_Editor.Properties.Resources._24x24_360degrees;
+      tsbMode360.ImageTransparentColor = System.Drawing.Color.Magenta;
+      tsbMode360.Name = "tsbMode360";
+      tsbMode360.Size = new System.Drawing.Size(23, 22);
+      tsbMode360.Text = "360°";
       // 
       // gbSongProperties
       // 
-      gbSongProperties.Controls.Add(this.tableLayoutPanel1);
+      gbSongProperties.Controls.Add(tlpSongProperties);
       gbSongProperties.Dock = System.Windows.Forms.DockStyle.Fill;
       gbSongProperties.Location = new System.Drawing.Point(0, 0);
       gbSongProperties.Name = "gbSongProperties";
@@ -631,53 +664,53 @@
       gbSongProperties.TabStop = false;
       gbSongProperties.Text = "Song properties";
       // 
-      // tableLayoutPanel1
+      // tlpSongProperties
       // 
-      this.tableLayoutPanel1.ColumnCount = 2;
-      this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-      this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-      this.tableLayoutPanel1.Controls.Add(this.lSongCoverDetails, 0, 1);
-      this.tableLayoutPanel1.Controls.Add(pbSongCover, 0, 0);
-      this.tableLayoutPanel1.Controls.Add(lArtist, 0, 2);
-      this.tableLayoutPanel1.Controls.Add(lArtistData, 1, 2);
-      this.tableLayoutPanel1.Controls.Add(lTitleData, 1, 3);
-      this.tableLayoutPanel1.Controls.Add(lLevelAuthorData, 1, 4);
-      this.tableLayoutPanel1.Controls.Add(lLevelAuthor, 0, 4);
-      this.tableLayoutPanel1.Controls.Add(lTitle, 0, 3);
-      this.tableLayoutPanel1.Controls.Add(lEnvironment, 0, 5);
-      this.tableLayoutPanel1.Controls.Add(lBeatsPerMinute, 0, 6);
-      this.tableLayoutPanel1.Controls.Add(lEnvironmentData, 1, 5);
-      this.tableLayoutPanel1.Controls.Add(lBeatsPerMinuteData, 1, 6);
-      this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-      this.tableLayoutPanel1.Location = new System.Drawing.Point(3, 19);
-      this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-      this.tableLayoutPanel1.RowCount = 7;
-      this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-      this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-      this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-      this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-      this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-      this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-      this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-      this.tableLayoutPanel1.Size = new System.Drawing.Size(281, 179);
-      this.tableLayoutPanel1.TabIndex = 0;
+      tlpSongProperties.ColumnCount = 2;
+      tlpSongProperties.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+      tlpSongProperties.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+      tlpSongProperties.Controls.Add(lSongCoverDetails, 0, 1);
+      tlpSongProperties.Controls.Add(pbSongCover, 0, 0);
+      tlpSongProperties.Controls.Add(lArtist, 0, 2);
+      tlpSongProperties.Controls.Add(lArtistData, 1, 2);
+      tlpSongProperties.Controls.Add(lTitleData, 1, 3);
+      tlpSongProperties.Controls.Add(lLevelAuthorData, 1, 4);
+      tlpSongProperties.Controls.Add(lLevelAuthor, 0, 4);
+      tlpSongProperties.Controls.Add(lTitle, 0, 3);
+      tlpSongProperties.Controls.Add(lEnvironment, 0, 5);
+      tlpSongProperties.Controls.Add(lBeatsPerMinute, 0, 6);
+      tlpSongProperties.Controls.Add(lEnvironmentData, 1, 5);
+      tlpSongProperties.Controls.Add(lBeatsPerMinuteData, 1, 6);
+      tlpSongProperties.Dock = System.Windows.Forms.DockStyle.Fill;
+      tlpSongProperties.Location = new System.Drawing.Point(3, 19);
+      tlpSongProperties.Name = "tlpSongProperties";
+      tlpSongProperties.RowCount = 7;
+      tlpSongProperties.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+      tlpSongProperties.RowStyles.Add(new System.Windows.Forms.RowStyle());
+      tlpSongProperties.RowStyles.Add(new System.Windows.Forms.RowStyle());
+      tlpSongProperties.RowStyles.Add(new System.Windows.Forms.RowStyle());
+      tlpSongProperties.RowStyles.Add(new System.Windows.Forms.RowStyle());
+      tlpSongProperties.RowStyles.Add(new System.Windows.Forms.RowStyle());
+      tlpSongProperties.RowStyles.Add(new System.Windows.Forms.RowStyle());
+      tlpSongProperties.Size = new System.Drawing.Size(281, 179);
+      tlpSongProperties.TabIndex = 0;
       // 
       // lSongCoverDetails
       // 
-      this.lSongCoverDetails.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-      this.lSongCoverDetails.AutoSize = true;
-      this.tableLayoutPanel1.SetColumnSpan(this.lSongCoverDetails, 2);
-      this.lSongCoverDetails.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.bsViewModel, "CurrentSong.CoverDetails", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-      this.lSongCoverDetails.Location = new System.Drawing.Point(3, 89);
-      this.lSongCoverDetails.Name = "lSongCoverDetails";
-      this.lSongCoverDetails.Size = new System.Drawing.Size(275, 15);
-      this.lSongCoverDetails.TabIndex = 0;
-      this.lSongCoverDetails.Text = "100 x 100";
-      this.lSongCoverDetails.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+      lSongCoverDetails.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+      lSongCoverDetails.AutoSize = true;
+      tlpSongProperties.SetColumnSpan(lSongCoverDetails, 2);
+      lSongCoverDetails.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.bsViewModel, "CurrentSong.CoverDetails", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+      lSongCoverDetails.Location = new System.Drawing.Point(3, 89);
+      lSongCoverDetails.Name = "lSongCoverDetails";
+      lSongCoverDetails.Size = new System.Drawing.Size(275, 15);
+      lSongCoverDetails.TabIndex = 0;
+      lSongCoverDetails.Text = "100 x 100";
+      lSongCoverDetails.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
       // 
       // pbSongCover
       // 
-      this.tableLayoutPanel1.SetColumnSpan(pbSongCover, 2);
+      tlpSongProperties.SetColumnSpan(pbSongCover, 2);
       pbSongCover.DataBindings.Add(new System.Windows.Forms.Binding("Image", this.bsViewModel, "CurrentSong.Cover.Image", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
       pbSongCover.Dock = System.Windows.Forms.DockStyle.Fill;
       pbSongCover.ErrorImage = global::BeatSaber_Playlist_Editor.Properties.Resources.NoPictureAvailable;
@@ -850,8 +883,8 @@
       tsSongs.ResumeLayout(false);
       tsSongs.PerformLayout();
       gbSongProperties.ResumeLayout(false);
-      this.tableLayoutPanel1.ResumeLayout(false);
-      this.tableLayoutPanel1.PerformLayout();
+      tlpSongProperties.ResumeLayout(false);
+      tlpSongProperties.PerformLayout();
       ((System.ComponentModel.ISupportInitialize)(pbSongCover)).EndInit();
       this.ResumeLayout(false);
       this.PerformLayout();
@@ -862,36 +895,9 @@
 
     private DataGridView dgvPlaylists;
     private DataGridView dgvPlaylistEntries;
-    private BindableToolStripSpringTextBox tstbSongFilter;
-    private BindableToolStripButton tsbModeOneSaber;
-    private BindableToolStripButton tsbModeStandard;
-    private BindableToolStripButton tsbModeNoArrows;
-    private BindableToolStripButton tsbMode90;
-    private BindableToolStripButton tsbMode360;
-    private BindableToolStripButton tsbEntryClear;
-    private BindableToolStripButton tsbEntryRemove;
-    private BindableToolStripButton tsbEntryLast;
-    private BindableToolStripButton tsbEntryFirst;
-    private BindableToolStripButton tsbEntryDown;
-    private BindableToolStripButton tsbEntryUp;
-    private BindableToolStripButton tsbPlaylistSave;
-    private BindableToolStripButton tsbPlaylistReread;
-    private BindableToolStripButton tsbBeatsaberSetPath;
-    private BindableToolStripButton tsbBeatsaberRefresh;
-        private BindingSource bsViewModel;
-        private FolderBrowserDialog fbdSelectRoot;
-        private DataGridView dgvSongs;
-    private TableLayoutPanel tlpPlaylistProperties;
-    private Label lPlaylistCoverDetails;
-    private PictureBox pbPlaylistCover;
-        private OpenFileDialog ofdSelectImage;
-        private TableLayoutPanel tableLayoutPanel1;
-        private Label lSongCoverDetails;
-        private Label lArtist;
-        private Label lArtistData;
-        private Label lTitleData;
-        private Label lLevelAuthorData;
-        private Label lLevelAuthor;
-        private Label lTitle;
-    }
+    private BindingSource bsViewModel;
+    private FolderBrowserDialog fbdSelectRoot;
+    private DataGridView dgvSongs;
+    private OpenFileDialog ofdSelectImage;
+  }
 }

@@ -102,12 +102,12 @@ namespace BeatSaber_Playlist_Editor {
       this.dgvSongs.DoDragDrop(selected, DragDropEffects.Copy);
     }
 
-    private void dgvPlaylistEntries_DragEnter(object sender, DragEventArgs e) {
+    private void dgvPlaylistEntries_DragEnter(object _, DragEventArgs e) {
       if (e.Data?.GetDataPresent(typeof(UISong[])) ?? false)
         e.Effect = DragDropEffects.Copy;
     }
 
-    private void dgvPlaylistEntries_DragDrop(object sender, DragEventArgs e) {
+    private void dgvPlaylistEntries_DragDrop(object _, DragEventArgs e) {
       if (e.Data?.GetData(typeof(UISong[])) is not UISong[] songs) {
         e.Effect = DragDropEffects.None;
         return;
@@ -117,12 +117,12 @@ namespace BeatSaber_Playlist_Editor {
       // TODO: would be nice to know where drop occured and insert songs there if possible
     }
 
-    private void pbPlaylistCover_Click(object sender, EventArgs e) {
+    private void pbPlaylistCover_Click(object _, EventArgs __) {
       if (this.ofdSelectImage.ShowDialog() == DialogResult.OK)
         this._viewModel?.SetPlaylistCover(new FileInfo(this.ofdSelectImage.FileName));
     }
 
-    private void dgvSongs_SelectionChanged(object sender, EventArgs e) {
+    private void dgvSongs_SelectionChanged(object _, EventArgs __) {
       if (this._viewModel == null)
         return;
 
@@ -132,11 +132,17 @@ namespace BeatSaber_Playlist_Editor {
 
     private void tbPlaylistName_Validating(object sender, System.ComponentModel.CancelEventArgs e) {
       var tb = (TextBox)sender;
-      if (this._viewModel?.ValidatePlaylistName(tb.Text) ?? false)
+      if (this._viewModel?.ValidatePlaylistNameNotEmpty(tb.Text) ?? false)
         return;
 
       MessageBox.Show("Playlist name must not be empty.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
       e.Cancel = true;
     }
+
+    private void tsbDeletePlaylist_Click(object _, EventArgs __) {
+      if (MessageBox.Show($"This will delete the currently selected playlist '{this._viewModel?.CurrentPlaylist?.Name}'.\r\nAre you sure?", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+        this._viewModel?.DeleteCurrentPlaylist();
+    }
+
   }
 }
