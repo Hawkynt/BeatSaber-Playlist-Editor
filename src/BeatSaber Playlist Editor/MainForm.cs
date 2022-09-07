@@ -121,5 +121,13 @@ namespace BeatSaber_Playlist_Editor {
       if (this.ofdSelectImage.ShowDialog() == DialogResult.OK)
         this._viewModel?.SetPlaylistCover(new FileInfo(this.ofdSelectImage.FileName));
     }
+
+    private void dgvSongs_SelectionChanged(object sender, EventArgs e) {
+      if (this._viewModel == null)
+        return;
+
+      if (this.dgvSongs.TryGetFirstSelectedItem<UISong>(out var song))
+        this._viewModel.CurrentSong = song;
+    }
   }
 }

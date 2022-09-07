@@ -10,7 +10,7 @@ internal class UIMain : INotifyPropertyChanged {
   #region nested types
 
   [DebuggerDisplay($"{{{nameof(Name)}}}")]
-  public class UIPlaylist:INotifyPropertyChanged {
+  public class UIPlaylist : INotifyPropertyChanged {
 
     [Browsable(false)]
     public IPlaylist Source { get; }
@@ -31,7 +31,7 @@ internal class UIMain : INotifyPropertyChanged {
           return;
 
         this.Source.SetImage(value);
-        this._cover= new System.Lazy<Image?>(() => this.Source.Image);
+        this._cover = new System.Lazy<Image?>(() => this.Source.Image);
         this._OnPropertyChanged();
       }
     }
@@ -67,7 +67,17 @@ internal class UIMain : INotifyPropertyChanged {
     public string? Artist => this.Source.Artist;
     public string Title => this.Source.Title;
 
-    public UISong(ISong source) => this.Source = source;
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    public string CoverDetails => this._cover.Value == null ? "No image" : $"{this.Cover.Width} x {this.Cover.Height}";
+
+    private System.Lazy<Image?> _cover;
+
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    public Image Cover => this._cover.Value ?? Resources.NoPictureAvailable;
+    public UISong(ISong source) {
+      this.Source = source;
+      this._cover = new System.Lazy<Image?>(() => source.Image);
+    }
   }
 
 
@@ -86,6 +96,7 @@ internal class UIMain : INotifyPropertyChanged {
   private bool _is90GameModeVisible;
   private bool _is360GameModeVisible;
   private bool _isCurrentPlaylistSaveAvailable;
+  private UISong? _currentSong;
 
   public event PropertyChangedEventHandler? PropertyChanged;
 
@@ -184,6 +195,11 @@ internal class UIMain : INotifyPropertyChanged {
 
       this.RereadCurrentPlaylist();
     }
+  }
+
+  public UISong? CurrentSong {
+    get => _currentSong;
+    set => this.SetProperty(this.OnPropertyChanged,ref _currentSong, value);
   }
 
   public SortableBindingList<UIPlaylist> Playlists { get; } = new();

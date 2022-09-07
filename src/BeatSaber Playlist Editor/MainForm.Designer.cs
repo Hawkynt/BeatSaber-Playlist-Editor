@@ -24,17 +24,20 @@
     /// </summary>
     private void InitializeComponent() {
       this.components = new System.ComponentModel.Container();
-      System.Windows.Forms.StatusStrip statusStrip1;
+      System.Windows.Forms.StatusStrip ssStatus;
       System.Windows.Forms.SplitContainer splitContainer1;
       System.Windows.Forms.ToolStrip tsBeatsaber;
       System.Windows.Forms.SplitContainer splitContainer2;
       System.Windows.Forms.SplitContainer splitContainer4;
       System.Windows.Forms.ToolStrip tsPlaylist;
-      System.Windows.Forms.GroupBox groupBox1;
+      System.Windows.Forms.GroupBox gbPlaylistProperties;
+      System.Windows.Forms.TableLayoutPanel tlpPlaylistProperties;
+      System.Windows.Forms.PictureBox pbPlaylistCover;
       System.Windows.Forms.SplitContainer splitContainer3;
       System.Windows.Forms.ToolStrip tsSongs;
       System.Windows.Forms.ToolStripLabel tslFilter;
-      System.Windows.Forms.GroupBox groupBox2;
+      System.Windows.Forms.GroupBox gbSongProperties;
+      System.Windows.Forms.PictureBox pbSongCover;
       this.dgvPlaylists = new System.Windows.Forms.DataGridView();
       this.bsViewModel = new System.Windows.Forms.BindingSource(this.components);
       this.tsbBeatsaberSetPath = new System.Windows.Forms.BindableToolStripButton();
@@ -48,9 +51,7 @@
       this.tsbEntryLast = new System.Windows.Forms.BindableToolStripButton();
       this.tsbEntryClear = new System.Windows.Forms.BindableToolStripButton();
       this.tsbPlaylistReread = new System.Windows.Forms.BindableToolStripButton();
-      this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
       this.lPlaylistCoverDetails = new System.Windows.Forms.Label();
-      this.pbPlaylistCover = new System.Windows.Forms.PictureBox();
       this.dgvSongs = new System.Windows.Forms.DataGridView();
       this.tstbSongFilter = new System.Windows.Forms.BindableToolStripSpringTextBox();
       this.tsbModeStandard = new System.Windows.Forms.BindableToolStripButton();
@@ -58,19 +59,24 @@
       this.tsbModeNoArrows = new System.Windows.Forms.BindableToolStripButton();
       this.tsbMode90 = new System.Windows.Forms.BindableToolStripButton();
       this.tsbMode360 = new System.Windows.Forms.BindableToolStripButton();
+      this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+      this.lSongCoverDetails = new System.Windows.Forms.Label();
       this.fbdSelectRoot = new System.Windows.Forms.FolderBrowserDialog();
       this.ofdSelectImage = new System.Windows.Forms.OpenFileDialog();
-      statusStrip1 = new System.Windows.Forms.StatusStrip();
+      ssStatus = new System.Windows.Forms.StatusStrip();
       splitContainer1 = new System.Windows.Forms.SplitContainer();
       tsBeatsaber = new System.Windows.Forms.ToolStrip();
       splitContainer2 = new System.Windows.Forms.SplitContainer();
       splitContainer4 = new System.Windows.Forms.SplitContainer();
       tsPlaylist = new System.Windows.Forms.ToolStrip();
-      groupBox1 = new System.Windows.Forms.GroupBox();
+      gbPlaylistProperties = new System.Windows.Forms.GroupBox();
+      tlpPlaylistProperties = new System.Windows.Forms.TableLayoutPanel();
+      pbPlaylistCover = new System.Windows.Forms.PictureBox();
       splitContainer3 = new System.Windows.Forms.SplitContainer();
       tsSongs = new System.Windows.Forms.ToolStrip();
       tslFilter = new System.Windows.Forms.ToolStripLabel();
-      groupBox2 = new System.Windows.Forms.GroupBox();
+      gbSongProperties = new System.Windows.Forms.GroupBox();
+      pbSongCover = new System.Windows.Forms.PictureBox();
       ((System.ComponentModel.ISupportInitialize)(splitContainer1)).BeginInit();
       splitContainer1.Panel1.SuspendLayout();
       splitContainer1.Panel2.SuspendLayout();
@@ -88,24 +94,27 @@
       splitContainer4.SuspendLayout();
       ((System.ComponentModel.ISupportInitialize)(this.dgvPlaylistEntries)).BeginInit();
       tsPlaylist.SuspendLayout();
-      groupBox1.SuspendLayout();
-      this.tableLayoutPanel1.SuspendLayout();
-      ((System.ComponentModel.ISupportInitialize)(this.pbPlaylistCover)).BeginInit();
+      gbPlaylistProperties.SuspendLayout();
+      tlpPlaylistProperties.SuspendLayout();
+      ((System.ComponentModel.ISupportInitialize)(pbPlaylistCover)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(splitContainer3)).BeginInit();
       splitContainer3.Panel1.SuspendLayout();
       splitContainer3.Panel2.SuspendLayout();
       splitContainer3.SuspendLayout();
       ((System.ComponentModel.ISupportInitialize)(this.dgvSongs)).BeginInit();
       tsSongs.SuspendLayout();
+      gbSongProperties.SuspendLayout();
+      this.tableLayoutPanel1.SuspendLayout();
+      ((System.ComponentModel.ISupportInitialize)(pbSongCover)).BeginInit();
       this.SuspendLayout();
       // 
-      // statusStrip1
+      // ssStatus
       // 
-      statusStrip1.Location = new System.Drawing.Point(0, 428);
-      statusStrip1.Name = "statusStrip1";
-      statusStrip1.Size = new System.Drawing.Size(800, 22);
-      statusStrip1.TabIndex = 0;
-      statusStrip1.Text = "statusStrip1";
+      ssStatus.Location = new System.Drawing.Point(0, 428);
+      ssStatus.Name = "ssStatus";
+      ssStatus.Size = new System.Drawing.Size(800, 22);
+      ssStatus.TabIndex = 0;
+      ssStatus.Text = "statusStrip1";
       // 
       // splitContainer1
       // 
@@ -217,7 +226,7 @@
       // 
       // splitContainer4.Panel2
       // 
-      splitContainer4.Panel2.Controls.Add(groupBox1);
+      splitContainer4.Panel2.Controls.Add(gbPlaylistProperties);
       splitContainer4.Size = new System.Drawing.Size(239, 428);
       splitContainer4.SplitterDistance = 225;
       splitContainer4.TabIndex = 0;
@@ -345,41 +354,41 @@
       this.tsbPlaylistReread.Text = "Re-read";
       this.tsbPlaylistReread.Click += new System.EventHandler(this.tsbPlaylistReread_Click);
       // 
-      // groupBox1
+      // gbPlaylistProperties
       // 
-      groupBox1.Controls.Add(this.tableLayoutPanel1);
-      groupBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-      groupBox1.Location = new System.Drawing.Point(0, 0);
-      groupBox1.Name = "groupBox1";
-      groupBox1.Size = new System.Drawing.Size(239, 199);
-      groupBox1.TabIndex = 0;
-      groupBox1.TabStop = false;
-      groupBox1.Text = "Playlist properties";
+      gbPlaylistProperties.Controls.Add(tlpPlaylistProperties);
+      gbPlaylistProperties.Dock = System.Windows.Forms.DockStyle.Fill;
+      gbPlaylistProperties.Location = new System.Drawing.Point(0, 0);
+      gbPlaylistProperties.Name = "gbPlaylistProperties";
+      gbPlaylistProperties.Size = new System.Drawing.Size(239, 199);
+      gbPlaylistProperties.TabIndex = 0;
+      gbPlaylistProperties.TabStop = false;
+      gbPlaylistProperties.Text = "Playlist properties";
       // 
-      // tableLayoutPanel1
+      // tlpPlaylistProperties
       // 
-      this.tableLayoutPanel1.ColumnCount = 2;
-      this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-      this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-      this.tableLayoutPanel1.Controls.Add(this.lPlaylistCoverDetails, 0, 1);
-      this.tableLayoutPanel1.Controls.Add(this.pbPlaylistCover, 0, 0);
-      this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-      this.tableLayoutPanel1.Location = new System.Drawing.Point(3, 19);
-      this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-      this.tableLayoutPanel1.RowCount = 5;
-      this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-      this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-      this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-      this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-      this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-      this.tableLayoutPanel1.Size = new System.Drawing.Size(233, 177);
-      this.tableLayoutPanel1.TabIndex = 0;
+      tlpPlaylistProperties.ColumnCount = 2;
+      tlpPlaylistProperties.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+      tlpPlaylistProperties.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+      tlpPlaylistProperties.Controls.Add(this.lPlaylistCoverDetails, 0, 1);
+      tlpPlaylistProperties.Controls.Add(pbPlaylistCover, 0, 0);
+      tlpPlaylistProperties.Dock = System.Windows.Forms.DockStyle.Fill;
+      tlpPlaylistProperties.Location = new System.Drawing.Point(3, 19);
+      tlpPlaylistProperties.Name = "tlpPlaylistProperties";
+      tlpPlaylistProperties.RowCount = 5;
+      tlpPlaylistProperties.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+      tlpPlaylistProperties.RowStyles.Add(new System.Windows.Forms.RowStyle());
+      tlpPlaylistProperties.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+      tlpPlaylistProperties.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+      tlpPlaylistProperties.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+      tlpPlaylistProperties.Size = new System.Drawing.Size(233, 177);
+      tlpPlaylistProperties.TabIndex = 0;
       // 
       // lPlaylistCoverDetails
       // 
       this.lPlaylistCoverDetails.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
       this.lPlaylistCoverDetails.AutoSize = true;
-      this.tableLayoutPanel1.SetColumnSpan(this.lPlaylistCoverDetails, 2);
+      tlpPlaylistProperties.SetColumnSpan(this.lPlaylistCoverDetails, 2);
       this.lPlaylistCoverDetails.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.bsViewModel, "CurrentPlaylist.CoverDetails", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
       this.lPlaylistCoverDetails.Location = new System.Drawing.Point(3, 102);
       this.lPlaylistCoverDetails.Name = "lPlaylistCoverDetails";
@@ -390,18 +399,20 @@
       // 
       // pbPlaylistCover
       // 
-      this.tableLayoutPanel1.SetColumnSpan(this.pbPlaylistCover, 2);
-      this.pbPlaylistCover.DataBindings.Add(new System.Windows.Forms.Binding("Image", this.bsViewModel, "CurrentPlaylist.Cover", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-      this.pbPlaylistCover.DataBindings.Add(new System.Windows.Forms.Binding("Enabled", this.bsViewModel, "IsCurrentPlaylistAvailable", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-      this.pbPlaylistCover.Dock = System.Windows.Forms.DockStyle.Fill;
-      this.pbPlaylistCover.Image = global::BeatSaber_Playlist_Editor.Properties.Resources.NoPictureAvailable;
-      this.pbPlaylistCover.Location = new System.Drawing.Point(3, 3);
-      this.pbPlaylistCover.Name = "pbPlaylistCover";
-      this.pbPlaylistCover.Size = new System.Drawing.Size(227, 96);
-      this.pbPlaylistCover.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-      this.pbPlaylistCover.TabIndex = 1;
-      this.pbPlaylistCover.TabStop = false;
-      this.pbPlaylistCover.Click += new System.EventHandler(this.pbPlaylistCover_Click);
+      tlpPlaylistProperties.SetColumnSpan(pbPlaylistCover, 2);
+      pbPlaylistCover.DataBindings.Add(new System.Windows.Forms.Binding("Image", this.bsViewModel, "CurrentPlaylist.Cover", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+      pbPlaylistCover.DataBindings.Add(new System.Windows.Forms.Binding("Enabled", this.bsViewModel, "IsCurrentPlaylistAvailable", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+      pbPlaylistCover.Dock = System.Windows.Forms.DockStyle.Fill;
+      pbPlaylistCover.ErrorImage = global::BeatSaber_Playlist_Editor.Properties.Resources.NoPictureAvailable;
+      pbPlaylistCover.Image = global::BeatSaber_Playlist_Editor.Properties.Resources.NoPictureAvailable;
+      pbPlaylistCover.InitialImage = global::BeatSaber_Playlist_Editor.Properties.Resources.NoPictureAvailable;
+      pbPlaylistCover.Location = new System.Drawing.Point(3, 3);
+      pbPlaylistCover.Name = "pbPlaylistCover";
+      pbPlaylistCover.Size = new System.Drawing.Size(227, 96);
+      pbPlaylistCover.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+      pbPlaylistCover.TabIndex = 1;
+      pbPlaylistCover.TabStop = false;
+      pbPlaylistCover.Click += new System.EventHandler(this.pbPlaylistCover_Click);
       // 
       // splitContainer3
       // 
@@ -417,7 +428,7 @@
       // 
       // splitContainer3.Panel2
       // 
-      splitContainer3.Panel2.Controls.Add(groupBox2);
+      splitContainer3.Panel2.Controls.Add(gbSongProperties);
       splitContainer3.Size = new System.Drawing.Size(287, 428);
       splitContainer3.SplitterDistance = 223;
       splitContainer3.TabIndex = 0;
@@ -442,6 +453,7 @@
       this.dgvSongs.Size = new System.Drawing.Size(287, 198);
       this.dgvSongs.TabIndex = 1;
       this.dgvSongs.CellMouseDown += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dgvSongs_CellMouseDown);
+      this.dgvSongs.SelectionChanged += new System.EventHandler(this.dgvSongs_SelectionChanged);
       // 
       // tsSongs
       // 
@@ -535,15 +547,63 @@
       this.tsbMode360.Size = new System.Drawing.Size(23, 22);
       this.tsbMode360.Text = "360°";
       // 
-      // groupBox2
+      // gbSongProperties
       // 
-      groupBox2.Dock = System.Windows.Forms.DockStyle.Fill;
-      groupBox2.Location = new System.Drawing.Point(0, 0);
-      groupBox2.Name = "groupBox2";
-      groupBox2.Size = new System.Drawing.Size(287, 201);
-      groupBox2.TabIndex = 0;
-      groupBox2.TabStop = false;
-      groupBox2.Text = "Song properties";
+      gbSongProperties.Controls.Add(this.tableLayoutPanel1);
+      gbSongProperties.Dock = System.Windows.Forms.DockStyle.Fill;
+      gbSongProperties.Location = new System.Drawing.Point(0, 0);
+      gbSongProperties.Name = "gbSongProperties";
+      gbSongProperties.Size = new System.Drawing.Size(287, 201);
+      gbSongProperties.TabIndex = 0;
+      gbSongProperties.TabStop = false;
+      gbSongProperties.Text = "Song properties";
+      // 
+      // tableLayoutPanel1
+      // 
+      this.tableLayoutPanel1.ColumnCount = 2;
+      this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+      this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+      this.tableLayoutPanel1.Controls.Add(this.lSongCoverDetails, 0, 1);
+      this.tableLayoutPanel1.Controls.Add(pbSongCover, 0, 0);
+      this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.tableLayoutPanel1.Location = new System.Drawing.Point(3, 19);
+      this.tableLayoutPanel1.Name = "tableLayoutPanel1";
+      this.tableLayoutPanel1.RowCount = 5;
+      this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+      this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
+      this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+      this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+      this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+      this.tableLayoutPanel1.Size = new System.Drawing.Size(281, 179);
+      this.tableLayoutPanel1.TabIndex = 0;
+      // 
+      // lSongCoverDetails
+      // 
+      this.lSongCoverDetails.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+      this.lSongCoverDetails.AutoSize = true;
+      this.tableLayoutPanel1.SetColumnSpan(this.lSongCoverDetails, 2);
+      this.lSongCoverDetails.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.bsViewModel, "CurrentSong.CoverDetails", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+      this.lSongCoverDetails.Location = new System.Drawing.Point(3, 104);
+      this.lSongCoverDetails.Name = "lSongCoverDetails";
+      this.lSongCoverDetails.Size = new System.Drawing.Size(275, 15);
+      this.lSongCoverDetails.TabIndex = 0;
+      this.lSongCoverDetails.Text = "100 x 100";
+      this.lSongCoverDetails.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+      // 
+      // pbSongCover
+      // 
+      this.tableLayoutPanel1.SetColumnSpan(pbSongCover, 2);
+      pbSongCover.DataBindings.Add(new System.Windows.Forms.Binding("Image", this.bsViewModel, "CurrentSong.Cover.Image", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+      pbSongCover.Dock = System.Windows.Forms.DockStyle.Fill;
+      pbSongCover.ErrorImage = global::BeatSaber_Playlist_Editor.Properties.Resources.NoPictureAvailable;
+      pbSongCover.Image = global::BeatSaber_Playlist_Editor.Properties.Resources.NoPictureAvailable;
+      pbSongCover.InitialImage = global::BeatSaber_Playlist_Editor.Properties.Resources.NoPictureAvailable;
+      pbSongCover.Location = new System.Drawing.Point(3, 3);
+      pbSongCover.Name = "pbSongCover";
+      pbSongCover.Size = new System.Drawing.Size(275, 98);
+      pbSongCover.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+      pbSongCover.TabIndex = 1;
+      pbSongCover.TabStop = false;
       // 
       // fbdSelectRoot
       // 
@@ -563,7 +623,7 @@
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
       this.ClientSize = new System.Drawing.Size(800, 450);
       this.Controls.Add(splitContainer1);
-      this.Controls.Add(statusStrip1);
+      this.Controls.Add(ssStatus);
       this.Name = "MainForm";
       this.Text = "BeatSaber Playlist Editor";
       splitContainer1.Panel1.ResumeLayout(false);
@@ -587,10 +647,10 @@
       ((System.ComponentModel.ISupportInitialize)(this.dgvPlaylistEntries)).EndInit();
       tsPlaylist.ResumeLayout(false);
       tsPlaylist.PerformLayout();
-      groupBox1.ResumeLayout(false);
-      this.tableLayoutPanel1.ResumeLayout(false);
-      this.tableLayoutPanel1.PerformLayout();
-      ((System.ComponentModel.ISupportInitialize)(this.pbPlaylistCover)).EndInit();
+      gbPlaylistProperties.ResumeLayout(false);
+      tlpPlaylistProperties.ResumeLayout(false);
+      tlpPlaylistProperties.PerformLayout();
+      ((System.ComponentModel.ISupportInitialize)(pbPlaylistCover)).EndInit();
       splitContainer3.Panel1.ResumeLayout(false);
       splitContainer3.Panel1.PerformLayout();
       splitContainer3.Panel2.ResumeLayout(false);
@@ -599,6 +659,10 @@
       ((System.ComponentModel.ISupportInitialize)(this.dgvSongs)).EndInit();
       tsSongs.ResumeLayout(false);
       tsSongs.PerformLayout();
+      gbSongProperties.ResumeLayout(false);
+      this.tableLayoutPanel1.ResumeLayout(false);
+      this.tableLayoutPanel1.PerformLayout();
+      ((System.ComponentModel.ISupportInitialize)(pbSongCover)).EndInit();
       this.ResumeLayout(false);
       this.PerformLayout();
 
@@ -627,9 +691,11 @@
         private BindingSource bsViewModel;
         private FolderBrowserDialog fbdSelectRoot;
         private DataGridView dgvSongs;
-    private TableLayoutPanel tableLayoutPanel1;
+    private TableLayoutPanel tlpPlaylistProperties;
     private Label lPlaylistCoverDetails;
     private PictureBox pbPlaylistCover;
         private OpenFileDialog ofdSelectImage;
+        private TableLayoutPanel tableLayoutPanel1;
+        private Label lSongCoverDetails;
     }
 }

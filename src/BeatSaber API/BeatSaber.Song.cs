@@ -65,6 +65,8 @@ partial class BeatSaberInstallation {
       }
     }
 
+    public Image? Image => this.GetCover();
+
     public Song(DirectoryInfo directory) {
       this.Directory = directory;
       this._data = new(this._ReadMetadata);
