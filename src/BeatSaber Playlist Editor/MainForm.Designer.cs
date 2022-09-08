@@ -28,6 +28,7 @@
       System.Windows.Forms.SplitContainer splitContainer1;
       System.Windows.Forms.ToolStrip tsBeatsaber;
       System.Windows.Forms.BindableToolStripButton tsbBeatsaberSetPath;
+      System.Windows.Forms.BindableToolStripButton tsbCreatePlaylist;
       System.Windows.Forms.BindableToolStripButton tsbBeatsaberRefresh;
       System.Windows.Forms.BindableToolStripButton tsbDeletePlaylist;
       System.Windows.Forms.SplitContainer splitContainer2;
@@ -47,7 +48,6 @@
       System.Windows.Forms.PictureBox pbPlaylistCover;
       System.Windows.Forms.Label lPlaylistName;
       System.Windows.Forms.Label lPlaylistAuthor;
-      System.Windows.Forms.TextBox tbPlaylistName;
       System.Windows.Forms.TextBox tbPlaylistAuthor;
       System.Windows.Forms.SplitContainer splitContainer3;
       System.Windows.Forms.ToolStrip tsSongs;
@@ -75,6 +75,7 @@
       this.dgvPlaylists = new System.Windows.Forms.DataGridView();
       this.bsViewModel = new System.Windows.Forms.BindingSource(this.components);
       this.dgvPlaylistEntries = new System.Windows.Forms.DataGridView();
+      this.tbPlaylistName = new System.Windows.Forms.TextBox();
       this.dgvSongs = new System.Windows.Forms.DataGridView();
       this.fbdSelectRoot = new System.Windows.Forms.FolderBrowserDialog();
       this.ofdSelectImage = new System.Windows.Forms.OpenFileDialog();
@@ -82,6 +83,7 @@
       splitContainer1 = new System.Windows.Forms.SplitContainer();
       tsBeatsaber = new System.Windows.Forms.ToolStrip();
       tsbBeatsaberSetPath = new System.Windows.Forms.BindableToolStripButton();
+      tsbCreatePlaylist = new System.Windows.Forms.BindableToolStripButton();
       tsbBeatsaberRefresh = new System.Windows.Forms.BindableToolStripButton();
       tsbDeletePlaylist = new System.Windows.Forms.BindableToolStripButton();
       splitContainer2 = new System.Windows.Forms.SplitContainer();
@@ -101,7 +103,6 @@
       pbPlaylistCover = new System.Windows.Forms.PictureBox();
       lPlaylistName = new System.Windows.Forms.Label();
       lPlaylistAuthor = new System.Windows.Forms.Label();
-      tbPlaylistName = new System.Windows.Forms.TextBox();
       tbPlaylistAuthor = new System.Windows.Forms.TextBox();
       splitContainer3 = new System.Windows.Forms.SplitContainer();
       tsSongs = new System.Windows.Forms.ToolStrip();
@@ -216,6 +217,7 @@
       tsBeatsaber.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
       tsBeatsaber.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             tsbBeatsaberSetPath,
+            tsbCreatePlaylist,
             tsbBeatsaberRefresh,
             tsbDeletePlaylist});
       tsBeatsaber.Location = new System.Drawing.Point(0, 0);
@@ -233,6 +235,17 @@
       tsbBeatsaberSetPath.Size = new System.Drawing.Size(23, 22);
       tsbBeatsaberSetPath.Text = "Select BeatSaber Installation";
       tsbBeatsaberSetPath.Click += new System.EventHandler(this.tsbBeatsaberSetPath_Click);
+      // 
+      // tsbCreatePlaylist
+      // 
+      tsbCreatePlaylist.DataBindings.Add(new System.Windows.Forms.Binding("Enabled", this.bsViewModel, "IsPlaylistsAvailable", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+      tsbCreatePlaylist.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+      tsbCreatePlaylist.Image = global::BeatSaber_Playlist_Editor.Properties.Resources._16x16_New;
+      tsbCreatePlaylist.ImageTransparentColor = System.Drawing.Color.Magenta;
+      tsbCreatePlaylist.Name = "tsbCreatePlaylist";
+      tsbCreatePlaylist.Size = new System.Drawing.Size(23, 22);
+      tsbCreatePlaylist.Text = "Create playlist";
+      tsbCreatePlaylist.Click += new System.EventHandler(this.tsbCreatePlaylist_Click);
       // 
       // tsbBeatsaberRefresh
       // 
@@ -435,7 +448,7 @@
       tlpPlaylistProperties.Controls.Add(pbPlaylistCover, 0, 0);
       tlpPlaylistProperties.Controls.Add(lPlaylistName, 0, 2);
       tlpPlaylistProperties.Controls.Add(lPlaylistAuthor, 0, 3);
-      tlpPlaylistProperties.Controls.Add(tbPlaylistName, 1, 2);
+      tlpPlaylistProperties.Controls.Add(this.tbPlaylistName, 1, 2);
       tlpPlaylistProperties.Controls.Add(tbPlaylistAuthor, 1, 3);
       tlpPlaylistProperties.Dock = System.Windows.Forms.DockStyle.Fill;
       tlpPlaylistProperties.Location = new System.Drawing.Point(3, 19);
@@ -501,14 +514,14 @@
       // 
       // tbPlaylistName
       // 
-      tbPlaylistName.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.bsViewModel, "CurrentPlaylistName", true));
-      tbPlaylistName.DataBindings.Add(new System.Windows.Forms.Binding("Enabled", this.bsViewModel, "IsCurrentPlaylistAvailable", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-      tbPlaylistName.Dock = System.Windows.Forms.DockStyle.Top;
-      tbPlaylistName.Location = new System.Drawing.Point(53, 102);
-      tbPlaylistName.Name = "tbPlaylistName";
-      tbPlaylistName.Size = new System.Drawing.Size(177, 23);
-      tbPlaylistName.TabIndex = 3;
-      tbPlaylistName.Validating += new System.ComponentModel.CancelEventHandler(this.tbPlaylistName_Validating);
+      this.tbPlaylistName.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.bsViewModel, "CurrentPlaylistName", true));
+      this.tbPlaylistName.DataBindings.Add(new System.Windows.Forms.Binding("Enabled", this.bsViewModel, "IsCurrentPlaylistAvailable", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+      this.tbPlaylistName.Dock = System.Windows.Forms.DockStyle.Top;
+      this.tbPlaylistName.Location = new System.Drawing.Point(53, 102);
+      this.tbPlaylistName.Name = "tbPlaylistName";
+      this.tbPlaylistName.Size = new System.Drawing.Size(177, 23);
+      this.tbPlaylistName.TabIndex = 3;
+      this.tbPlaylistName.Validating += new System.ComponentModel.CancelEventHandler(this.tbPlaylistName_Validating);
       // 
       // tbPlaylistAuthor
       // 
@@ -899,5 +912,6 @@
     private FolderBrowserDialog fbdSelectRoot;
     private DataGridView dgvSongs;
     private OpenFileDialog ofdSelectImage;
+    private TextBox tbPlaylistName;
   }
 }

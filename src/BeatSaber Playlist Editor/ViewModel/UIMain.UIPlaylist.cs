@@ -10,6 +10,9 @@ partial class UIMain {
   [DebuggerDisplay($"{{{nameof(Name)}}}")]
   public class UIPlaylist : INotifyPropertyChanged {
 
+    private static readonly Image _DEFAULT_IMAGE = Resources.NoPictureAvailable;
+
+
     [Browsable(false)]
     public IPlaylist Source { get; }
 
@@ -22,10 +25,10 @@ partial class UIMain {
     [EditorBrowsable(EditorBrowsableState.Never)]
     public Image Cover {
       get {
-        return this._cover.Value ?? Resources.NoPictureAvailable;
+        return this._cover.Value ?? _DEFAULT_IMAGE;
       }
       set {
-        if (value == this.Cover)
+        if (value == this.Cover || value == _DEFAULT_IMAGE)
           return;
 
         this.Source.SetImage(value);

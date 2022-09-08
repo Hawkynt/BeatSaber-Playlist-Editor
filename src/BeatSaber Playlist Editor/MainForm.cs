@@ -144,5 +144,10 @@ namespace BeatSaber_Playlist_Editor {
         this._viewModel?.DeleteCurrentPlaylist();
     }
 
+    private void tsbCreatePlaylist_Click(object _, EventArgs __) {
+      this._viewModel?.CreatePlaylist();
+      this.tbPlaylistName.Focus();
+    }
+
   }
 }

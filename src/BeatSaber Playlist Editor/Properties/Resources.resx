@@ -121,6 +121,9 @@
   <data name="16x16 Clear" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\16x16 Clear.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="16x16 New" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\16x16 New.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="16x16 Refresh" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\16x16 Refresh.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>

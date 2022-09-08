@@ -217,6 +217,9 @@ internal partial class UIMain : INotifyPropertyChanged {
     cp.Source.WriteToDisk();
     cp.TriggerAllPropertiesChanged();
     this._MarkCurrentPlaylistUnmodified();
+
+    if (this.Playlists.ContainsNot(cp))
+      this.Playlists.Add(cp);
   }
 
   public void ClearCurrentPlaylist() {
@@ -359,4 +362,11 @@ internal partial class UIMain : INotifyPropertyChanged {
     this.CurrentPlaylist = null;
   }
 
+  public void CreatePlaylist() {
+    var beatSaber = this.BeatSaber;
+    if (beatSaber == null)
+      return;
+
+    this.CurrentPlaylist = new UIPlaylist(beatSaber.Playlists.Create("New"));
+  }
 }
