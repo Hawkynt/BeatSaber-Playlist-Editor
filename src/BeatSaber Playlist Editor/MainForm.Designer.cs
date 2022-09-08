@@ -72,6 +72,7 @@
       System.Windows.Forms.Label lBeatsPerMinute;
       System.Windows.Forms.Label lEnvironmentData;
       System.Windows.Forms.Label lBeatsPerMinuteData;
+      System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
       this.dgvPlaylists = new System.Windows.Forms.DataGridView();
       this.bsViewModel = new System.Windows.Forms.BindingSource(this.components);
       this.dgvPlaylistEntries = new System.Windows.Forms.DataGridView();
@@ -860,6 +861,7 @@
       this.ClientSize = new System.Drawing.Size(800, 450);
       this.Controls.Add(splitContainer1);
       this.Controls.Add(ssStatus);
+      this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
       this.Name = "MainForm";
       this.Text = "BeatSaber Playlist Editor";
       splitContainer1.Panel1.ResumeLayout(false);
