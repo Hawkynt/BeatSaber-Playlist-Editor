@@ -26,8 +26,14 @@ namespace BeatSaber_Playlist_Editor {
     }
 
     private void tsbBeatsaberSetPath_Click(object _, EventArgs __) {
-      if (this.fbdSelectRoot.ShowDialog() == DialogResult.OK)
+      if (this.fbdSelectRoot.ShowDialog() != DialogResult.OK)
+        return;
+
+      try {
         this._viewModel?.SetInstallation(new DirectoryInfo(this.fbdSelectRoot.SelectedPath));
+      } catch (Exception ex) {
+        MessageBox.Show("Could not set BeatSaber directory.\r\nAre you sure you selected the right one?", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+      }
     }
 
     private void dgvPlaylists_SelectionChanged(object sender, EventArgs _) {
