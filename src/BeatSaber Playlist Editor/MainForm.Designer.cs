@@ -849,6 +849,7 @@
       // ofdSelectImage
       // 
       this.ofdSelectImage.FileName = "Cover";
+      this.ofdSelectImage.Filter = "Image Files|*.bmp;*.gif;*jpg;*.jpeg;*.jfif;*.png|All files (*.*)|*.*";
       this.ofdSelectImage.ReadOnlyChecked = true;
       this.ofdSelectImage.RestoreDirectory = true;
       this.ofdSelectImage.SupportMultiDottedExtensions = true;
