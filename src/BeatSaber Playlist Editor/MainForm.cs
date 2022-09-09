@@ -124,8 +124,14 @@ namespace BeatSaber_Playlist_Editor {
     }
 
     private void pbPlaylistCover_Click(object _, EventArgs __) {
-      if (this.ofdSelectImage.ShowDialog() == DialogResult.OK)
+      if (this.ofdSelectImage.ShowDialog() != DialogResult.OK)
+        return;
+
+      try {
         this._viewModel?.SetPlaylistCover(new FileInfo(this.ofdSelectImage.FileName));
+      } catch (Exception ex) {
+        MessageBox.Show("Could not set cover image.\r\nAre you sure you selected the right thing?", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+      }
     }
 
     private void dgvSongs_SelectionChanged(object _, EventArgs __) {
