@@ -1,9 +1,12 @@
-﻿using System.Security.Cryptography;
+﻿using System;
+using System.Linq;
+using System.Security.Cryptography;
 using System.Diagnostics;
 using System.Text;
 using System.Text.Json;
-using System.Collections;
+using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
 using BeatSaberAPI.JSON;
 
 namespace BeatSaberAPI;
@@ -13,10 +16,10 @@ partial class BeatSaberInstallation {
   [DebuggerDisplay($"{{{nameof(Artist)}}} - {{{nameof(Title)}}}")]
   private class Song : ISong {
 
-    private readonly System.Lazy<SongInfo.Root> _data;
+    private readonly Lazy<SongInfo.Root> _data;
 
     public DirectoryInfo Directory { get; }
-    private SongInfo.Root _Data => _data.Value;
+    private SongInfo.Root _Data => this._data.Value;
     public string Title => this._Data.SongName!;
     public string? Artist => this._Data.SongAuthorName.DefaultIfNullOrWhiteSpace();
     private IEnumerable<SongInfo.DifficultyBeatmapSet> _DifficultyBeatmapSets => this._Data.DifficultyBeatmapSets as IEnumerable<SongInfo.DifficultyBeatmapSet> ?? Array.Empty<SongInfo.DifficultyBeatmapSet>();
@@ -83,13 +86,9 @@ partial class BeatSaberInstallation {
       return this.Directory.File(coverFileName);
     }
 
-    public FileInfo? GetSongFile() {
-      var songFileName = this._Data.SongFilename;
-      if (songFileName.IsNullOrWhiteSpace())
-        return null;
-
-      return this.Directory.File(songFileName);
-    }
+    public FileInfo? GetSongFile() => this._Data.SongFilename?.Trim() is { Length: > 0 } songFileName
+        ? this.Directory.File(songFileName)
+        : null;
 
     public string CalculateChecksum() {
       var sb = new StringBuilder();
@@ -125,7 +124,7 @@ partial class BeatSaberInstallation {
         var image = Image.FromFile(coverFile!.FullName);
         return image;
       } catch (Exception e) {
-        Trace.WriteLine($"{nameof(_ReadCover)}:Error loading cover '{coverFile!.FullName}': {e}");
+        Trace.WriteLine($"{nameof(this._ReadCover)}:Error loading cover '{coverFile!.FullName}': {e}");
         return null;
       }
     }

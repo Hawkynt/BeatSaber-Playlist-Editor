@@ -1,5 +1,8 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
 using System.Drawing;
+using System.IO;
+using System.Linq;
 using System.Text.Json;
 using BeatSaberAPI.JSON;
 
@@ -9,10 +12,10 @@ partial class BeatSaberInstallation {
 
   [DebuggerDisplay($"{{{nameof(Name)}}}")]
   private class Playlist : IPlaylist {
-    private readonly System.Lazy<PlaylistFile.Root> _data;
-    private readonly System.Lazy<PlaylistEntryCollection> _entries;
+    private readonly Lazy<PlaylistFile.Root> _data;
+    private readonly Lazy<PlaylistEntryCollection> _entries;
 
-    private PlaylistFile.Root _Data => _data.Value;
+    private PlaylistFile.Root _Data => this._data.Value;
 
     private Playlist(FileInfo file, Func<PlaylistFile.Root> rootFactory) {
       this.File = file;
@@ -46,14 +49,12 @@ partial class BeatSaberInstallation {
       private set => this._Data.Image = value == null ? string.Empty : value.ToBase64DataUri();
     }
 
-    private PlaylistEntryCollection _CreateEntryCollection() => new PlaylistEntryCollection(this._Data.Songs!.Select(s => new PlaylistEntry(s.SongName!, s.Hash!)));
+    private PlaylistEntryCollection _CreateEntryCollection() => new(this._Data.Songs!.Select(s => new PlaylistEntry(s.SongName!, s.Hash!)));
 
     private static PlaylistFile.Root _ReadMetadata(FileInfo file) {
       using var fileStream = file.OpenRead();
       var result = JsonSerializer.Deserialize<PlaylistFile.Root>(fileStream)!;
-      if (result.Songs == null)
-        result.Songs = new();
-
+      result.Songs ??= [];
       return result;
     }
 
@@ -107,7 +108,7 @@ partial class BeatSaberInstallation {
     public static Playlist Create(string name, FileInfo file) => new Playlist(
       new PlaylistFile.Root {
         PlaylistTitle = name,
-        Songs = new List<PlaylistFile.Song>()
+        Songs = []
       }, file
     );
 

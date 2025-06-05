@@ -1,4 +1,8 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 
 namespace BeatSaberAPI; 
 
@@ -26,8 +30,8 @@ partial class BeatSaberInstallation {
           yield return result!;
     }
 
-    public IEnumerator<IPlaylist> GetEnumerator() => _GetLists().GetEnumerator();
-    IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+    public IEnumerator<IPlaylist> GetEnumerator() => this._GetLists().GetEnumerator();
+    IEnumerator IEnumerable.GetEnumerator() => this.GetEnumerator();
 
   }
 

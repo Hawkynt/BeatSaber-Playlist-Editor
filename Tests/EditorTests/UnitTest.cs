@@ -1,7 +1,8 @@
+using NUnit.Framework;
+
 namespace EditorTests;
-using BeatSaberAPI;
+
 using BeatSaber_Playlist_Editor.ViewModel;
-using System.Linq;
 
 public partial class Tests {
 

@@ -1,4 +1,6 @@
-﻿namespace BeatSaberAPI;
+﻿using System;
+
+namespace BeatSaberAPI;
 
 [Flags]
 public enum GameMode {

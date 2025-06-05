@@ -1,4 +1,6 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
+using System.IO;
 
 namespace BeatSaberAPI; 
 
@@ -12,7 +14,7 @@ partial class BeatSaberInstallation {
           yield return result!;
     }
 
-    IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+    IEnumerator IEnumerable.GetEnumerator() => this.GetEnumerator();
   }
 
 }

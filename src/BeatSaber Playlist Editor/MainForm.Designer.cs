@@ -1,3 +1,5 @@
+using System.Windows.Forms;
+
 namespace BeatSaber_Playlist_Editor;
 
 partial class MainForm : Form {

@@ -1,14 +1,17 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace BeatSaberAPI; 
 
 partial class BeatSaberInstallation {
   private class PlaylistEntryCollection(IEnumerable<IPlaylistEntry> entries) : IPlaylistEntryCollection {
-    private readonly List<IPlaylistEntry> _entries = new(entries);
+    private readonly List<IPlaylistEntry> _entries = [..entries];
 
     public IEnumerator<IPlaylistEntry> GetEnumerator() => this._entries.GetEnumerator();
 
-    IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+    IEnumerator IEnumerable.GetEnumerator() => this.GetEnumerator();
 
     public void Add(IPlaylistEntry entry) => this._entries.Add(entry);
     public void InsertAt(int index, IPlaylistEntry entry) => this._entries.Insert(index, entry);

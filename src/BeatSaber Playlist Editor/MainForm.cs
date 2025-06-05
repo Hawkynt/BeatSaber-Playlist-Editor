@@ -1,17 +1,21 @@
+using System;
+using System.Collections.Generic;
 using BeatSaber_Playlist_Editor.ViewModel;
-using BeatSaberAPI;
 using static BeatSaber_Playlist_Editor.ViewModel.UIMain;
 using System.Drawing;
+using System.IO;
+using System.Linq;
+using System.Windows.Forms;
 
 namespace BeatSaber_Playlist_Editor;
 
-internal partial class MainForm : Form {
+internal partial class MainForm {
 
     private UIMain? _viewModel;
 
-    private bool _HasPlaylistChanged => this._viewModel != null && this._viewModel.IsCurrentPlaylistSaveAvailable;
+    private bool _HasPlaylistChanged => this._viewModel is { IsCurrentPlaylistSaveAvailable: true };
 
-    public MainForm() => InitializeComponent();
+    public MainForm() => this.InitializeComponent();
 
     public void Bind(UIMain viewModel) {
       this.bsViewModel.Clear();
@@ -33,7 +37,7 @@ internal partial class MainForm : Form {
 
       try {
         this._viewModel?.SetInstallation(new DirectoryInfo(this.fbdSelectRoot.SelectedPath));
-      } catch (Exception ex) {
+      } catch (Exception) {
         MessageBox.Show("Could not set BeatSaber directory.\r\nAre you sure you selected the right one?", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
       }
     }
@@ -44,7 +48,7 @@ internal partial class MainForm : Form {
     }
 
     private void tsbBeatsaberRefresh_Click(object _, EventArgs __) {
-      if (_HasPlaylistChanged && MessageBox.Show("Executing this will revert all changes made to the current playlist.\r\nAre you sure?", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) != DialogResult.Yes)
+      if (this._HasPlaylistChanged && MessageBox.Show("Executing this will revert all changes made to the current playlist.\r\nAre you sure?", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) != DialogResult.Yes)
         return;
 
       this._viewModel?.Refresh();
@@ -85,14 +89,14 @@ internal partial class MainForm : Form {
     }
 
     private void tsbEntryClear_Click(object _, EventArgs __) {
-      if (_HasPlaylistChanged && MessageBox.Show("Executing this will revert all changes made to the current playlist.\r\nAre you sure?", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) != DialogResult.Yes)
+      if (this._HasPlaylistChanged && MessageBox.Show("Executing this will revert all changes made to the current playlist.\r\nAre you sure?", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) != DialogResult.Yes)
         return;
 
       this._viewModel?.ClearCurrentPlaylist();
     }
 
     private void tsbPlaylistReread_Click(object _, EventArgs __) {
-      if (_HasPlaylistChanged && MessageBox.Show("Executing this will revert all changes made to the current playlist.\r\nAre you sure?", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) != DialogResult.Yes)
+      if (this._HasPlaylistChanged && MessageBox.Show("Executing this will revert all changes made to the current playlist.\r\nAre you sure?", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) != DialogResult.Yes)
         return;
 
       this._viewModel?.RereadCurrentPlaylist();
@@ -134,7 +138,7 @@ internal partial class MainForm : Form {
 
       try {
         this._viewModel?.SetPlaylistCover(new FileInfo(this.ofdSelectImage.FileName));
-      } catch (Exception ex) {
+      } catch (Exception) {
         MessageBox.Show("Could not set cover image.\r\nAre you sure you selected the right thing?", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
       }
     }

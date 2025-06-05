@@ -1,4 +1,6 @@
-﻿namespace BeatSaberAPI; 
+﻿using System.Collections.Generic;
+
+namespace BeatSaberAPI; 
 
 public interface IPlaylistEntryCollection : IEnumerable<IPlaylistEntry> {
   void Add(IPlaylistEntry entry);

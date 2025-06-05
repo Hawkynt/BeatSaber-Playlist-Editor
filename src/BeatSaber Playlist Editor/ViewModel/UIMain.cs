@@ -1,8 +1,15 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Drawing;
+using System.IO;
+using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Runtime.Versioning;
 using BeatSaberAPI;
 
 namespace BeatSaber_Playlist_Editor.ViewModel;
+
 internal partial class UIMain : INotifyPropertyChanged {
 
   public event PropertyChangedEventHandler? PropertyChanged;
@@ -82,29 +89,35 @@ internal partial class UIMain : INotifyPropertyChanged {
     }
   }
 
+  private string _currentPlaylistName = string.Empty;
+
   public string CurrentPlaylistName {
-    get => field;
+    get => this._currentPlaylistName;
     set {
-      if (this.SetProperty(this.OnPropertyChanged, ref field, value))
+      if (this.SetProperty(this.OnPropertyChanged, ref this._currentPlaylistName, value))
         this._MarkCurrentPlaylistModified();
     }
-  } = string.Empty;
+  }
+
+  private string _currentPlaylistAuthor = string.Empty;
 
   public string CurrentPlaylistAuthor {
-    get => field;
+    get => this._currentPlaylistAuthor;
     set {
-      if (this.SetProperty(this.OnPropertyChanged, ref field, value))
+      if (this.SetProperty(this.OnPropertyChanged, ref this._currentPlaylistAuthor, value))
         this._MarkCurrentPlaylistModified();
     }
-  } = string.Empty;
+  }
 
-  public string? CurrentPlaylistDescription {
-    get => field;
+  private string _currentPlaylistDescription = string.Empty;
+
+  public string CurrentPlaylistDescription {
+    get => _currentPlaylistDescription;
     set {
-      if (this.SetProperty(this.OnPropertyChanged, ref field, value))
+      if (this.SetProperty(this.OnPropertyChanged, ref this._currentPlaylistDescription, value))
         this._MarkCurrentPlaylistModified();
     }
-  } = string.Empty;
+  }
 
   public IBeatSaberInstallation? BeatSaber {
     get => field;
@@ -137,12 +150,10 @@ internal partial class UIMain : INotifyPropertyChanged {
   public SortableBindingList<UISong> Songs { get; } = new();
 
   public void SetInstallation(DirectoryInfo? rootDirectory)
-    => this.SetInstallation(rootDirectory == null ? null : BeatSaberInstallation.FromGameDirectory(rootDirectory))
-  ;
+    => this.SetInstallation(rootDirectory == null ? null : BeatSaberInstallation.FromGameDirectory(rootDirectory));
 
   public void SetInstallation(IBeatSaberInstallation? beatSaber)
-    => this.BeatSaber = beatSaber
-  ;
+    => this.BeatSaber = beatSaber;
 
   public void SetCurrentPlaylist(UIPlaylist playlist) => this.CurrentPlaylist = playlist;
 
@@ -156,11 +167,15 @@ internal partial class UIMain : INotifyPropertyChanged {
     this.Songs.Clear();
     if (bs != null) {
       IEnumerable<ISong> songs = bs.Songs;
-      if (this.SongFilterText.IsNotNullOrWhiteSpace()) {
-        var parts = (this.SongFilterText ?? string.Empty).Split(" ").Select(i => i.Trim());
-        foreach (var part in parts)
-          songs = songs.Where(s => (s.Artist?.Contains(part, StringComparison.CurrentCultureIgnoreCase) ?? true) || s.Title.Contains(part, StringComparison.CurrentCultureIgnoreCase));
-      }
+      if (this.SongFilterText.IsNotNullOrWhiteSpace())
+        songs = (this.SongFilterText ?? string.Empty)
+          .Split(" ")
+          .Select(i => i.Trim())
+          .Aggregate(songs, (current, part) => current.Where(s => 
+            (s.Artist?.Contains(part, StringComparison.CurrentCultureIgnoreCase) ?? true) 
+            || (s.Title?.Contains(part, StringComparison.CurrentCultureIgnoreCase) ?? true)
+          ))
+          ;
 
       // TODO: somehow i'm not convinced by the game mode filter logic
       if (this.IsStandardGameModeVisible)
@@ -227,8 +242,8 @@ internal partial class UIMain : INotifyPropertyChanged {
 
     this.IsCurrentPlaylistAvailable = cp != null;
     this.CurrentPlaylistAuthor = cp?.Author ?? string.Empty;
-    this.CurrentPlaylistName= cp?.Name??string.Empty;
-    this.CurrentPlaylistDescription = cp?.Description;
+    this.CurrentPlaylistName = cp?.Name ?? string.Empty;
+    this.CurrentPlaylistDescription = cp?.Description ?? string.Empty;
     this._MarkCurrentPlaylistUnmodified();
   }
 
@@ -328,6 +343,7 @@ internal partial class UIMain : INotifyPropertyChanged {
   public void AppendSongs(IEnumerable<UISong> songs)
     => this.InsertSongsAt(this.CurrentPlaylistEntries.Count, songs);
 
+  [SupportedOSPlatform("windows6.1")]
   public void SetPlaylistCover(FileInfo file) {
     var currentPlaylist = this.CurrentPlaylist;
     if (currentPlaylist == null)
@@ -335,12 +351,11 @@ internal partial class UIMain : INotifyPropertyChanged {
 
     using var img = Image.FromFile(file.FullName);
     currentPlaylist.Cover = img;
-
     this._MarkCurrentPlaylistModified();
   }
 
   public bool ValidatePlaylistNameNotEmpty(string text) => text.IsNotNullOrWhiteSpace();
-  
+
   public void DeleteCurrentPlaylist() {
     var currentPlaylist = this.CurrentPlaylist;
     if (currentPlaylist == null)
@@ -363,4 +378,5 @@ internal partial class UIMain : INotifyPropertyChanged {
 
     this.CurrentPlaylist = new UIPlaylist(beatSaber.Playlists.Create("New"));
   }
+
 }

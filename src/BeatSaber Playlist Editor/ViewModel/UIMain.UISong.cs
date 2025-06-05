@@ -1,5 +1,7 @@
 ﻿using System.ComponentModel;
 using System.Diagnostics;
+using System.Drawing;
+using System.Runtime.Versioning;
 using BeatSaber_Playlist_Editor.Properties;
 using BeatSaberAPI;
 
@@ -7,20 +9,23 @@ namespace BeatSaber_Playlist_Editor.ViewModel;
 partial class UIMain {
   
   [DebuggerDisplay($"{{{nameof(Artist)}}} - {{{nameof(Title)}}}")]
-  public class UISong {
+  public class UISong(ISong source) {
 
     [Browsable(false)]
-    public ISong Source { get; }
+    public ISong Source { get; } = source;
 
     public string? Artist => this.Source.Artist;
     public string Title => this.Source.Title;
 
     [EditorBrowsable(EditorBrowsableState.Never)]
+    [SupportedOSPlatform("windows6.1")] 
     public string CoverDetails => this._cover.Value == null ? "No image" : $"{this.Cover.Width} x {this.Cover.Height}";
 
-    private System.Lazy<Image?> _cover;
+    [SupportedOSPlatform("windows6.1")] 
+    private readonly System.Lazy<Image?> _cover = new(() => source.Image);
 
     [EditorBrowsable(EditorBrowsableState.Never)]
+    [SupportedOSPlatform("windows6.1")] 
     public Image Cover => this._cover.Value ?? Resources.NoPictureAvailable;
     
     [EditorBrowsable(EditorBrowsableState.Advanced)]
@@ -31,11 +36,6 @@ partial class UIMain {
     
     [EditorBrowsable(EditorBrowsableState.Advanced)]
     public string? Environment => this.Source.Environment;
-
-    public UISong(ISong source) {
-      this.Source = source;
-      this._cover = new System.Lazy<Image?>(() => source.Image);
-    }
   }
 
 }
