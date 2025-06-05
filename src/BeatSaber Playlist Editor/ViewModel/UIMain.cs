@@ -4,120 +4,104 @@ using BeatSaberAPI;
 
 namespace BeatSaber_Playlist_Editor.ViewModel;
 internal partial class UIMain : INotifyPropertyChanged {
-  private bool _isPlaylistsAvailable;
-  private bool _isRefreshAvailable;
-  private bool _isCurrentPlaylistAvailable;
-  private bool _isSongsAvailable;
-  private IBeatSaberInstallation? _beatSaber;
-  private UIPlaylist? _currentPlaylist;
-  private string? _songFilterText;
-  private bool _isStandardGameModeVisible;
-  private bool _isOneSaberGameModeVisible;
-  private bool _isNoArrowsGameModeVisible;
-  private bool _is90GameModeVisible;
-  private bool _is360GameModeVisible;
-  private bool _isCurrentPlaylistSaveAvailable;
-  private UISong? _currentSong;
-  private string _currentPlaylistName = string.Empty;
-  private string _currentPlaylistAuthor = string.Empty;
 
   public event PropertyChangedEventHandler? PropertyChanged;
 
   protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null) => this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 
   public bool IsPlaylistsAvailable {
-    get => _isPlaylistsAvailable;
-    private set => this.SetProperty(this.OnPropertyChanged, ref _isPlaylistsAvailable, value);
+    get => field;
+    private set => this.SetProperty(this.OnPropertyChanged, ref field, value);
   }
 
   public bool IsRefreshAvailable {
-    get => _isRefreshAvailable;
-    private set => this.SetProperty(this.OnPropertyChanged, ref _isRefreshAvailable, value);
+    get => field;
+    private set => this.SetProperty(this.OnPropertyChanged, ref field, value);
   }
 
   public bool IsCurrentPlaylistAvailable {
-    get => _isCurrentPlaylistAvailable;
-    private set => this.SetProperty(this.OnPropertyChanged, ref _isCurrentPlaylistAvailable, value);
+    get => field;
+    private set => this.SetProperty(this.OnPropertyChanged, ref field, value);
   }
 
   public bool IsCurrentPlaylistSaveAvailable {
-    get => _isCurrentPlaylistSaveAvailable;
-    private set => this.SetProperty(this.OnPropertyChanged, ref _isCurrentPlaylistSaveAvailable, value);
+    get => field;
+    private set => this.SetProperty(this.OnPropertyChanged, ref field, value);
   }
 
   public bool IsSongsAvailable {
-    get => _isSongsAvailable;
-    private set => this.SetProperty(this.OnPropertyChanged, ref _isSongsAvailable, value);
+    get => field;
+    private set => this.SetProperty(this.OnPropertyChanged, ref field, value);
   }
 
   public string? SongFilterText {
-    get => _songFilterText;
+    get => field;
     set {
-      if (this.SetProperty(this.OnPropertyChanged, ref _songFilterText, value))
+      if (this.SetProperty(this.OnPropertyChanged, ref field, value))
         this.RefreshSongs();
     }
   }
 
   public bool IsStandardGameModeVisible {
-    get => _isStandardGameModeVisible;
+    get => field;
     set {
-      if (this.SetProperty(this.OnPropertyChanged, ref _isStandardGameModeVisible, value))
+      if (this.SetProperty(this.OnPropertyChanged, ref field, value))
         this.RefreshSongs();
     }
   }
 
   public bool IsOneSaberGameModeVisible {
-    get => _isOneSaberGameModeVisible;
+    get => field;
     set {
-      if (this.SetProperty(this.OnPropertyChanged, ref _isOneSaberGameModeVisible, value))
+      if (this.SetProperty(this.OnPropertyChanged, ref field, value))
         this.RefreshSongs();
     }
   }
 
   public bool IsNoArrowsGameModeVisible {
-    get => _isNoArrowsGameModeVisible;
+    get => field;
     set {
-      if (this.SetProperty(this.OnPropertyChanged, ref _isNoArrowsGameModeVisible, value))
+      if (this.SetProperty(this.OnPropertyChanged, ref field, value))
         this.RefreshSongs();
     }
   }
 
   public bool Is90GameModeVisible {
-    get => _is90GameModeVisible;
+    get => field;
     set {
-      if (this.SetProperty(this.OnPropertyChanged, ref _is90GameModeVisible, value))
+      if (this.SetProperty(this.OnPropertyChanged, ref field, value))
         this.RefreshSongs();
     }
   }
 
   public bool Is360GameModeVisible {
-    get => _is360GameModeVisible;
+    get => field;
     set {
-      if (this.SetProperty(this.OnPropertyChanged, ref _is360GameModeVisible, value))
+      if (this.SetProperty(this.OnPropertyChanged, ref field, value))
         this.RefreshSongs();
     }
   }
 
   public string CurrentPlaylistName {
-    get => _currentPlaylistName;
+    get => field;
     set {
-      if (this.SetProperty(this.OnPropertyChanged, ref _currentPlaylistName, value))
+      if (this.SetProperty(this.OnPropertyChanged, ref field, value))
         this._MarkCurrentPlaylistModified();
     }
-  }
+  } = string.Empty;
 
   public string CurrentPlaylistAuthor {
-    get => _currentPlaylistAuthor;
+    get => field;
     set {
-      if (this.SetProperty(this.OnPropertyChanged, ref _currentPlaylistAuthor, value))
+      if (this.SetProperty(this.OnPropertyChanged, ref field, value))
         this._MarkCurrentPlaylistModified();
     }
-  }
+  } = string.Empty;
 
   public IBeatSaberInstallation? BeatSaber {
-    get => _beatSaber;
+    get => field;
     private set {
-      if (!this.SetProperty(this.OnPropertyChanged, ref _beatSaber, value))
+      if (!this.SetProperty(this.OnPropertyChanged, ref field, value))
         return;
 
       this.IsRefreshAvailable = value != null;
@@ -126,10 +110,9 @@ internal partial class UIMain : INotifyPropertyChanged {
   }
 
   public UIPlaylist? CurrentPlaylist {
-    get => _currentPlaylist;
+    get => field;
     private set {
-      var oldValue = _currentPlaylist;
-      if (!this.SetProperty(this.OnPropertyChanged, ref _currentPlaylist, value))
+      if (!this.SetProperty(this.OnPropertyChanged, ref field, value))
         return;
 
       this.RereadCurrentPlaylist();
@@ -137,8 +120,8 @@ internal partial class UIMain : INotifyPropertyChanged {
   }
 
   public UISong? CurrentSong {
-    get => _currentSong;
-    set => this.SetProperty(this.OnPropertyChanged, ref _currentSong, value);
+    get => field;
+    set => this.SetProperty(this.OnPropertyChanged, ref field, value);
   }
 
   public SortableBindingList<UIPlaylist> Playlists { get; } = new();
