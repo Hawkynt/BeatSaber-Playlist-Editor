@@ -2,8 +2,9 @@ using BeatSaber_Playlist_Editor.ViewModel;
 using BeatSaberAPI;
 using static BeatSaber_Playlist_Editor.ViewModel.UIMain;
 
-namespace BeatSaber_Playlist_Editor {
-  internal partial class MainForm : Form {
+namespace BeatSaber_Playlist_Editor;
+
+internal partial class MainForm : Form {
 
     private UIMain? _viewModel;
 
@@ -162,4 +163,3 @@ namespace BeatSaber_Playlist_Editor {
     }
 
   }
-}

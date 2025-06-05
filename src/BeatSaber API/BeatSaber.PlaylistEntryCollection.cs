@@ -3,14 +3,12 @@
 namespace BeatSaberAPI; 
 
 partial class BeatSaberInstallation {
-  private class PlaylistEntryCollection : IPlaylistEntryCollection {
-    private readonly List<IPlaylistEntry> _entries=new();
+  private class PlaylistEntryCollection(IEnumerable<IPlaylistEntry> entries) : IPlaylistEntryCollection {
+    private readonly List<IPlaylistEntry> _entries = new(entries);
 
-    public PlaylistEntryCollection(IEnumerable<PlaylistEntry> entries) => this._entries.AddRange(entries);
+    public IEnumerator<IPlaylistEntry> GetEnumerator() => this._entries.GetEnumerator();
 
-    public IEnumerator<IPlaylistEntry> GetEnumerator() => this._entries.Cast<IPlaylistEntry>().GetEnumerator();
-
-    IEnumerator IEnumerable.GetEnumerator() => this.GetEnumerator();
+    IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
     public void Add(IPlaylistEntry entry) => this._entries.Add(entry);
     public void InsertAt(int index, IPlaylistEntry entry) => this._entries.Insert(index, entry);
