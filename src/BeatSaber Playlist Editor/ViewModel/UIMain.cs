@@ -311,7 +311,7 @@ internal partial class UIMain : INotifyPropertyChanged {
     this._MarkCurrentPlaylistModified();
   }
 
-  public void AppendSongs(IEnumerable<UISong> songs) {
+  public void InsertSongsAt(int index, IEnumerable<UISong> songs) {
     var currentPlaylist = this.CurrentPlaylist;
     if (currentPlaylist == null)
       return;
@@ -319,11 +319,14 @@ internal partial class UIMain : INotifyPropertyChanged {
     var currentPlaylistEntries = this.CurrentPlaylistEntries;
     foreach (var song in songs) {
       var entry = currentPlaylist.Source.CreateEntry(song.Source);
-      currentPlaylistEntries.Add(new UIPlaylistEntry(entry));
+      currentPlaylistEntries.Insert(index++, new UIPlaylistEntry(entry));
     }
 
     this._MarkCurrentPlaylistModified();
   }
+
+  public void AppendSongs(IEnumerable<UISong> songs)
+    => this.InsertSongsAt(this.CurrentPlaylistEntries.Count, songs);
 
   public void SetPlaylistCover(FileInfo file) {
     var currentPlaylist = this.CurrentPlaylist;
