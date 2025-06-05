@@ -1,46 +1,55 @@
 namespace EditorTests;
 using BeatSaberAPI;
+using BeatSaber_Playlist_Editor.ViewModel;
+using System.Linq;
 
 public partial class Tests {
 
-  private IBeatSaberInstallation _mock;
-
-  [SetUp]
-  public void Setup() {
-    this._mock = new BeatSaberInstallationMock(
-      new PlaylistCollectionMock(new[] {
-        new PlaylistMock(new PlaylistEntryCollectionMock(new[] {
-          new PlaylistEntryMock("a"),
-          new PlaylistEntryMock("b"),
-          new PlaylistEntryMock("c")
-        }))
-      }),
-      null
-      );
+  private static UIMain CreateVM(out UIMain.UIPlaylistEntry a, out UIMain.UIPlaylistEntry b, out UIMain.UIPlaylistEntry c) {
+    var vm = new UIMain();
+    a = new UIMain.UIPlaylistEntry(new PlaylistEntryMock("a"));
+    b = new UIMain.UIPlaylistEntry(new PlaylistEntryMock("b"));
+    c = new UIMain.UIPlaylistEntry(new PlaylistEntryMock("c"));
+    vm.CurrentPlaylistEntries.Add(a);
+    vm.CurrentPlaylistEntries.Add(b);
+    vm.CurrentPlaylistEntries.Add(c);
+    return vm;
   }
 
   [Test]
   public void TestOneUpOrdering() {
-    // TODO:
-    Assert.Pass();
+    var vm = CreateVM(out var a, out var b, out var c);
+
+    vm.MoveUp(new[] { b });
+
+    CollectionAssert.AreEqual(new[] { b, a, c }, vm.CurrentPlaylistEntries);
   }
 
   [Test]
   public void TestOneDownOrdering() {
-    // TODO:
-    Assert.Pass();
+    var vm = CreateVM(out var a, out var b, out var c);
+
+    vm.MoveDown(new[] { b });
+
+    CollectionAssert.AreEqual(new[] { a, c, b }, vm.CurrentPlaylistEntries);
   }
 
   [Test]
   public void TestMoveToFirstOrdering() {
-    // TODO:
-    Assert.Pass();
+    var vm = CreateVM(out var a, out var b, out var c);
+
+    vm.MoveToFront(new[] { c });
+
+    CollectionAssert.AreEqual(new[] { c, a, b }, vm.CurrentPlaylistEntries);
   }
 
   [Test]
   public void TestMoveToLastOrdering() {
-    // TODO:
-    Assert.Pass();
+    var vm = CreateVM(out var a, out var b, out var c);
+
+    vm.MoveToBack(new[] { a });
+
+    CollectionAssert.AreEqual(new[] { b, c, a }, vm.CurrentPlaylistEntries);
   }
 
 
