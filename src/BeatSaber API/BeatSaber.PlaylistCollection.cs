@@ -4,17 +4,13 @@ namespace BeatSaberAPI;
 
 partial class BeatSaberInstallation {
 
-  private class PlaylistCollection : IPlaylistCollection {
-    
-    private readonly DirectoryInfo _root;
-
-    public PlaylistCollection(DirectoryInfo root) => _root = root;
+  private class PlaylistCollection(DirectoryInfo root) : IPlaylistCollection {
 
     public IPlaylist Create(string name) {
       if (this.Any(i => string.Equals(i.Name ,name,StringComparison.OrdinalIgnoreCase)))
         throw new ArgumentException($"Playlist {name} already exists.", nameof(name));
       
-      var result = Playlist.Create(name,_root.File($"{name.SanitizeForFileName()}.json"));
+      var result = Playlist.Create(name, root.File($"{name.SanitizeForFileName()}.json"));
       return result;
     }
 
@@ -25,13 +21,13 @@ partial class BeatSaberInstallation {
     }
 
     private IEnumerable<Playlist> _GetLists() {
-      foreach (var file in _root.GetFiles("*.json"))
+      foreach (var file in root.GetFiles("*.json"))
         if (Playlist.TryCreatePlaylistFromFile(file, out var result))
           yield return result!;
     }
 
-    public IEnumerator<IPlaylist> GetEnumerator() =>this._GetLists().GetEnumerator();
-    IEnumerator IEnumerable.GetEnumerator() =>this.GetEnumerator();
+    public IEnumerator<IPlaylist> GetEnumerator() => _GetLists().GetEnumerator();
+    IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
   }
 

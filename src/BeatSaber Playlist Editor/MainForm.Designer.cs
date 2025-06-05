@@ -1,5 +1,6 @@
-﻿namespace BeatSaber_Playlist_Editor {
-  partial class MainForm : Form {
+namespace BeatSaber_Playlist_Editor;
+
+partial class MainForm : Form {
     /// <summary>
     ///  Required designer variable.
     /// </summary>
@@ -917,4 +918,3 @@
     private OpenFileDialog ofdSelectImage;
     private TextBox tbPlaylistName;
   }
-}
