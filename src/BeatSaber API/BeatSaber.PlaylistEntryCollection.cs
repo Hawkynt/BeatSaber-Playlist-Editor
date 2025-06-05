@@ -16,8 +16,8 @@ partial class BeatSaberInstallation {
     public void InsertAt(int index, IPlaylistEntry entry) => this._entries.Insert(index, entry);
     public void RemoveAt(int index) => this._entries.RemoveAt(index);
     public void Clear() => this._entries.Clear();
-    public void ContainsByName(string name) => this._entries.Any(i => i.Name.Equals(name, StringComparison.OrdinalIgnoreCase));
-    public void ContainsByHash(string hash) => this._entries.Any(i => i.Sha1Hash.Equals(hash, StringComparison.OrdinalIgnoreCase));
+    public bool ContainsByName(string name) => this._entries.Any(i => i.Name.Equals(name, StringComparison.OrdinalIgnoreCase));
+    public bool ContainsByHash(string hash) => this._entries.Any(i => i.Sha1Hash.Equals(hash, StringComparison.OrdinalIgnoreCase));
 
   }
 
