@@ -25,7 +25,7 @@
 
   <ItemGroup>
     <PackageReference Include="FrameworkExtensions.Corlib" Version="1.0.2.480" />
-    <ProjectReference Include="..\..\..\..\Framework\System.Drawing.Extensions\System.Drawing.Extensions.csproj" />
+    <PackageReference Include="FrameworkExtensions.System.Drawing" Version="1.0.0.36" />
   </ItemGroup>
 
 </Project>
