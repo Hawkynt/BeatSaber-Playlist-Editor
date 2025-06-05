@@ -41,8 +41,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\Framework\Corlib.Extensions\Corlib.Extensions.csproj" />
-    <ProjectReference Include="..\..\..\..\Framework\System.Windows.Forms.Extensions\System.Windows.Form.Extensions.csproj" />
+    <PackageReference Include="FrameworkExtensions.Corlib" Version="1.0.2.480" />
+    <PackageReference Include="FrameworkExtensions.System.Windows.Forms" Version="1.0.0.72" />
     <ProjectReference Include="..\BeatSaber API\BeatSaber API.csproj" />
   </ItemGroup>
 

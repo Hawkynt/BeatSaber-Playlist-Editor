@@ -24,7 +24,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\Framework\Corlib.Extensions\Corlib.Extensions.csproj" />
+    <PackageReference Include="FrameworkExtensions.Corlib" Version="1.0.2.480" />
     <ProjectReference Include="..\..\..\..\Framework\System.Drawing.Extensions\System.Drawing.Extensions.csproj" />
   </ItemGroup>
 
