@@ -1,6 +1,7 @@
 using BeatSaber_Playlist_Editor.ViewModel;
 using BeatSaberAPI;
 using static BeatSaber_Playlist_Editor.ViewModel.UIMain;
+using System.Drawing;
 
 namespace BeatSaber_Playlist_Editor;
 
@@ -120,8 +121,11 @@ internal partial class MainForm : Form {
         return;
       }
 
-      this._viewModel?.AppendSongs(songs);
-      // TODO: would be nice to know where drop occured and insert songs there if possible
+      var clientPoint = this.dgvPlaylistEntries.PointToClient(new Point(e.X, e.Y));
+      var hit = this.dgvPlaylistEntries.HitTest(clientPoint.X, clientPoint.Y);
+      var index = hit.RowIndex < 0 ? this.dgvPlaylistEntries.Rows.Count : hit.RowIndex;
+
+      this._viewModel?.InsertSongsAt(index, songs);
     }
 
     private void pbPlaylistCover_Click(object _, EventArgs __) {
