@@ -98,6 +98,14 @@ internal partial class UIMain : INotifyPropertyChanged {
     }
   } = string.Empty;
 
+  public string? CurrentPlaylistDescription {
+    get => field;
+    set {
+      if (this.SetProperty(this.OnPropertyChanged, ref field, value))
+        this._MarkCurrentPlaylistModified();
+    }
+  } = string.Empty;
+
   public IBeatSaberInstallation? BeatSaber {
     get => field;
     private set {
@@ -193,6 +201,7 @@ internal partial class UIMain : INotifyPropertyChanged {
 
     cp.Source.Name = this.CurrentPlaylistName;
     cp.Source.Author = this.CurrentPlaylistAuthor;
+    cp.Source.Description = this.CurrentPlaylistDescription;
     cp.Source.Songs.Clear();
     foreach (var entry in this.CurrentPlaylistEntries)
       cp.Source.Songs.Add(entry.Source);
@@ -219,6 +228,7 @@ internal partial class UIMain : INotifyPropertyChanged {
     this.IsCurrentPlaylistAvailable = cp != null;
     this.CurrentPlaylistAuthor = cp?.Author ?? string.Empty;
     this.CurrentPlaylistName= cp?.Name??string.Empty;
+    this.CurrentPlaylistDescription = cp?.Description;
     this._MarkCurrentPlaylistUnmodified();
   }
 
