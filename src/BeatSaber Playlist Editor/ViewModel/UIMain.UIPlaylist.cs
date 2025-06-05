@@ -18,6 +18,17 @@ partial class UIMain {
 
     public string Name => this.Source.Name;
     public string? Author => this.Source.Author;
+    public string? Description
+    {
+      get => this.Source.Description;
+      set
+      {
+        if (value == this.Source.Description)
+          return;
+        this.Source.Description = value;
+        this._OnPropertyChanged();
+      }
+    }
 
     [EditorBrowsable(EditorBrowsableState.Never)]
     public string CoverDetails => this._cover.Value == null ? "No image" : $"{this.Cover.Width} x {this.Cover.Height}";
@@ -45,6 +56,7 @@ partial class UIMain {
     public void TriggerAllPropertiesChanged() {
       this._OnPropertyChanged(nameof(Name));
       this._OnPropertyChanged(nameof(Author));
+      this._OnPropertyChanged(nameof(Description));
       this._OnPropertyChanged(nameof(Cover));
       this._OnPropertyChanged(nameof(CoverDetails));
     }

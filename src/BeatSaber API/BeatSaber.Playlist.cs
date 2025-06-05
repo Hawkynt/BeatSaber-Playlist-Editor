@@ -34,6 +34,11 @@ partial class BeatSaberInstallation {
       set => this._Data.PlaylistAuthor = value;
     }
 
+    public string? Description {
+      get => this._Data.PlaylistDescription;
+      set => this._Data.PlaylistDescription = value;
+    }
+
     public IPlaylistEntryCollection Songs => this._entries.Value;
 
     public Image? Image {

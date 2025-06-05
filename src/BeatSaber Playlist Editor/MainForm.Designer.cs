@@ -50,6 +50,8 @@ partial class MainForm : Form {
       System.Windows.Forms.Label lPlaylistName;
       System.Windows.Forms.Label lPlaylistAuthor;
       System.Windows.Forms.TextBox tbPlaylistAuthor;
+      System.Windows.Forms.Label lPlaylistDescription;
+      System.Windows.Forms.TextBox tbPlaylistDescription;
       System.Windows.Forms.SplitContainer splitContainer3;
       System.Windows.Forms.ToolStrip tsSongs;
       System.Windows.Forms.ToolStripLabel tslFilter;
@@ -106,6 +108,8 @@ partial class MainForm : Form {
       lPlaylistName = new System.Windows.Forms.Label();
       lPlaylistAuthor = new System.Windows.Forms.Label();
       tbPlaylistAuthor = new System.Windows.Forms.TextBox();
+      lPlaylistDescription = new System.Windows.Forms.Label();
+      tbPlaylistDescription = new System.Windows.Forms.TextBox();
       splitContainer3 = new System.Windows.Forms.SplitContainer();
       tsSongs = new System.Windows.Forms.ToolStrip();
       tslFilter = new System.Windows.Forms.ToolStripLabel();
@@ -452,6 +456,8 @@ partial class MainForm : Form {
       tlpPlaylistProperties.Controls.Add(lPlaylistAuthor, 0, 3);
       tlpPlaylistProperties.Controls.Add(this.tbPlaylistName, 1, 2);
       tlpPlaylistProperties.Controls.Add(tbPlaylistAuthor, 1, 3);
+      tlpPlaylistProperties.Controls.Add(lPlaylistDescription, 0, 4);
+      tlpPlaylistProperties.Controls.Add(tbPlaylistDescription, 1, 4);
       tlpPlaylistProperties.Dock = System.Windows.Forms.DockStyle.Fill;
       tlpPlaylistProperties.Location = new System.Drawing.Point(3, 19);
       tlpPlaylistProperties.Name = "tlpPlaylistProperties";
@@ -460,7 +466,7 @@ partial class MainForm : Form {
       tlpPlaylistProperties.RowStyles.Add(new System.Windows.Forms.RowStyle());
       tlpPlaylistProperties.RowStyles.Add(new System.Windows.Forms.RowStyle());
       tlpPlaylistProperties.RowStyles.Add(new System.Windows.Forms.RowStyle());
-      tlpPlaylistProperties.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+      tlpPlaylistProperties.RowStyles.Add(new System.Windows.Forms.RowStyle());
       tlpPlaylistProperties.Size = new System.Drawing.Size(233, 177);
       tlpPlaylistProperties.TabIndex = 0;
       // 
@@ -513,9 +519,9 @@ partial class MainForm : Form {
       lPlaylistAuthor.Size = new System.Drawing.Size(44, 15);
       lPlaylistAuthor.TabIndex = 2;
       lPlaylistAuthor.Text = "Author";
-      // 
+      //
       // tbPlaylistName
-      // 
+      //
       this.tbPlaylistName.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.bsViewModel, "CurrentPlaylistName", true));
       this.tbPlaylistName.DataBindings.Add(new System.Windows.Forms.Binding("Enabled", this.bsViewModel, "IsCurrentPlaylistAvailable", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
       this.tbPlaylistName.Dock = System.Windows.Forms.DockStyle.Top;
@@ -534,6 +540,26 @@ partial class MainForm : Form {
       tbPlaylistAuthor.Name = "tbPlaylistAuthor";
       tbPlaylistAuthor.Size = new System.Drawing.Size(177, 23);
       tbPlaylistAuthor.TabIndex = 4;
+      //
+      // lPlaylistDescription
+      //
+      lPlaylistDescription.Anchor = System.Windows.Forms.AnchorStyles.Left;
+      lPlaylistDescription.AutoSize = true;
+      lPlaylistDescription.Location = new System.Drawing.Point(3, 164);
+      lPlaylistDescription.Name = "lPlaylistDescription";
+      lPlaylistDescription.Size = new System.Drawing.Size(67, 15);
+      lPlaylistDescription.TabIndex = 2;
+      lPlaylistDescription.Text = "Description";
+      //
+      // tbPlaylistDescription
+      //
+      tbPlaylistDescription.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.bsViewModel, "CurrentPlaylistDescription", true));
+      tbPlaylistDescription.DataBindings.Add(new System.Windows.Forms.Binding("Enabled", this.bsViewModel, "IsCurrentPlaylistAvailable", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+      tbPlaylistDescription.Dock = System.Windows.Forms.DockStyle.Top;
+      tbPlaylistDescription.Location = new System.Drawing.Point(53, 160);
+      tbPlaylistDescription.Name = "tbPlaylistDescription";
+      tbPlaylistDescription.Size = new System.Drawing.Size(177, 23);
+      tbPlaylistDescription.TabIndex = 5;
       // 
       // splitContainer3
       // 
