@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net6.0-windows</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
 
@@ -14,11 +14,25 @@
     <PackageReference Include="NUnit3TestAdapter" Version="4.2.1" />
     <PackageReference Include="NUnit.Analyzers" Version="3.3.0" />
     <PackageReference Include="coverlet.collector" Version="3.1.2" />
+    <PackageReference Include="System.Drawing.Common" Version="8.0.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\BeatSaber API\BeatSaber API.csproj" />
-    <ProjectReference Include="..\..\src\BeatSaber Playlist Editor\BeatSaber Playlist Editor.csproj" />
+    <Compile Include="..\..\src\BeatSaber API\IBeatSaberInstallation.cs" Link="BeatSaberAPI\IBeatSaberInstallation.cs" />
+    <Compile Include="..\..\src\BeatSaber API\IPlaylist.cs" Link="BeatSaberAPI\IPlaylist.cs" />
+    <Compile Include="..\..\src\BeatSaber API\IPlaylistCollection.cs" Link="BeatSaberAPI\IPlaylistCollection.cs" />
+    <Compile Include="..\..\src\BeatSaber API\IPlaylistEntry.cs" Link="BeatSaberAPI\IPlaylistEntry.cs" />
+    <Compile Include="..\..\src\BeatSaber API\IPlaylistEntryCollection.cs" Link="BeatSaberAPI\IPlaylistEntryCollection.cs" />
+    <Compile Include="..\..\src\BeatSaber API\ISong.cs" Link="BeatSaberAPI\ISong.cs" />
+    <Compile Include="..\..\src\BeatSaber API\ISongCollection.cs" Link="BeatSaberAPI\ISongCollection.cs" />
+    <Compile Include="..\..\src\BeatSaber API\GameMode.cs" Link="BeatSaberAPI\GameMode.cs" />
+    <Compile Include="..\..\src\BeatSaber API\DifficultyMode.cs" Link="BeatSaberAPI\DifficultyMode.cs" />
+
+    <Compile Include="..\..\src\BeatSaber Playlist Editor\ViewModel\UIMain.cs" Link="ViewModel\UIMain.cs" />
+    <Compile Include="..\..\src\BeatSaber Playlist Editor\ViewModel\UIMain.UIPlaylist.cs" Link="ViewModel\UIMain.UIPlaylist.cs" />
+    <Compile Include="..\..\src\BeatSaber Playlist Editor\ViewModel\UIMain.UIPlaylistEntry.cs" Link="ViewModel\UIMain.UIPlaylistEntry.cs" />
+    <Compile Include="..\..\src\BeatSaber Playlist Editor\ViewModel\UIMain.UISong.cs" Link="ViewModel\UIMain.UISong.cs" />
+    <Compile Include="..\..\src\BeatSaber Playlist Editor\Properties\Resources.Designer.cs" Link="ViewModel\Resources.Designer.cs" />
   </ItemGroup>
 
 </Project>
