@@ -52,5 +52,23 @@ public partial class Tests {
     CollectionAssert.AreEqual(new[] { b, c, a }, vm.CurrentPlaylistEntries);
   }
 
+  [Test]
+  public void TestMultiUpOrdering() {
+    var vm = CreateVM(out var a, out var b, out var c);
+
+    vm.MoveUp(new[] { c, b });
+
+    CollectionAssert.AreEqual(new[] { b, c, a }, vm.CurrentPlaylistEntries);
+  }
+
+  [Test]
+  public void TestMultiDownOrdering() {
+    var vm = CreateVM(out var a, out var b, out var c);
+
+    vm.MoveDown(new[] { b, a });
+
+    CollectionAssert.AreEqual(new[] { c, a, b }, vm.CurrentPlaylistEntries);
+  }
+
 
 }

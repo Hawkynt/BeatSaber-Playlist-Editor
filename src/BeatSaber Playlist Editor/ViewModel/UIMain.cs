@@ -251,10 +251,9 @@ internal partial class UIMain : INotifyPropertyChanged {
   }
 
   public void MoveUp(IEnumerable<UIPlaylistEntry> entries) {
-    // TODO: fix when moving more than one
     var currentPlaylistEntries = this.CurrentPlaylistEntries;
 
-    foreach (var entry in entries.Reverse()) {
+    foreach (var entry in entries.OrderBy(e => currentPlaylistEntries.IndexOf(e))) {
       var oldPosition = currentPlaylistEntries.IndexOf(entry);
       if (oldPosition <= 0)
         continue;
@@ -281,11 +280,10 @@ internal partial class UIMain : INotifyPropertyChanged {
   }
 
   public void MoveDown(IEnumerable<UIPlaylistEntry> entries) {
-    // TODO: fix when moving more than one
     var currentPlaylistEntries = this.CurrentPlaylistEntries;
     var length = currentPlaylistEntries.Count - 1;
 
-    foreach (var entry in entries) {
+    foreach (var entry in entries.OrderByDescending(e => currentPlaylistEntries.IndexOf(e))) {
       var oldPosition = currentPlaylistEntries.IndexOf(entry);
       if (oldPosition < 0 || oldPosition >= length)
         continue;
