@@ -1,0 +1,54 @@
+name: Build artifacts
+
+# Produces one artifact:
+#   * BeatSaber-Playlist-Editor-win-x64-<version>.zip  (WinForms, net6.0-windows)
+on:
+  workflow_call:
+    inputs:
+      version: { required: true, type: string }
+      release-kind: { required: true, type: string }
+      changelog-flag: { required: true, type: string }
+      ref: { required: false, type: string, default: "" }
+    outputs:
+      artifact-name:
+        value: ${{ jobs.build.outputs.artifact-name }}
+
+jobs:
+  build:
+    runs-on: windows-latest
+    outputs:
+      artifact-name: BeatSaber-Playlist-Editor-win-x64-${{ inputs.version }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.ref || github.ref }}
+          fetch-depth: 0
+
+      - uses: actions/setup-dotnet@v4
+        with: { dotnet-version: '6.x' }
+
+      - uses: actions/setup-node@v4
+        with: { node-version: '22' }
+
+      - name: Update CHANGELOG
+        shell: bash
+        run: node .github/workflows/scripts/update-changelog.mjs ${{ inputs.changelog-flag }}
+
+      - name: Stamp versions
+        shell: bash
+        run: perl .github/workflows/scripts/version.pl --stamp
+
+      - name: Publish (win-x64, self-contained)
+        shell: bash
+        run: dotnet publish "src/BeatSaber Playlist Editor/BeatSaber Playlist Editor.csproj" -r win-x64 -c Release --self-contained --output publish/exe
+
+      - name: Package zip
+        shell: pwsh
+        run: |
+          $v = "${{ inputs.version }}"
+          Compress-Archive -Path publish/exe/* -DestinationPath "BeatSaber-Playlist-Editor-win-x64-$v.zip"
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: BeatSaber-Playlist-Editor-win-x64-${{ inputs.version }}
+          path: BeatSaber-Playlist-Editor-win-x64-${{ inputs.version }}.zip
