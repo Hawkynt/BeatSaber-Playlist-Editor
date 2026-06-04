@@ -1,11 +1,21 @@
 # 🎵 BeatSaber Playlist Editor
 
+[![License](https://img.shields.io/github/license/Hawkynt/BeatSaber-Playlist-Editor)](https://github.com/Hawkynt/BeatSaber-Playlist-Editor/blob/master/LICENSE)
+[![Language](https://img.shields.io/github/languages/top/Hawkynt/BeatSaber-Playlist-Editor?color=8957D5)](https://github.com/Hawkynt/BeatSaber-Playlist-Editor)
+
 [![CI](https://github.com/Hawkynt/BeatSaber-Playlist-Editor/actions/workflows/ci.yml/badge.svg?branch=master)](https://github.com/Hawkynt/BeatSaber-Playlist-Editor/actions/workflows/ci.yml)
-[![Release](https://github.com/Hawkynt/BeatSaber-Playlist-Editor/actions/workflows/release.yml/badge.svg)](https://github.com/Hawkynt/BeatSaber-Playlist-Editor/actions/workflows/release.yml)
-[![Latest release](https://img.shields.io/github/v/release/Hawkynt/BeatSaber-Playlist-Editor?label=release&sort=semver)](https://github.com/Hawkynt/BeatSaber-Playlist-Editor/releases/latest)
-[![Latest nightly](https://img.shields.io/github/v/release/Hawkynt/BeatSaber-Playlist-Editor?include_prereleases&label=nightly&sort=date)](https://github.com/Hawkynt/BeatSaber-Playlist-Editor/releases?q=prerelease%3Atrue)
-[![License](https://img.shields.io/badge/License-LGPL_3.0-blue)](https://licenses.nuget.org/LGPL-3.0-or-later)
-![Language](https://img.shields.io/github/languages/top/Hawkynt/BeatSaber-Playlist-Editor?color=purple)
+![Last Commit](https://img.shields.io/github/last-commit/Hawkynt/BeatSaber-Playlist-Editor?branch=master)
+![Activity](https://img.shields.io/github/commit-activity/m/Hawkynt/BeatSaber-Playlist-Editor)
+
+[![Stars](https://img.shields.io/github/stars/Hawkynt/BeatSaber-Playlist-Editor?color=FFD700)](https://github.com/Hawkynt/BeatSaber-Playlist-Editor/stargazers)
+[![Forks](https://img.shields.io/github/forks/Hawkynt/BeatSaber-Playlist-Editor?color=008080)](https://github.com/Hawkynt/BeatSaber-Playlist-Editor/network/members)
+[![Issues](https://img.shields.io/github/issues/Hawkynt/BeatSaber-Playlist-Editor)](https://github.com/Hawkynt/BeatSaber-Playlist-Editor/issues)
+![Code Size](https://img.shields.io/github/languages/code-size/Hawkynt/BeatSaber-Playlist-Editor?color=4CAF50)
+![Repo Size](https://img.shields.io/github/repo-size/Hawkynt/BeatSaber-Playlist-Editor?color=FF9800)
+
+[![Release](https://img.shields.io/github/v/release/Hawkynt/BeatSaber-Playlist-Editor?sort=semver)](https://github.com/Hawkynt/BeatSaber-Playlist-Editor/releases/latest)
+[![Nightly](https://img.shields.io/github/v/release/Hawkynt/BeatSaber-Playlist-Editor?include_prereleases=true&sort=date&label=nightly&color=FF9800)](https://github.com/Hawkynt/BeatSaber-Playlist-Editor/releases)
+[![Downloads](https://img.shields.io/github/downloads/Hawkynt/BeatSaber-Playlist-Editor/total)](https://github.com/Hawkynt/BeatSaber-Playlist-Editor/releases)
 
 A user-friendly desktop application for creating and managing your Beat Saber playlists for both PC and Quest!
 
