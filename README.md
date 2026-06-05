@@ -1,10 +1,10 @@
 # 🎵 BeatSaber Playlist Editor
 
-[![License](https://img.shields.io/github/license/Hawkynt/BeatSaber-Playlist-Editor)](https://github.com/Hawkynt/BeatSaber-Playlist-Editor/blob/master/LICENSE)
+[![License](https://img.shields.io/github/license/Hawkynt/BeatSaber-Playlist-Editor)](https://github.com/Hawkynt/BeatSaber-Playlist-Editor/blob/main/LICENSE)
 [![Language](https://img.shields.io/github/languages/top/Hawkynt/BeatSaber-Playlist-Editor?color=8957D5)](https://github.com/Hawkynt/BeatSaber-Playlist-Editor)
 
-[![CI](https://github.com/Hawkynt/BeatSaber-Playlist-Editor/actions/workflows/ci.yml/badge.svg?branch=master)](https://github.com/Hawkynt/BeatSaber-Playlist-Editor/actions/workflows/ci.yml)
-![Last Commit](https://img.shields.io/github/last-commit/Hawkynt/BeatSaber-Playlist-Editor?branch=master)
+[![CI](https://github.com/Hawkynt/BeatSaber-Playlist-Editor/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/Hawkynt/BeatSaber-Playlist-Editor/actions/workflows/ci.yml)
+![Last Commit](https://img.shields.io/github/last-commit/Hawkynt/BeatSaber-Playlist-Editor?branch=main)
 ![Activity](https://img.shields.io/github/commit-activity/m/Hawkynt/BeatSaber-Playlist-Editor)
 
 [![Stars](https://img.shields.io/github/stars/Hawkynt/BeatSaber-Playlist-Editor?color=FFD700)](https://github.com/Hawkynt/BeatSaber-Playlist-Editor/stargazers)
@@ -17,7 +17,7 @@
 [![Nightly](https://img.shields.io/github/v/release/Hawkynt/BeatSaber-Playlist-Editor?include_prereleases=true&sort=date&label=nightly&color=FF9800)](https://github.com/Hawkynt/BeatSaber-Playlist-Editor/releases)
 [![Downloads](https://img.shields.io/github/downloads/Hawkynt/BeatSaber-Playlist-Editor/total)](https://github.com/Hawkynt/BeatSaber-Playlist-Editor/releases)
 
-A user-friendly desktop application for creating and managing your Beat Saber playlists for both PC and Quest!
+> A user-friendly desktop application for creating and managing Beat Saber playlists for both PC and Quest — browse, reorder, cover-art and share playlists without hand-editing JSON.
 
 ![Screenshot](https://user-images.githubusercontent.com/14230988/189197825-95580757-0e23-4e33-896c-c346e0106e07.png)
 
@@ -30,7 +30,7 @@ A user-friendly desktop application for creating and managing your Beat Saber pl
 *   **Song Ordering:** Arrange the songs in your playlist exactly how you want them.
 *   **Save & Refresh:** Quickly save your changes or refresh your libraries to reflect the latest updates.
 
-## 🚀 Getting Started
+## 📦 Getting Started
 
 1.  **Set Game Path:** Launch the application and click the folder icon 📂 to select your Beat Saber installation directory.
 2.  **Manage Playlists:**
@@ -55,6 +55,13 @@ This project demonstrates a unique approach by applying the **Model-View-ViewMod
 
 It serves as an interesting case study for applying modern design patterns to classic UI frameworks.
 
+## ❤️ Support
+
+If this project saves you time or money, consider supporting its development:
+
+[![GitHub Sponsors](https://img.shields.io/badge/GitHub-Sponsor-EA4AAA?logo=githubsponsors)](https://github.com/sponsors/Hawkynt)
+[![PayPal](https://img.shields.io/badge/PayPal-Donate-00457C?logo=paypal)](https://www.paypal.me/hawkynt)
+
 ## 📜 License
 
-This project is licensed under the LGPL-3.0 License. See the `LICENSE` file for more details.
+Licensed under LGPL-3.0-or-later — see [LICENSE](LICENSE).

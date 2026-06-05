@@ -174,3 +174,32 @@ The Agent is expected to be aware of:
 - Cache blocking and loop unrolling, Duff's device, T4-templates
 - Unsafe memory tricks and stack discipline, pre-allocation, pooling
 - Branchless programming patterns
+
+## 📝 Commits
+
+- **Group changes semantically/logically** — one concern per commit.
+- **Every subject line starts with a prefix**: `+` added · `-` removed ·
+  `*` changed · `#` bug fixed · `!` critical todo (the changelog generator
+  buckets by these).
+- Never start a subject with "fix"/"bugfix"/"changed"/"modified".
+- **No AI traces anywhere**: no `Co-Authored-By` AI lines, no "Generated
+  with" footers, no agent mentions in messages, comments, or authorship.
+
+## 🔄 The loop (always, in this order)
+
+1. **Before committing**: build and run the tests locally until green;
+   update the README when behavior changes.
+2. **Commit** (rules above) and **push**.
+3. **Wait for CI**; on `main` a green CI triggers the nightly (prerelease +
+   GFS pruning, same-day replace). Fix and loop until everything is green.
+
+Stable releases are **manual** (`gh workflow run release.yml`) — never cut
+one unless explicitly asked.
+
+## 🏠 House README conventions
+
+- Standard frame: title → badges → one-line `>` blockquote → screenshot;
+  fixed emoji mapping for the standard sections (`## ✨ Features`,
+  `## 📦 Getting Started`, `## ❤️ Support`, `## 📜 License`).
+- License is LGPL-3.0-or-later; the `## ❤️ Support` section and
+  `.github/FUNDING.yml` stay intact.
