@@ -14,7 +14,7 @@
 ![Repo Size](https://img.shields.io/github/repo-size/Hawkynt/BeatSaber-Playlist-Editor?color=FF9800)
 
 [![Release](https://img.shields.io/github/v/release/Hawkynt/BeatSaber-Playlist-Editor)](https://github.com/Hawkynt/BeatSaber-Playlist-Editor/releases/latest)
-[![Nightly](https://img.shields.io/github/v/release/Hawkynt/BeatSaber-Playlist-Editor?include_prereleases&sort=date&label=nightly&color=FF9800)](https://github.com/Hawkynt/BeatSaber-Playlist-Editor/releases)
+[![Nightly](https://img.shields.io/github/v/release/Hawkynt/BeatSaber-Playlist-Editor?include_prereleases&sort=date&filter=nightly-*&label=nightly&color=FF9800)](https://github.com/Hawkynt/BeatSaber-Playlist-Editor/releases)
 [![Downloads](https://img.shields.io/github/downloads/Hawkynt/BeatSaber-Playlist-Editor/total)](https://github.com/Hawkynt/BeatSaber-Playlist-Editor/releases)
 
 > A user-friendly desktop application for creating and managing Beat Saber playlists for both PC and Quest — browse, reorder, cover-art and share playlists without hand-editing JSON.
