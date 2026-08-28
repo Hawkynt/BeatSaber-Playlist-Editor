@@ -1,33 +1,38 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
-namespace BeatSaberAPI; 
+namespace BeatSaberAPI;
 
 partial class BeatSaberInstallation {
+
+  private static readonly string[] PLAYLIST_EXTENSIONS = ["*.json", "*.bplist", "*.blist"];
 
   private class PlaylistCollection(DirectoryInfo root) : IPlaylistCollection {
 
     public IPlaylist Create(string name) {
-      if (this.Any(i => string.Equals(i.Name ,name,StringComparison.OrdinalIgnoreCase)))
+      root.Create();
+      if (this.Any(i => string.Equals(i.Name, name, StringComparison.OrdinalIgnoreCase)))
         throw new ArgumentException($"Playlist {name} already exists.", nameof(name));
-      
-      var result = Playlist.Create(name, root.File($"{name.SanitizeForFileName()}.json"));
-      return result;
+
+      return Playlist.Create(name, root.File($"{name.SanitizeForFileName()}.json"));
     }
 
     public void Delete(string name) {
-      var list = this._GetLists().First(i => string.Equals(i.Name, name, StringComparison.OrdinalIgnoreCase));
-      if (list != null)
-        list.File.Delete();
+      var list = this._GetLists().FirstOrDefault(i => string.Equals(i.Name, name, StringComparison.OrdinalIgnoreCase));
+      list?.File.Delete();
     }
 
     private IEnumerable<Playlist> _GetLists() {
-      foreach (var file in root.GetFiles("*.json"))
-        if (Playlist.TryCreatePlaylistFromFile(file, out var result))
-          yield return result!;
+      if (!root.Exists)
+        yield break;
+
+      foreach (var pattern in PLAYLIST_EXTENSIONS)
+        foreach (var file in root.GetFiles(pattern, SearchOption.AllDirectories))
+          if (Playlist.TryCreatePlaylistFromFile(file, out var result))
+            yield return result!;
     }
 
     public IEnumerator<IPlaylist> GetEnumerator() => this._GetLists().GetEnumerator();
@@ -36,4 +41,3 @@ partial class BeatSaberInstallation {
   }
 
 }
-
