@@ -1,0 +1,54 @@
+name: Refresh screenshots
+
+on:
+  push:
+    branches: [main]
+    paths-ignore:
+      - 'docs/screenshots/**'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: 'true'
+
+jobs:
+  screenshot:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.x'
+
+      - name: Restore
+        shell: bash
+        run: dotnet restore "BeatSaber Playlist Editor.sln"
+
+      - name: Build screenshot target
+        shell: bash
+        run: dotnet build "src/BeatSaber Playlist Editor/BeatSaber Playlist Editor.csproj" --configuration Release --no-restore
+
+      - name: Capture application screenshot
+        shell: pwsh
+        run: |
+          New-Item -ItemType Directory -Force -Path docs/screenshots | Out-Null
+          & "src/BeatSaber Playlist Editor/bin/Release/net10.0-windows/BeatSaber Playlist Editor.exe" --screenshot "docs/screenshots/main.png"
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+
+      - name: Commit changed screenshot
+        shell: bash
+        run: |
+          if [ -z "$(git status --porcelain -- docs/screenshots/main.png)" ]; then
+            echo "Screenshot is already current."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add docs/screenshots/main.png
+          git commit -m "* Refresh application screenshot"
+          git push

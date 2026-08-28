@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using BeatSaberAPI;
 using BeatSaber_Playlist_Editor.ViewModel;
 using static BeatSaber_Playlist_Editor.ViewModel.UIMain;
 using System.Drawing;
@@ -22,23 +23,44 @@ internal partial class MainForm {
       this.bsViewModel.Add(this._viewModel = viewModel);
 
       this.dgvPlaylists.EnableExtendedAttributes();
-      this.dgvPlaylists.DataSource = viewModel?.Playlists;
+      this.dgvPlaylists.DataSource = viewModel.Playlists;
 
       this.dgvPlaylistEntries.EnableExtendedAttributes();
-      this.dgvPlaylistEntries.DataSource = viewModel?.CurrentPlaylistEntries;
+      this.dgvPlaylistEntries.DataSource = viewModel.CurrentPlaylistEntries;
 
       this.dgvSongs.EnableExtendedAttributes();
-      this.dgvSongs.DataSource = viewModel?.Songs;
+      this.dgvSongs.DataSource = viewModel.Songs;
     }
 
     private void tsbBeatsaberSetPath_Click(object _, EventArgs __) {
-      if (this.fbdSelectRoot.ShowDialog() != DialogResult.OK)
+      var source = MessageBox.Show(
+        "Choose the Beat Saber source:\r\n\r\nYes = Meta Quest (USB / ADB)\r\nNo = PC installation (Steam / Meta PC)\r\nCancel = do nothing",
+        "Connect Beat Saber",
+        MessageBoxButtons.YesNoCancel,
+        MessageBoxIcon.Question
+      );
+
+      if (source == DialogResult.Cancel)
         return;
 
       try {
-        this._viewModel?.SetInstallation(new DirectoryInfo(this.fbdSelectRoot.SelectedPath));
-      } catch (Exception) {
-        MessageBox.Show("Could not set BeatSaber directory.\r\nAre you sure you selected the right one?", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        if (source == DialogResult.Yes) {
+          this.Cursor = Cursors.WaitCursor;
+          this._viewModel?.SetInstallation(BeatSaberInstallation.FromQuest());
+          return;
+        }
+
+        if (this.fbdSelectRoot.ShowDialog() == DialogResult.OK)
+          this._viewModel?.SetInstallation(new DirectoryInfo(this.fbdSelectRoot.SelectedPath));
+      } catch (Exception exception) {
+        MessageBox.Show(
+          $"Could not connect to Beat Saber.\r\n\r\n{exception.Message}",
+          "Error",
+          MessageBoxButtons.OK,
+          MessageBoxIcon.Error
+        );
+      } finally {
+        this.Cursor = Cursors.Default;
       }
     }
 
@@ -106,9 +128,7 @@ internal partial class MainForm {
       if (e.ColumnIndex < 0 || e.RowIndex < 0)
         return;
 
-      // if dragged row not yet selected - select it
       this.dgvSongs.Rows[e.RowIndex].Selected = true;
-
 
       var selected = this.dgvSongs.GetSelectedItems<UISong>().ToArray();
       this.dgvSongs.DoDragDrop(selected, DragDropEffects.Copy);

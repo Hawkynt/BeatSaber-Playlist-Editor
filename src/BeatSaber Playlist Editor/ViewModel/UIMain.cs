@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
@@ -11,6 +11,8 @@ using BeatSaberAPI;
 namespace BeatSaber_Playlist_Editor.ViewModel;
 
 internal partial class UIMain : INotifyPropertyChanged {
+
+  private readonly List<UISong> _allSongs = [];
 
   public event PropertyChangedEventHandler? PropertyChanged;
 
@@ -112,7 +114,7 @@ internal partial class UIMain : INotifyPropertyChanged {
   private string _currentPlaylistDescription = string.Empty;
 
   public string CurrentPlaylistDescription {
-    get => _currentPlaylistDescription;
+    get => this._currentPlaylistDescription;
     set {
       if (this.SetProperty(this.OnPropertyChanged, ref this._currentPlaylistDescription, value))
         this._MarkCurrentPlaylistModified();
@@ -159,41 +161,50 @@ internal partial class UIMain : INotifyPropertyChanged {
 
   public void Refresh() {
     this.RefreshPlaylists();
+    this._ReloadSongs();
+  }
+
+  private void _ReloadSongs() {
+    this._allSongs.Clear();
+    if (this.BeatSaber is { } beatSaber)
+      this._allSongs.AddRange(beatSaber.Songs.Select(static song => new UISong(song)));
+
     this.RefreshSongs();
   }
 
   public void RefreshSongs() {
-    var bs = this.BeatSaber;
-    this.Songs.Clear();
-    if (bs != null) {
-      IEnumerable<ISong> songs = bs.Songs;
-      if (this.SongFilterText.IsNotNullOrWhiteSpace())
-        songs = (this.SongFilterText ?? string.Empty)
-          .Split(" ")
-          .Select(i => i.Trim())
-          .Aggregate(songs, (current, part) => current.Where(s => 
-            (s.Artist?.Contains(part, StringComparison.CurrentCultureIgnoreCase) ?? true) 
-            || (s.Title?.Contains(part, StringComparison.CurrentCultureIgnoreCase) ?? true)
-          ))
-          ;
+    IEnumerable<UISong> songs = this._allSongs;
+    if (this.SongFilterText.IsNotNullOrWhiteSpace()) {
+      var parts = this.SongFilterText!
+        .Split(' ', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
+      songs = songs.Where(song => parts.All(part =>
+        (song.Artist?.Contains(part, StringComparison.CurrentCultureIgnoreCase) ?? false)
+        || song.Title.Contains(part, StringComparison.CurrentCultureIgnoreCase)
+      ));
+    }
 
-      // TODO: somehow i'm not convinced by the game mode filter logic
-      if (this.IsStandardGameModeVisible)
-        songs = songs.Where(s => s.SupportedGameModes.HasFlag(GameMode.Normal));
+    GameMode visibleModes = 0;
+    if (this.IsStandardGameModeVisible)
+      visibleModes |= GameMode.Normal;
+    if (this.IsOneSaberGameModeVisible)
+      visibleModes |= GameMode.OneSaber;
+    if (this.IsNoArrowsGameModeVisible)
+      visibleModes |= GameMode.NoArrows;
+    if (this.Is90GameModeVisible)
+      visibleModes |= GameMode.NinetyDegrees;
+    if (this.Is360GameModeVisible)
+      visibleModes |= GameMode.ThreeSixtyDegrees;
 
-      if (this.IsOneSaberGameModeVisible)
-        songs = songs.Where(s => s.SupportedGameModes.HasFlag(GameMode.OneSaber));
+    if (visibleModes != 0)
+      songs = songs.Where(song => (song.Source.SupportedGameModes & visibleModes) != 0);
 
-      if (this.IsNoArrowsGameModeVisible)
-        songs = songs.Where(s => s.SupportedGameModes.HasFlag(GameMode.NoArrows));
-
-      if (this.Is90GameModeVisible)
-        songs = songs.Where(s => s.SupportedGameModes.HasFlag(GameMode.NinetyDegrees));
-
-      if (this.Is360GameModeVisible)
-        songs = songs.Where(s => s.SupportedGameModes.HasFlag(GameMode.ThreeSixtyDegrees));
-
-      this.Songs.AddRange(songs.Select(i => new UISong(i)));
+    this.Songs.RaiseListChangedEvents = false;
+    try {
+      this.Songs.Clear();
+      this.Songs.AddRange(songs);
+    } finally {
+      this.Songs.RaiseListChangedEvents = true;
+      this.Songs.ResetBindings();
     }
 
     this.IsSongsAvailable = this.Songs.Count > 0;
@@ -204,7 +215,7 @@ internal partial class UIMain : INotifyPropertyChanged {
     this.CurrentPlaylist = null;
     this.Playlists.Clear();
     if (bs != null)
-      this.Playlists.AddRange(bs.Playlists.Select(i => new UIPlaylist(i)));
+      this.Playlists.AddRange(bs.Playlists.Select(static playlist => new UIPlaylist(playlist)));
 
     this.IsPlaylistsAvailable = this.Playlists.Count > 0;
   }
@@ -230,15 +241,18 @@ internal partial class UIMain : INotifyPropertyChanged {
   }
 
   public void ClearCurrentPlaylist() {
+    if (this.CurrentPlaylistEntries.Count == 0)
+      return;
+
     this.CurrentPlaylistEntries.Clear();
-    this._MarkCurrentPlaylistUnmodified();
+    this._MarkCurrentPlaylistModified();
   }
 
   public void RereadCurrentPlaylist() {
     var cp = this.CurrentPlaylist;
     this.CurrentPlaylistEntries.Clear();
     if (cp != null)
-      this.CurrentPlaylistEntries.AddRange(cp.Source.Songs.Select(i => new UIPlaylistEntry(i)));
+      this.CurrentPlaylistEntries.AddRange(cp.Source.Songs.Select(static entry => new UIPlaylistEntry(entry)));
 
     this.IsCurrentPlaylistAvailable = cp != null;
     this.CurrentPlaylistAuthor = cp?.Author ?? string.Empty;
@@ -252,6 +266,7 @@ internal partial class UIMain : INotifyPropertyChanged {
 
   public void MoveToFront(IEnumerable<UIPlaylistEntry> entries) {
     var currentPlaylistEntries = this.CurrentPlaylistEntries;
+    var changed = false;
 
     foreach (var entry in entries.Reverse()) {
       var oldPosition = currentPlaylistEntries.IndexOf(entry);
@@ -260,28 +275,34 @@ internal partial class UIMain : INotifyPropertyChanged {
 
       currentPlaylistEntries.RemoveAt(oldPosition);
       currentPlaylistEntries.Insert(0, entry);
+      changed = true;
     }
 
-    this._MarkCurrentPlaylistModified();
+    if (changed)
+      this._MarkCurrentPlaylistModified();
   }
 
   public void MoveUp(IEnumerable<UIPlaylistEntry> entries) {
     var currentPlaylistEntries = this.CurrentPlaylistEntries;
+    var changed = false;
 
-    foreach (var entry in entries.OrderBy(e => currentPlaylistEntries.IndexOf(e))) {
+    foreach (var entry in entries.OrderBy(currentPlaylistEntries.IndexOf)) {
       var oldPosition = currentPlaylistEntries.IndexOf(entry);
       if (oldPosition <= 0)
         continue;
 
       currentPlaylistEntries.RemoveAt(oldPosition);
       currentPlaylistEntries.Insert(oldPosition - 1, entry);
+      changed = true;
     }
 
-    this._MarkCurrentPlaylistModified();
+    if (changed)
+      this._MarkCurrentPlaylistModified();
   }
 
   public void Remove(IEnumerable<UIPlaylistEntry> entries) {
     var currentPlaylistEntries = this.CurrentPlaylistEntries;
+    var changed = false;
 
     foreach (var entry in entries) {
       var oldPosition = currentPlaylistEntries.IndexOf(entry);
@@ -289,41 +310,49 @@ internal partial class UIMain : INotifyPropertyChanged {
         continue;
 
       currentPlaylistEntries.RemoveAt(oldPosition);
+      changed = true;
     }
 
-    this._MarkCurrentPlaylistModified();
+    if (changed)
+      this._MarkCurrentPlaylistModified();
   }
 
   public void MoveDown(IEnumerable<UIPlaylistEntry> entries) {
     var currentPlaylistEntries = this.CurrentPlaylistEntries;
-    var length = currentPlaylistEntries.Count - 1;
+    var lastIndex = currentPlaylistEntries.Count - 1;
+    var changed = false;
 
-    foreach (var entry in entries.OrderByDescending(e => currentPlaylistEntries.IndexOf(e))) {
+    foreach (var entry in entries.OrderByDescending(currentPlaylistEntries.IndexOf)) {
       var oldPosition = currentPlaylistEntries.IndexOf(entry);
-      if (oldPosition < 0 || oldPosition >= length)
+      if (oldPosition < 0 || oldPosition >= lastIndex)
         continue;
 
       currentPlaylistEntries.RemoveAt(oldPosition);
       currentPlaylistEntries.Insert(oldPosition + 1, entry);
+      changed = true;
     }
 
-    this._MarkCurrentPlaylistModified();
+    if (changed)
+      this._MarkCurrentPlaylistModified();
   }
 
   public void MoveToBack(IEnumerable<UIPlaylistEntry> entries) {
     var currentPlaylistEntries = this.CurrentPlaylistEntries;
-    var length = currentPlaylistEntries.Count - 1;
+    var lastIndex = currentPlaylistEntries.Count - 1;
+    var changed = false;
 
     foreach (var entry in entries) {
       var oldPosition = currentPlaylistEntries.IndexOf(entry);
-      if (oldPosition < 0 || oldPosition >= length)
+      if (oldPosition < 0 || oldPosition >= lastIndex)
         continue;
 
       currentPlaylistEntries.RemoveAt(oldPosition);
-      currentPlaylistEntries.Insert(length, entry);
+      currentPlaylistEntries.Insert(lastIndex, entry);
+      changed = true;
     }
 
-    this._MarkCurrentPlaylistModified();
+    if (changed)
+      this._MarkCurrentPlaylistModified();
   }
 
   public void InsertSongsAt(int index, IEnumerable<UISong> songs) {
@@ -332,12 +361,15 @@ internal partial class UIMain : INotifyPropertyChanged {
       return;
 
     var currentPlaylistEntries = this.CurrentPlaylistEntries;
+    var changed = false;
     foreach (var song in songs) {
       var entry = currentPlaylist.Source.CreateEntry(song.Source);
       currentPlaylistEntries.Insert(index++, new UIPlaylistEntry(entry));
+      changed = true;
     }
 
-    this._MarkCurrentPlaylistModified();
+    if (changed)
+      this._MarkCurrentPlaylistModified();
   }
 
   public void AppendSongs(IEnumerable<UISong> songs)
@@ -365,8 +397,7 @@ internal partial class UIMain : INotifyPropertyChanged {
     if (beatSaber == null)
       return;
 
-    var name = currentPlaylist.Name;
-    beatSaber.Playlists.Delete(name);
+    beatSaber.Playlists.Delete(currentPlaylist.Name);
     this.Playlists.Remove(currentPlaylist);
     this.CurrentPlaylist = null;
   }

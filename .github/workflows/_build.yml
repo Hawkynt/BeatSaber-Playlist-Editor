@@ -1,7 +1,7 @@
 name: Build artifacts
 
 # Produces one artifact:
-#   * BeatSaber-Playlist-Editor-win-x64-<version>.zip  (WinForms, net6.0-windows)
+#   * BeatSaber-Playlist-Editor-win-x64-<version>.zip  (WinForms, net10.0-windows)
 on:
   workflow_call:
     inputs:
@@ -13,8 +13,6 @@ on:
       artifact-name:
         value: ${{ jobs.build.outputs.artifact-name }}
 
-# Force JavaScript-based actions to run on Node 24 instead of the deprecated Node 20 ahead of
-# the 2026-06-16 hard cutover, until we bump each action to a Node-24-native major version.
 env:
   FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: 'true'
 
@@ -30,7 +28,7 @@ jobs:
           fetch-depth: 0
 
       - uses: actions/setup-dotnet@v4
-        with: { dotnet-version: '6.x' }
+        with: { dotnet-version: '10.x' }
 
       - uses: actions/setup-node@v4
         with: { node-version: '22' }

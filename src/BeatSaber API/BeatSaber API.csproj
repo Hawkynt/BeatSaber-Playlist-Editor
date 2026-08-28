@@ -1,8 +1,8 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net6.0-windows</TargetFramework>
-    <LangVersion>default</LangVersion>
+    <TargetFramework>net10.0-windows</TargetFramework>
+    <LangVersion>14.0</LangVersion>
     <RootNamespace>BeatSaberAPI</RootNamespace>
     <ImplicitUsings>disable</ImplicitUsings>
     <Nullable>enable</Nullable>
@@ -20,10 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="System.Drawing.Common" Version="6.0.0" />
-  </ItemGroup>
-
-  <ItemGroup>
+    <PackageReference Include="System.Drawing.Common" Version="10.0.0" />
     <PackageReference Include="FrameworkExtensions.Corlib" Version="1.0.2.480" />
     <PackageReference Include="FrameworkExtensions.System.Drawing" Version="1.0.0.36" />
   </ItemGroup>
