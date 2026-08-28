@@ -1,12 +1,11 @@
-﻿using System;
-using System.Linq;
-using System.Security.Cryptography;
-using System.Diagnostics;
-using System.Text;
-using System.Text.Json;
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
+using System.Linq;
+using System.Security.Cryptography;
+using System.Text.Json;
 using BeatSaberAPI.JSON;
 
 namespace BeatSaberAPI;
@@ -16,13 +15,14 @@ partial class BeatSaberInstallation {
   [DebuggerDisplay($"{{{nameof(Artist)}}} - {{{nameof(Title)}}}")]
   private class Song : ISong {
 
+    private const int HASH_BUFFER_SIZE = 81920;
     private readonly Lazy<SongInfo.Root> _data;
 
     public DirectoryInfo Directory { get; }
     private SongInfo.Root _Data => this._data.Value;
     public string Title => this._Data.SongName!;
     public string? Artist => this._Data.SongAuthorName.DefaultIfNullOrWhiteSpace();
-    private IEnumerable<SongInfo.DifficultyBeatmapSet> _DifficultyBeatmapSets => this._Data.DifficultyBeatmapSets as IEnumerable<SongInfo.DifficultyBeatmapSet> ?? Array.Empty<SongInfo.DifficultyBeatmapSet>();
+    private IEnumerable<SongInfo.DifficultyBeatmapSet> _DifficultyBeatmapSets => this._Data.DifficultyBeatmapSets as IEnumerable<SongInfo.DifficultyBeatmapSet> ?? [];
     public bool SupportsStandardMode => this._DifficultyBeatmapSets.Any(i => i.BeatmapCharacteristicName!.Equals("Standard", StringComparison.OrdinalIgnoreCase));
     public bool SupportsOneSaberMode => this._DifficultyBeatmapSets.Any(i => i.BeatmapCharacteristicName!.Equals("OneSaber", StringComparison.OrdinalIgnoreCase));
     public bool SupportsNoArrowsMode => this._DifficultyBeatmapSets.Any(i => i.BeatmapCharacteristicName!.Equals("NoArrows", StringComparison.OrdinalIgnoreCase));
@@ -33,12 +33,11 @@ partial class BeatSaberInstallation {
       | (this.SupportsOneSaberMode ? GameMode.OneSaber : 0)
       | (this.SupportsNoArrowsMode ? GameMode.NoArrows : 0)
       | (this.Supports90DegreesMode ? GameMode.NinetyDegrees : 0)
-      | (this.Supports360DegreesMode ? GameMode.ThreeSixtyDegrees : 0)
-      ;
+      | (this.Supports360DegreesMode ? GameMode.ThreeSixtyDegrees : 0);
 
     public IReadOnlyDictionary<GameMode, DifficultyMode> Difficulties {
       get {
-        var result = new Dictionary<GameMode, DifficultyMode>();
+        Dictionary<GameMode, DifficultyMode> result = [];
         foreach (var mode in this._DifficultyBeatmapSets) {
           var gameMode = mode.BeatmapCharacteristicName!.ToLowerInvariant() switch {
             "standard" => GameMode.Normal,
@@ -52,7 +51,7 @@ partial class BeatSaberInstallation {
             continue;
 
           DifficultyMode value = 0;
-          foreach (var difficulty in mode.DifficultyBeatmaps!)
+          foreach (var difficulty in mode.DifficultyBeatmaps ?? [])
             value |= (difficulty.Difficulty ?? string.Empty).ToLowerInvariant() switch {
               "easy" => DifficultyMode.Easy,
               "normal" => DifficultyMode.Normal,
@@ -62,8 +61,9 @@ partial class BeatSaberInstallation {
               _ => 0
             };
 
-          result.Add(gameMode, value);
+          result[gameMode] = value;
         }
+
         return result;
       }
     }
@@ -87,24 +87,28 @@ partial class BeatSaberInstallation {
     }
 
     public FileInfo? GetSongFile() => this._Data.SongFilename?.Trim() is { Length: > 0 } songFileName
-        ? this.Directory.File(songFileName)
-        : null;
+      ? this.Directory.File(songFileName)
+      : null;
 
     public string CalculateChecksum() {
-      var sb = new StringBuilder();
-      _AddFileToBuilder(sb, _GetInfoFile(this.Directory));
-      foreach (var set in this._DifficultyBeatmapSets)
-        foreach (var map in set.DifficultyBeatmaps!)
-          _AddFileToBuilder(sb, this.Directory.File(map.BeatmapFilename));
-
-      var str = sb.ToString();
       using var crypto = SHA1.Create();
-      return crypto.ComputeHash(Encoding.UTF8.GetBytes(str)).ToHex(true);
+      var buffer = new byte[HASH_BUFFER_SIZE];
+      _AppendFileToHash(crypto, _GetInfoFile(this.Directory), buffer);
+      foreach (var set in this._DifficultyBeatmapSets)
+        foreach (var map in set.DifficultyBeatmaps ?? [])
+          if (map.BeatmapFilename is { Length: > 0 } fileName)
+            _AppendFileToHash(crypto, this.Directory.File(fileName), buffer);
+
+      crypto.TransformFinalBlock([], 0, 0);
+      return crypto.Hash!.ToHex(true);
     }
 
-    private static void _AddFileToBuilder(StringBuilder builder, FileInfo textFile)
-      => builder.Append(textFile.ReadAllText(Encoding.UTF8))
-    ;
+    private static void _AppendFileToHash(HashAlgorithm hash, FileInfo file, byte[] buffer) {
+      using var stream = file.OpenRead();
+      int read;
+      while ((read = stream.Read(buffer, 0, buffer.Length)) > 0)
+        hash.TransformBlock(buffer, 0, read, null, 0);
+    }
 
     public Image? GetCover() => this._ReadCover();
 
@@ -112,19 +116,20 @@ partial class BeatSaberInstallation {
 
     private SongInfo.Root _ReadMetadata() {
       using var fileStream = _GetInfoFile(this.Directory).OpenRead();
-      return JsonSerializer.Deserialize<SongInfo.Root>(fileStream)!;
+      return JsonSerializer.Deserialize<SongInfo.Root>(fileStream) ?? throw new InvalidDataException($"Invalid song metadata in '{this.Directory.FullName}'.");
     }
 
     private Image? _ReadCover() {
       var coverFile = this.GetCoverFile();
-      if (coverFile?.NotExists() ?? false)
+      if (coverFile?.NotExists() ?? true)
         return null;
 
       try {
-        var image = Image.FromFile(coverFile!.FullName);
-        return image;
+        using var stream = coverFile!.OpenRead();
+        using var source = Image.FromStream(stream);
+        return new Bitmap(source);
       } catch (Exception e) {
-        Trace.WriteLine($"{nameof(this._ReadCover)}:Error loading cover '{coverFile!.FullName}': {e}");
+        Trace.WriteLine($"{nameof(this._ReadCover)}: Error loading cover '{coverFile!.FullName}': {e}");
         return null;
       }
     }
@@ -148,4 +153,3 @@ partial class BeatSaberInstallation {
   }
 
 }
-
