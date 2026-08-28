@@ -9,6 +9,7 @@ on:
 
 permissions:
   contents: write
+  pull-requests: write
 
 env:
   FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: 'true'
@@ -51,8 +52,19 @@ jobs:
             exit 1
           }
 
-      - name: Commit changed screenshot
+      # main takes changes through pull requests only, so the refreshed screenshot is proposed rather
+      # than pushed. One long-lived branch is reused and force-updated: a screenshot is worth one open
+      # pull request, never one per commit that lands on main.
+      #
+      # SCREENSHOT_PR_TOKEN is optional and only affects whether CI runs on the proposed change.
+      # Anything done with GITHUB_TOKEN cannot trigger another workflow, so a pull request opened
+      # with it arrives with no checks and cannot satisfy a required-checks rule. With a personal
+      # access token (contents + pull-requests write) the pull request behaves like any other.
+      - name: Propose the refreshed screenshot
         shell: bash
+        env:
+          GH_TOKEN: ${{ secrets.SCREENSHOT_PR_TOKEN || secrets.GITHUB_TOKEN }}
+          BRANCH: bot/screenshot
         run: |
           if [ ! -f docs/screenshots/main.png ]; then
             echo "::error::docs/screenshots/main.png does not exist — the capture step produced nothing."
@@ -64,6 +76,14 @@ jobs:
           fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git checkout -B "$BRANCH"
           git add docs/screenshots/main.png
-          git commit -m "* Refresh application screenshot"
-          git push
+          git commit -m "* refresh the application screenshot"
+          git push --force origin "$BRANCH"
+          if [ -n "$(gh pr list --head "$BRANCH" --state open --json number --jq '.[].number')" ]; then
+            echo "The open pull request for $BRANCH now carries the current screenshot."
+            exit 0
+          fi
+          gh pr create --base main --head "$BRANCH" \
+            --title "* refresh the application screenshot" \
+            --body "The gallery moved. This is what \`--screenshot\` renders from the current build on \`main\`, which is the image the README shows."
