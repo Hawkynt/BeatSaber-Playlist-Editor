@@ -12,7 +12,8 @@ public partial class BeatSaberInstallation(DirectoryInfo gameDirectory) : IBeatS
   public ISongCollection Songs => new SongCollection(this._SongDirectory);
 
   public static BeatSaberInstallation FromGameDirectory(DirectoryInfo gameDirectory) {
-    if (gameDirectory.IsNullOrDoesNotExist())
+    ArgumentNullException.ThrowIfNull(gameDirectory);
+    if (!gameDirectory.Exists)
       throw new DirectoryNotFoundException("Could not find the selected Beat Saber directory.");
 
     if (!gameDirectory.Directory("Beat Saber_Data").Exists)
