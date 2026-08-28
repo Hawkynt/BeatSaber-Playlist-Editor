@@ -43,7 +43,7 @@ jobs:
       - name: Commit changed screenshot
         shell: bash
         run: |
-          if git diff --quiet -- docs/screenshots/main.png; then
+          if [ -z "$(git status --porcelain -- docs/screenshots/main.png)" ]; then
             echo "Screenshot is already current."
             exit 0
           fi
