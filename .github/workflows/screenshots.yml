@@ -23,7 +23,7 @@ jobs:
 
       - uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: '9.x'
+          dotnet-version: '10.x'
 
       - name: Restore
         shell: bash
@@ -37,7 +37,7 @@ jobs:
         shell: pwsh
         run: |
           New-Item -ItemType Directory -Force -Path docs/screenshots | Out-Null
-          & "src/BeatSaber Playlist Editor/bin/Release/net9.0-windows/BeatSaber Playlist Editor.exe" --screenshot "docs/screenshots/main.png"
+          & "src/BeatSaber Playlist Editor/bin/Release/net10.0-windows/BeatSaber Playlist Editor.exe" --screenshot "docs/screenshots/main.png"
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
 
       - name: Commit changed screenshot
