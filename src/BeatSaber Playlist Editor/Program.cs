@@ -40,9 +40,8 @@ internal static class Program {
     view.Location = Point.Empty;
     view.Size = new Size(1280, 720);
     view.Show();
-    Application.DoEvents();
+    view.PerformLayout();
     view.Refresh();
-    Application.DoEvents();
 
     using Bitmap screenshot = new(view.ClientSize.Width, view.ClientSize.Height);
     view.DrawToBitmap(screenshot, new Rectangle(Point.Empty, view.ClientSize));
@@ -50,6 +49,7 @@ internal static class Program {
     var fullPath = Path.GetFullPath(outputPath);
     Directory.CreateDirectory(Path.GetDirectoryName(fullPath)!);
     screenshot.Save(fullPath, ImageFormat.Png);
+    view.Hide();
   }
 
 }
