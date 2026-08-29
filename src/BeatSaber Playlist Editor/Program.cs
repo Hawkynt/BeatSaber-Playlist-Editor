@@ -26,20 +26,13 @@ internal static class Program {
     }
 
     UIMain viewModel = new() { IsStandardGameModeVisible = true };
-    if (screenshotIndex >= 0) {
-      viewModel.SetInstallation(ScreenshotSampleData.CreateInstallation());
-      viewModel.SetCurrentPlaylist(viewModel.Playlists[0]);
-      viewModel.CurrentSong = viewModel.Songs[0];
-      _Trace(tracePath!, "sample-data-bound");
-    }
-
     using MainForm view = new();
     _Trace(tracePath, "form-created");
     view.Bind(viewModel);
-    _Trace(tracePath, "form-bound");
+    _Trace(tracePath, "form-bound-empty");
 
     if (screenshotPath != null) {
-      _CaptureScreenshot(view, screenshotPath, tracePath!);
+      _CaptureScreenshot(view, viewModel, screenshotPath, tracePath!);
       Environment.Exit(0);
       return;
     }
@@ -47,16 +40,25 @@ internal static class Program {
     Application.Run(view);
   }
 
-  private static void _CaptureScreenshot(MainForm view, string outputPath, string tracePath) {
+  private static void _CaptureScreenshot(MainForm view, UIMain viewModel, string outputPath, string tracePath) {
     _Trace(tracePath, "capture-start");
     view.StartPosition = FormStartPosition.Manual;
     view.Location = Point.Empty;
     view.Size = new Size(1280, 720);
-    _Trace(tracePath, "before-create-control");
-    view.CreateControl();
-    _Trace(tracePath, "after-create-control");
+    _Trace(tracePath, "before-show-empty");
+    view.Show();
+    _Trace(tracePath, "after-show-empty");
+
+    viewModel.SetInstallation(ScreenshotSampleData.CreateInstallation());
+    _Trace(tracePath, "after-sample-installation");
+    viewModel.SetCurrentPlaylist(viewModel.Playlists[0]);
+    viewModel.CurrentSong = viewModel.Songs[0];
+    _Trace(tracePath, "after-sample-selection");
+
     view.PerformLayout();
     _Trace(tracePath, "after-layout");
+    view.Refresh();
+    _Trace(tracePath, "after-refresh");
 
     using Bitmap screenshot = new(view.ClientSize.Width, view.ClientSize.Height);
     _Trace(tracePath, "before-draw");
