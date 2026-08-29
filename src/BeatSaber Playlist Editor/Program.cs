@@ -50,7 +50,6 @@ internal static class Program {
     var fullPath = Path.GetFullPath(outputPath);
     Directory.CreateDirectory(Path.GetDirectoryName(fullPath)!);
     screenshot.Save(fullPath, ImageFormat.Png);
-    view.Close();
   }
 
 }
