@@ -1,0 +1,58 @@
+name: Generate
+
+# The cheap stage. A push to a working branch regenerates the derived files and commits them
+# straight back onto that branch, so by the time a pull request exists they are already part of it
+# and the expensive battery only has to test.
+#
+# Never on main: that branch takes changes through pull requests only, and the action refuses to
+# touch it anyway.
+on:
+  push:
+    branches-ignore: [main]
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+concurrency:
+  group: generate-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: 'true'
+
+jobs:
+  screenshot:
+    name: refresh the screenshot
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.x'
+
+      - name: Build the editor
+        shell: bash
+        run: dotnet build "src/BeatSaber Playlist Editor/BeatSaber Playlist Editor.csproj" --configuration Release
+
+      # The editor is a WinExe, so Windows starts it on the GUI subsystem and PowerShell's call
+      # operator does not wait for it. Start-Process -Wait is what actually blocks; the Test-Path is
+      # the proof it ran, because a GUI process that dies during startup still exits 0.
+      - name: Capture the gallery
+        shell: pwsh
+        run: |
+          New-Item -ItemType Directory -Force -Path docs/screenshots | Out-Null
+          $editor = Resolve-Path "src/BeatSaber Playlist Editor/bin/Release/net10.0-windows/BeatSaber Playlist Editor.exe"
+          $shot = Join-Path (Get-Location) "docs/screenshots/main.png"
+          $run = Start-Process -FilePath $editor -ArgumentList '--screenshot', $shot -Wait -PassThru -NoNewWindow
+          if ($run.ExitCode -ne 0) { exit $run.ExitCode }
+          if (-not (Test-Path $shot)) {
+            Write-Error "The editor exited 0 but wrote no screenshot to $shot."
+            exit 1
+          }
+
+      - uses: Hawkynt/RepositoryTemplate/commit-generated-file@v1
+        with:
+          file: docs/screenshots/main.png
+          message: '* refresh the application screenshot'
