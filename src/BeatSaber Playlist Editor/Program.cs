@@ -52,13 +52,11 @@ internal static class Program {
     view.StartPosition = FormStartPosition.Manual;
     view.Location = Point.Empty;
     view.Size = new Size(1280, 720);
-    _Trace(tracePath, "before-show");
-    view.Show();
-    _Trace(tracePath, "after-show");
+    _Trace(tracePath, "before-create-control");
+    view.CreateControl();
+    _Trace(tracePath, "after-create-control");
     view.PerformLayout();
     _Trace(tracePath, "after-layout");
-    view.Refresh();
-    _Trace(tracePath, "after-refresh");
 
     using Bitmap screenshot = new(view.ClientSize.Width, view.ClientSize.Height);
     _Trace(tracePath, "before-draw");
