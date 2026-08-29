@@ -32,6 +32,7 @@
     <Compile Include="..\..\src\BeatSaber Playlist Editor\ViewModel\UIMain.UIPlaylist.cs" Link="ViewModel\UIMain.UIPlaylist.cs" />
     <Compile Include="..\..\src\BeatSaber Playlist Editor\ViewModel\UIMain.UIPlaylistEntry.cs" Link="ViewModel\UIMain.UIPlaylistEntry.cs" />
     <Compile Include="..\..\src\BeatSaber Playlist Editor\ViewModel\UIMain.UISong.cs" Link="ViewModel\UIMain.UISong.cs" />
+    <Compile Include="..\..\src\BeatSaber Playlist Editor\ScreenshotSampleData.cs" Link="ScreenshotSampleData.cs" />
     <Compile Include="..\..\src\BeatSaber Playlist Editor\Properties\Resources.Designer.cs" Link="ViewModel\Resources.Designer.cs" />
   </ItemGroup>
 

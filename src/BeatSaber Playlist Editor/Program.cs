@@ -15,10 +15,17 @@ internal static class Program {
   public static void Main(string[] args) {
     ApplicationConfiguration.Initialize();
 
-    using MainForm view = new();
-    view.Bind(new UIMain { IsStandardGameModeVisible = true });
-
     var screenshotIndex = Array.IndexOf(args, SCREENSHOT_ARGUMENT);
+    UIMain viewModel = new() { IsStandardGameModeVisible = true };
+    if (screenshotIndex >= 0) {
+      viewModel.SetInstallation(ScreenshotSampleData.CreateInstallation());
+      viewModel.SetCurrentPlaylist(viewModel.Playlists[0]);
+      viewModel.CurrentSong = viewModel.Songs[0];
+    }
+
+    using MainForm view = new();
+    view.Bind(viewModel);
+
     if (screenshotIndex >= 0) {
       var outputPath = screenshotIndex + 1 < args.Length ? args[screenshotIndex + 1] : "screenshot.png";
       _CaptureScreenshot(view, outputPath);
