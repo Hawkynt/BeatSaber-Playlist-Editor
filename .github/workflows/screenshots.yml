@@ -54,36 +54,20 @@ jobs:
 
       # main takes changes through pull requests only, so the refreshed screenshot is proposed rather
       # than pushed. One long-lived branch is reused and force-updated: a screenshot is worth one open
-      # pull request, never one per commit that lands on main.
+      # pull request, never one per commit that lands on main. The commit is made through the
+      # contents API, because a commit made by git on a runner is unsigned and its pull request would
+      # then fail the signature rule forever.
       #
-      # SCREENSHOT_PR_TOKEN is optional and only affects whether CI runs on the proposed change.
-      # Anything done with GITHUB_TOKEN cannot trigger another workflow, so a pull request opened
-      # with it arrives with no checks and cannot satisfy a required-checks rule. With a personal
-      # access token (contents + pull-requests write) the pull request behaves like any other.
+      # SCREENSHOT_PR_TOKEN is optional and only affects whether CI runs on the proposed change —
+      # see the action's token input.
       - name: Propose the refreshed screenshot
-        shell: bash
-        env:
-          GH_TOKEN: ${{ secrets.SCREENSHOT_PR_TOKEN || secrets.GITHUB_TOKEN }}
-          BRANCH: bot/screenshot
-        run: |
-          if [ ! -f docs/screenshots/main.png ]; then
-            echo "::error::docs/screenshots/main.png does not exist — the capture step produced nothing."
-            exit 1
-          fi
-          if [ -z "$(git status --porcelain -- docs/screenshots/main.png)" ]; then
-            echo "Screenshot is already current."
-            exit 0
-          fi
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git checkout -B "$BRANCH"
-          git add docs/screenshots/main.png
-          git commit -m "* refresh the application screenshot"
-          git push --force origin "$BRANCH"
-          if [ -n "$(gh pr list --head "$BRANCH" --state open --json number --jq '.[].number')" ]; then
-            echo "The open pull request for $BRANCH now carries the current screenshot."
-            exit 0
-          fi
-          gh pr create --base main --head "$BRANCH" \
-            --title "* refresh the application screenshot" \
-            --body "The gallery moved. This is what \`--screenshot\` renders from the current build on \`main\`, which is the image the README shows."
+        uses: Hawkynt/RepositoryTemplate/publish-generated-file@v1
+        with:
+          file: docs/screenshots/main.png
+          branch: bot/screenshot
+          message: '* refresh the application screenshot'
+          title: '* refresh the application screenshot'
+          body: >-
+            The gallery moved. This is what `--screenshot` renders from the current build on `main`,
+            which is the image the README shows.
+          token: ${{ secrets.SCREENSHOT_PR_TOKEN || github.token }}
