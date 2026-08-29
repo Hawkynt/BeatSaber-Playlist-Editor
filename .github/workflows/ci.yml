@@ -20,3 +20,46 @@ jobs:
       runs-on: windows-latest
       # net10.0-windows WinForms: nothing here is packable, so there is no package README to check.
       package-readme: false
+
+  # The README's screenshot is generated, so it is checked here rather than published afterwards by
+  # a bot: it lands in the same pull request as the UI change that altered it, which is where a
+  # reviewer wants to see it. There is no secret and nothing to merge separately.
+  screenshot:
+    name: screenshot is current
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.x'
+
+      - name: Build the editor
+        shell: bash
+        run: dotnet build "src/BeatSaber Playlist Editor/BeatSaber Playlist Editor.csproj" --configuration Release
+
+      # The editor is a WinExe, so Windows starts it on the GUI subsystem and PowerShell's call
+      # operator does not wait for it. Start-Process -Wait is what actually blocks; the Test-Path is
+      # the proof it ran, because a GUI process that dies during startup still exits 0.
+      - name: Capture it
+        shell: pwsh
+        run: |
+          New-Item -ItemType Directory -Force -Path docs/screenshots | Out-Null
+          $editor = Resolve-Path "src/BeatSaber Playlist Editor/bin/Release/net10.0-windows/BeatSaber Playlist Editor.exe"
+          $shot = Join-Path (Get-Location) "docs/screenshots/main.png"
+          $run = Start-Process -FilePath $editor -ArgumentList '--screenshot', $shot -Wait -PassThru -NoNewWindow
+          if ($run.ExitCode -ne 0) { exit $run.ExitCode }
+          if (-not (Test-Path $shot)) {
+            Write-Error "The editor exited 0 but wrote no screenshot to $shot."
+            exit 1
+          }
+
+      - uses: Hawkynt/RepositoryTemplate/assert-generated-file@v1
+        with:
+          file: docs/screenshots/main.png
+          artifact: screenshot
+          hint: >-
+            The gallery moved. Download the `screenshot` artifact from this run and commit it as
+            docs/screenshots/main.png — it cannot be regenerated without a Windows desktop.
