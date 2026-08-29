@@ -36,16 +36,21 @@ jobs:
         shell: bash
         run: dotnet build "src/BeatSaber Playlist Editor/BeatSaber Playlist Editor.csproj" --configuration Release
 
-      # The editor is a WinExe, so Windows starts it on the GUI subsystem and PowerShell's call
-      # operator does not wait for it. Start-Process -Wait is what actually blocks; the Test-Path is
-      # the proof it ran, because a GUI process that dies during startup still exits 0.
       - name: Capture the gallery
         shell: pwsh
         run: |
           New-Item -ItemType Directory -Force -Path docs/screenshots | Out-Null
           $editor = Resolve-Path "src/BeatSaber Playlist Editor/bin/Release/net10.0-windows/BeatSaber Playlist Editor.exe"
           $shot = Join-Path (Get-Location) "docs/screenshots/main.png"
-          $run = Start-Process -FilePath $editor -ArgumentList '--screenshot', $shot -Wait -PassThru -NoNewWindow
+          $trace = "$shot.trace"
+          $run = Start-Process -FilePath $editor -ArgumentList '--screenshot', $shot -PassThru -NoNewWindow
+          if (-not $run.WaitForExit(20000)) {
+            Stop-Process -Id $run.Id -Force -ErrorAction SilentlyContinue
+            if (Test-Path $trace) { Get-Content $trace }
+            Write-Error "The editor did not finish screenshot capture within 20 seconds."
+            exit 1
+          }
+          if (Test-Path $trace) { Get-Content $trace }
           if ($run.ExitCode -ne 0) { exit $run.ExitCode }
           if (-not (Test-Path $shot)) {
             Write-Error "The editor exited 0 but wrote no screenshot to $shot."
