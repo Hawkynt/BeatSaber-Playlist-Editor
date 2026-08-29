@@ -29,6 +29,7 @@ internal static class Program {
     if (screenshotIndex >= 0) {
       var outputPath = screenshotIndex + 1 < args.Length ? args[screenshotIndex + 1] : "screenshot.png";
       _CaptureScreenshot(view, outputPath);
+      Environment.Exit(0);
       return;
     }
 
@@ -49,7 +50,6 @@ internal static class Program {
     var fullPath = Path.GetFullPath(outputPath);
     Directory.CreateDirectory(Path.GetDirectoryName(fullPath)!);
     screenshot.Save(fullPath, ImageFormat.Png);
-    view.Hide();
   }
 
 }
