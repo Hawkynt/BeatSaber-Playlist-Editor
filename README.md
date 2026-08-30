@@ -21,7 +21,7 @@
 
 ![BeatSaber Playlist Editor](docs/screenshots/main.png)
 
-_The screenshot is generated from the current application build by GitHub Actions after changes land on `main`, so the README follows the actual UI instead of an aging hand-made capture._
+_The screenshot is generated from the current application build by GitHub Actions with deterministic sample playlists and songs, so the README shows the real UI populated with representative data instead of an aging hand-made capture._
 
 ## ✨ Features
 

@@ -15,27 +15,34 @@ internal static class Program {
   public static void Main(string[] args) {
     ApplicationConfiguration.Initialize();
 
-    using MainForm view = new();
-    view.Bind(new UIMain { IsStandardGameModeVisible = true });
-
     var screenshotIndex = Array.IndexOf(args, SCREENSHOT_ARGUMENT);
+    UIMain viewModel = new() { IsStandardGameModeVisible = true };
+
+    using MainForm view = new();
+    view.Bind(viewModel);
+
     if (screenshotIndex >= 0) {
       var outputPath = screenshotIndex + 1 < args.Length ? args[screenshotIndex + 1] : "screenshot.png";
-      _CaptureScreenshot(view, outputPath);
+      _CaptureScreenshot(view, viewModel, outputPath);
+      Environment.Exit(0);
       return;
     }
 
     Application.Run(view);
   }
 
-  private static void _CaptureScreenshot(MainForm view, string outputPath) {
+  private static void _CaptureScreenshot(MainForm view, UIMain viewModel, string outputPath) {
     view.StartPosition = FormStartPosition.Manual;
     view.Location = Point.Empty;
     view.Size = new Size(1280, 720);
     view.Show();
-    Application.DoEvents();
+
+    viewModel.SetInstallation(ScreenshotSampleData.CreateInstallation());
+    viewModel.SetCurrentPlaylist(viewModel.Playlists[0]);
+    viewModel.CurrentSong = viewModel.Songs[0];
+
+    view.PerformLayout();
     view.Refresh();
-    Application.DoEvents();
 
     using Bitmap screenshot = new(view.ClientSize.Width, view.ClientSize.Height);
     view.DrawToBitmap(screenshot, new Rectangle(Point.Empty, view.ClientSize));
@@ -43,7 +50,6 @@ internal static class Program {
     var fullPath = Path.GetFullPath(outputPath);
     Directory.CreateDirectory(Path.GetDirectoryName(fullPath)!);
     screenshot.Save(fullPath, ImageFormat.Png);
-    view.Close();
   }
 
 }
