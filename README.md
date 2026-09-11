@@ -23,6 +23,16 @@
 
 _The screenshot is generated from the current application build by GitHub Actions with deterministic sample playlists and songs, so the README shows the real UI populated with representative data instead of an aging hand-made capture._
 
+## 🧭 Vision
+
+Beat Saber playlists are JSON files with base64 cover art inside them, which is a fine format for a
+game to read and a miserable one for a person to edit. This editor makes them ordinary: browse the
+songs you actually have, drag them into a playlist, reorder, set a cover, save.
+
+Quest is treated as a first-class source rather than an afterthought — the mod data is reached over
+ADB and synchronized back, so a modded headset is edited from the desktop without anyone copying an
+APK around.
+
 ## ✨ Features
 
 * **Playlist Management:** Create, delete, and edit playlists.
@@ -35,7 +45,13 @@ _The screenshot is generated from the current application build by GitHub Action
 * **Playlist Formats:** Reads `.json`, `.bplist` and `.blist` playlists, including playlist subfolders.
 * **Save & Refresh:** Save edits and explicitly refresh libraries from disk/device.
 
-## 📦 Getting Started
+## 📦 Installation
+
+Download the editor from the [latest release](../../releases/latest) (or a `nightly-*` prerelease) and
+run it — no installer. Requires Windows and .NET; editing a Quest additionally needs an authorized
+headset over USB with ADB available.
+
+## 🚀 Quick start
 
 Click the folder/connect button and choose the source:
 
@@ -50,6 +66,14 @@ After connecting:
 3. Reorder or remove entries with the arrow/remove buttons.
 4. Edit name, author, description or cover image.
 5. Click `💾` to save. For Quest, saving also pushes the playlist data back to the headset.
+
+## 🖼️ Screenshots
+
+![The main window, with a playlist selected and the available songs beside it](docs/screenshots/main.png)
+
+_Generated from the current build by GitHub Actions with deterministic sample playlists and songs, so
+the README shows the real UI populated with representative data instead of an ageing hand-made
+capture._
 
 ## 🥽 How do I use this with Quest?
 
@@ -86,7 +110,7 @@ If multiple Android/Quest devices are connected, the API also supports selecting
 
 The application itself targets **.NET 10 / C# 14** and is published as a self-contained Windows x64 executable.
 
-## 🏛️ Architecture
+## 🏗️ Architecture
 
 This project demonstrates a unique approach by applying the **Model-View-ViewModel (MVVM)** pattern to a **Windows Forms** application. While typically associated with newer frameworks like WPF and MAUI, this architectural choice brings several key benefits:
 
@@ -95,6 +119,16 @@ This project demonstrates a unique approach by applying the **Model-View-ViewMod
 * **Improved Maintainability:** This separation makes the project easier to understand, debug, and extend over time.
 
 It serves as an interesting case study for applying modern design patterns to classic UI frameworks.
+
+## 🛠️ Building
+
+```bash
+dotnet build -c Release
+dotnet test
+```
+
+CI also regenerates `docs/screenshots/main.png` from the built application, so the screenshot above
+cannot drift away from the UI.
 
 ## ❤️ Support
 

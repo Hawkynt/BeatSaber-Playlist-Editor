@@ -14,6 +14,8 @@ jobs:
   ci:
     uses: Hawkynt/RepositoryTemplate/.github/workflows/dotnet-ci.yml@v1
     with:
+      repo-readme: true
+      repo-readme-gui: true
       solution: '"BeatSaber Playlist Editor.sln"'
       test-target: Tests/EditorTests/EditorTests.csproj
       dotnet-version: '10.x'
